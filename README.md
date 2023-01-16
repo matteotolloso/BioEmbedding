@@ -13,3 +13,7 @@ python 3.5.6  (deprecated)
 * sklearn==0.19.0     (conda)
 * matplotlib==2.0.2   (conda)
 * seaborn==0.8.1      (conda)
+
+`conda list --export > requirements.txt`
+
+`conda create --name <env> --file <this file>`
