@@ -1,6 +1,4 @@
-# BioEmbedding
-
-## paper: learned protein embeddings for machine nearning
+# paper: learned protein embeddings for machine nearning
 
 venv: bioemb1
 
@@ -17,3 +15,12 @@ python 3.5.6  (deprecated)
 `conda list --export > requirements.txt`
 
 `conda create --name <env> --file <this file>`
+
+File created with `conda list -e > requirements.txt`
+This file may be used to create an environment using:
+`$ conda create --name <env> --file <this file>`
+platform: win-64
+!!! the module embeddings_reprodiction from the paper is not avaiable on pip or conda and must be downloaded 
+from github and then installed, follow the instruction here: https://github.com/fhalab/embeddings_reproduction
+
+# paper: biobert
