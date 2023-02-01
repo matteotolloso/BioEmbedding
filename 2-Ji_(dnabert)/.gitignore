@@ -1,6 +1,7 @@
 # code for DNABERT
 DNABERT
 dna_model
+result
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

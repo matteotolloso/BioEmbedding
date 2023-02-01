@@ -1,6 +1,6 @@
 export KMER=6
-export MODEL_PATH=./dna_model/$KMER
-export DATA_PATH=sample_data/ft/$KMER
+export MODEL_PATH=./dna_model/
+export DATA_PATH=DNABERT/examples/sample_data/ft/$KMER
 export PREDICTION_PATH=./result/$KMER
 
 python DNABERT/examples/run_finetune.py \
@@ -14,4 +14,4 @@ python DNABERT/examples/run_finetune.py \
     --per_gpu_pred_batch_size=128   \
     --output_dir $MODEL_PATH \
     --predict_dir $PREDICTION_PATH \
-    --n_process 48
+    --n_process 8
