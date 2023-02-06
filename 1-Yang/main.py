@@ -1,5 +1,4 @@
 from embeddings_reproduction import embedding_tools
-from numpy import array2string
 import json
 
 
@@ -21,7 +20,7 @@ embeds_list = embedding_tools.get_embeddings_new(
 )  # list of embeddings
 
 for id, embed in zip(IDs, embeds_list): 
-    seq_dict[id][ANNOTATION_KEY] = array2string(embed)
+    seq_dict[id][ANNOTATION_KEY] = embed.tolist()
 
 with open(FILE_PATH, "w") as file:
     json.dump(seq_dict, file, indent=4)
