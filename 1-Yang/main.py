@@ -14,7 +14,7 @@ seqrec_list = list(SeqIO.parse(IN_PATH, IN_FORMAT)) # list of SeqRec objects
 
 seqstring_list = [str(seqrec.seq) for seqrec in seqrec_list]     #list of sequences as string
 
-embeds_list = embedding_tools.get_embeddings_new('.\models\original_5_7.pkl', seqstring_list, k=5, overlap=False)  # list of embeddings
+embeds_list = embedding_tools.get_embeddings_new('./models/original_5_7.pkl', seqstring_list, k=5, overlap=False)  # list of embeddings
 
 for seqrec, embed in zip(seqrec_list, embeds_list): # add to each seqrecord the embedding of the relative sequence as an annotation
     seqrec.annotations[ANNOTATION_KEY] = array2string(embed)

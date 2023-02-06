@@ -4,6 +4,9 @@ from transformers import BertModel, BertConfig, DNATokenizer
 
 dir_to_pretrained_model = "./dna_model/"
 
+
+
+
 config = BertConfig.from_pretrained('https://raw.githubusercontent.com/jerryji1993/DNABERT/master/src/transformers/dnabert-config/bert-config-6/config.json')
 tokenizer = DNATokenizer.from_pretrained('dna6')
 model = BertModel.from_pretrained(dir_to_pretrained_model, config=config)
