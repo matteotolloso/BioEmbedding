@@ -3,19 +3,19 @@ import sys
 import numpy as np
 import h5py
 import torch
-from prose.alphabets import Uniprot21
-import prose.fasta as fasta
+from prose.prose.alphabets import Uniprot21
+import prose.prose.fasta as fasta
 from Bio import SeqRecord
 import pickle
 from numpy import array2string
 
-IN_PATH = ""    
-IN_FORMAT = "fasta"
+IN_PATH = "dataset/output_test.pkl"    
 ANNOTATION_KEY = "embedding2"
-OUT_PATH = "../dataset/output_test.pkl"
+OUT_PATH = "../dataset/output_test2.pkl"
 
 MODEL_PATH = "prose_mt"
 DEVICE = -2
+POOL = "none"
 
 
 
@@ -51,18 +51,7 @@ def embed_sequence(model, x, pool='none', use_cuda=False):
 
 
 def main():
-    import argparse
-    parser = argparse.ArgumentParser()
-
-    parser.add_argument('path')
-    parser.add_argument('-m', '--model', default='prose_mt', help='pretrained model to load, prose_mt loads the pretrained ProSE MT model, prose_dlm loads the pretrained Prose DLM model, otherwise unpickles torch model directly (default: prose_mt)')
-    parser.add_argument('-o', '--output')
-    parser.add_argument('--pool', choices=['none', 'sum', 'max', 'avg'], default='none', help='apply some sort of pooling operation over each sequence (default: none)')
-    parser.add_argument('-d', '--device', type=int, default=-2, help='compute device to use')
-
-    args = parser.parse_args()
-
-    
+      
 
     # load the model
     if MODEL_PATH == 'prose_mt':
@@ -89,13 +78,13 @@ def main():
 
     # parse the sequences and embed them
     # write them to hdf5 file
-    print('# writing:', args.output, file=sys.stderr)
+    print('# writing:', OUT_PATH, file=sys.stderr)
     
     seqrec_list = []
-    with open(IN_PATH, "rb"):
-        seqrec_list = pickle.load()
+    with open(IN_PATH, "rb") as file:   # load the list of seqrecords alreay annotated with the others embeddings
+        seqrec_list = pickle.load(seqrec_list, file)
 
-    pool = args.pool
+    pool = POOL
     print('# embedding with pool={}'.format(pool), file=sys.stderr)
     count = 0
     
@@ -104,11 +93,13 @@ def main():
         embed = embed_sequence(model, string_seq, pool=pool, use_cuda=use_cuda)
         
         seqrec.annotations[ANNOTATION_KEY] = array2string(embed)
-
         
         count += 1
         print('# {} sequences processed...'.format(count), file=sys.stderr, end='\r')
     print(' '*80, file=sys.stderr, end='\r')
+
+    with open(OUT_PATH, "wb") as file:
+        pickle.dump(seqrec_list, file)
 
 
 if __name__ == '__main__':
