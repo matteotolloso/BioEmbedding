@@ -1,8 +1,6 @@
 
-data/*
-!data/demo.fa
-!data/demo.h5
-saved_models/*
+prose/
+saved_models/
 
 # editor temp files
 *.swp

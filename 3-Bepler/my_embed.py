@@ -8,7 +8,7 @@ from numpy import array2string
 import os
 
 
-FILE_PATH = "../../dataset/test.json"    
+FILE_PATH = "../dataset/test.json"    
 ANNOTATION_KEY = "embedding3"
 MODEL_PATH = "prose_mt"
 DEVICE = -2
