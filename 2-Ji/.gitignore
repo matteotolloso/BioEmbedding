@@ -1,6 +1,7 @@
 # code for DNABERT
 DNABERT
-dna_model
+dna_model_fine_tuned
+dna_model_pre_trained
 result
 
 # Byte-compiled / optimized / DLL files

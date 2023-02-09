@@ -3,14 +3,14 @@ import torch
 from transformers import BertModel, BertConfig, DNATokenizer
 import json 
 
-dir_to_pretrained_model = "2-Ji_(dnabert)/dna_model/"
+PATH_TO_MODEL = "2-Ji/dna_model_pre_trained/"
+FILE_PATH = "dataset/test.json" # file containing the origina dataset. A key will be added on the dict and the file will be overwrited
+ANNOTATION_KEY = "embedding2_pre"   # the key to add
+
 
 config = BertConfig.from_pretrained('https://raw.githubusercontent.com/jerryji1993/DNABERT/master/src/transformers/dnabert-config/bert-config-6/config.json')
 tokenizer = DNATokenizer.from_pretrained('dna6')
-model = BertModel.from_pretrained(dir_to_pretrained_model, config=config)
-
-FILE_PATH = "dataset/test.json" # file containing the origina dataset. A key will be added on the dict and the file will be overwrited
-ANNOTATION_KEY = "embedding2"   # the key to add
+model = BertModel.from_pretrained(PATH_TO_MODEL, config=config)
 
 seq_dict = {}
 
