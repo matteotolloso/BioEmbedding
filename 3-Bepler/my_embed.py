@@ -33,7 +33,10 @@ def embed_sequence(model, x, pool='none', use_cuda=False):
     # embed the sequence
     with torch.no_grad():
         x = x.long().unsqueeze(0)
-        z = model.transform(x)
+        
+        # !!! change this in model(x) in order to get only the last layer
+        z = model.transform(x) 
+       
         # pool if needed
         z = z.squeeze(0)
         if pool == 'sum':
@@ -88,11 +91,9 @@ def main():
         seq_string = bytes(seq_dict[id]["sequence"], "utf-8")
         embed = embed_sequence(model, seq_string , pool=pool, use_cuda=use_cuda)
         
-        print(type(embed), embed.shape)
         seq_dict[id][ANNOTATION_KEY] = embed.tolist()
         
         
-    
     with open(FILE_PATH, "w") as file:
         json.dump(seq_dict, file, indent=4)
 

@@ -2,6 +2,7 @@
 import torch
 from transformers import BertModel, BertConfig, DNATokenizer
 import json 
+import numpy as np
 
 PATH_TO_MODEL = "2-Ji/dna_model_pre_trained/"
 FILE_PATH = "dataset/test.json" # file containing the origina dataset. A key will be added on the dict and the file will be overwrited
@@ -26,6 +27,9 @@ for k in seq_dict.keys():
         
         output = model(model_input)
         seq_dict[k][ANNOTATION_KEY] = output[1].tolist()
+        
+        # maybe this is better, but it doesn't work
+        #seq_dict[k][ANNOTATION_KEY] = np.mean(output[0])
 
 
 with open(FILE_PATH, "w") as file:
