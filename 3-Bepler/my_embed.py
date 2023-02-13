@@ -35,7 +35,10 @@ def embed_sequence(model, x, pool='none', use_cuda=False):
         x = x.long().unsqueeze(0)
         
         # !!! change this in model(x) in order to get only the last layer
-        z = model.transform(x) 
+        
+        #z = model.transform(x) # all the network stack
+
+        z = model(x) # only the z layer
        
         # pool if needed
         z = z.squeeze(0)

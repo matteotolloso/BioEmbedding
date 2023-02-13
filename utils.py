@@ -17,4 +17,12 @@ def genbank_to_json(genbank_file_path: str, json_file_path : str):
     with open(json_file_path, "w") as file:
         json.dump(out_dict, file, indent=4)
     
+def fasta_to_json(fasta_file_path: str, json_file_path: str):
+
+    out_dict = {}
+    with open(fasta_file_path, "r") as file:
+        for seqrecord in (SeqIO.parse(file, "fasta")):
+            out_dict[seqrecord.id] = {"sequence" : str(seqrecord.seq)}
     
+    with open(json_file_path, "w") as file:
+        json.dump(out_dict, file, indent=4)
