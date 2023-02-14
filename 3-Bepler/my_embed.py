@@ -7,12 +7,18 @@ import json
 from numpy import array2string
 import os
 
+# ********* SETTINGS **********
 
-FILE_PATH = "../dataset/test.json"    
+FILE_PATH = "../dataset/NEIS2157.json" 
 ANNOTATION_KEY = "embedding3"
+POOL = "none"
+ALL_STACK = False
+
 MODEL_PATH = "prose_mt"
 DEVICE = -2
-POOL = "avg"
+
+# ******************************
+
 
 
 
@@ -34,11 +40,12 @@ def embed_sequence(model, x, pool='none', use_cuda=False):
     with torch.no_grad():
         x = x.long().unsqueeze(0)
         
-        # !!! change this in model(x) in order to get only the last layer
+        z = None
         
-        #z = model.transform(x) # all the network stack
-
-        z = model(x) # only the z layer
+        if ALL_STACK:
+            z = model.transform(x) # all the network stack
+        else:
+            z = model(x) # only the last z layer
        
         # pool if needed
         z = z.squeeze(0)

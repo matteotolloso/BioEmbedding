@@ -1,3 +1,6 @@
+# Usually dataset with embeddings, too large
+dataset/*.json
+
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

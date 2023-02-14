@@ -4,9 +4,15 @@ from transformers import BertModel, BertConfig, DNATokenizer
 import json 
 import numpy as np
 
+
+
+# ********* SETTINGS **********
+
 PATH_TO_MODEL = "2-Ji/dna_model_pre_trained/"
-FILE_PATH = "dataset/test.json" # file containing the origina dataset. A key will be added on the dict and the file will be overwrited
-ANNOTATION_KEY = "embedding2_pre"   # the key to add
+FILE_PATH = "dataset/NEIS2157.json" # file containing the origina dataset. A key will be added on the dict and the file will be overwrited
+ANNOTATION_KEY = "embedding2"   # the key to add
+
+# ******************************
 
 
 config = BertConfig.from_pretrained('https://raw.githubusercontent.com/jerryji1993/DNABERT/master/src/transformers/dnabert-config/bert-config-6/config.json')
@@ -18,18 +24,32 @@ seq_dict = {}
 with open(FILE_PATH, "r") as file:
     seq_dict = json.load(file)
 
-for k in seq_dict.keys():
+for k in seq_dict.keys(): # for each sequence
 
-    with torch.no_grad():
-        model_input = tokenizer.encode_plus(seq_dict[k]["sequence"], add_special_tokens=True, max_length=512)["input_ids"]
-        model_input = torch.tensor(model_input, dtype=torch.long)
-        model_input = model_input.unsqueeze(0)   # to generate a fake batch with batch size one
-        
-        output = model(model_input)
-        seq_dict[k][ANNOTATION_KEY] = output[1].tolist()
-        
-        # maybe this is better, but it doesn't work
-        #seq_dict[k][ANNOTATION_KEY] = np.mean(output[0])
+    # split into substrings of 512 nucleotides
+    string = seq_dict[k]["sequence"]
+    substrings = []
+    for i in range(0, len(string), 512):
+        substrings.append(string[i:i+512])
+
+    embeddings = []
+
+    for i, substring in enumerate(substrings):
+
+        with torch.no_grad():
+            model_input = tokenizer.encode_plus( substring, add_special_tokens=True, max_length=512)["input_ids"]
+            model_input = torch.tensor(model_input, dtype=torch.long)
+            model_input = model_input.unsqueeze(0)   # to generate a fake batch with batch size one
+            
+            # someone suggest to average the output for each token insted of use the last one
+            # check the issues on github
+
+            output = model(model_input)
+            embeddings.append(output[1].tolist()[0])
+    
+    
+    seq_dict[k][ANNOTATION_KEY] = embeddings
+            
 
 
 with open(FILE_PATH, "w") as file:

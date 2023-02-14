@@ -2,7 +2,7 @@ from embeddings_reproduction import embedding_tools
 import json
 
 
-FILE_PATH = "dataset/test.json" # file containing the origina dataset. A key will be added on the dict and the file will be overwrited
+FILE_PATH = "../dataset/NEIS2157.json" # file containing the origina dataset. A key will be added on the dict and the file will be overwrited
 ANNOTATION_KEY = "embedding1"   # the key to add
 
 seq_dict = {}
@@ -13,7 +13,7 @@ with open(FILE_PATH, "r") as file:
 IDs = seq_dict.keys()
 
 embeds_list = embedding_tools.get_embeddings_new(
-    '1-Yang/models/original_5_7.pkl', 
+    'models/original_5_7.pkl', 
     [seq_dict[id]["sequence"] for id in IDs], 
     k=5, 
     overlap=False
