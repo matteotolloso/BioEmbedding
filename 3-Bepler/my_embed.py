@@ -5,7 +5,8 @@ import torch
 from prose.alphabets import Uniprot21
 import json
 from numpy import array2string
-import os
+from Bio.Seq import Seq
+import prose.fasta as fasta
 
 # ********* SETTINGS **********
 
@@ -98,7 +99,14 @@ def main():
     print('# embedding with pool={}'.format(pool), file=sys.stderr)
     
     for id in seq_dict.keys():
-        seq_string = bytes(seq_dict[id]["sequence"], "utf-8")
+        seq_string = seq_dict[id]["sequence"]
+
+        if set(seq_string).issubset(set(["A", "C", "G", "T"])):
+            seq_string = str(Seq(seq_string).translate())
+            print("The nucleotides sequence for ", id, " has been translated")
+
+        seq_string = bytes(seq_string, "utf-8")
+
         embed = embed_sequence(model, seq_string , pool=pool, use_cuda=use_cuda)
         
         seq_dict[id][ANNOTATION_KEY] = embed.tolist()

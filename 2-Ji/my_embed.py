@@ -8,8 +8,8 @@ import numpy as np
 
 # ********* SETTINGS **********
 
-PATH_TO_MODEL = "2-Ji/dna_model_pre_trained/"
-FILE_PATH = "dataset/NEIS2157.json" # file containing the origina dataset. A key will be added on the dict and the file will be overwrited
+PATH_TO_MODEL = "dna_model_pre_trained/"
+FILE_PATH = "../dataset/NEIS2157.json" # file containing the origina dataset. A key will be added on the dict and the file will be overwrited
 ANNOTATION_KEY = "embedding2"   # the key to add
 
 # ******************************
