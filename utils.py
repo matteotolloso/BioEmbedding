@@ -39,7 +39,7 @@ def get_sequence_dict(path : str) -> dict:
 
 def get_ordered_ids(seq_dict: dict) -> list:
     """
-    Given a seqence dictionary, where the keys are the IDs of the sequences, it return an ordered list of IDs taking into account the version fo the protein (that is different from the lexicographchi order). Example: NEIS2157_9 < NEIS2157_10.
+    Given a seqence dictionary, where the keys are the IDs of the sequences, it return an ordered list of IDs taking into account the version fo the protein (that is different from the lexicographic order). Example: NEIS2157_9 < NEIS2157_10.
 
     """
     from functools import cmp_to_key
