@@ -27,7 +27,7 @@ def fasta_to_json(fasta_file_path: str, json_file_path: str):
     with open(json_file_path, "w") as file:
         json.dump(out_dict, file, indent=4)
 
-def get_sequence_dict(path : str) -> dict:
+def get_embeddings_dict(path : str) -> dict:
     """
     Given the path of the json file created with the "genbak_to_json" or "fasta_to_json" functions, it returns a a dict where the ID of the sequences is the key
     """
