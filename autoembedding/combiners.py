@@ -7,11 +7,11 @@ def combiner_for_prose(raw_embedding : np.array , method: str)-> np.array :
     """
 
     if method == "average":
-        return raw_embedding.mean(axis=0)  # mean between all amminoacids
+        return np.mean(raw_embedding, axis=0)  # mean between all amminoacids
     elif method == "max":
-        return raw_embedding.max(axis=0) 
+        return np.max(raw_embedding, axis=0) 
     elif method == "sum":
-        return raw_embedding.sum(axis=0)
+        return np.sum(raw_embedding, axis=0)
     else:
         raise Exception(f"Unknown combining method: {method} for prose")
     
@@ -22,7 +22,7 @@ def combiner_for_dnabert(raw_embedding: np.array, method: str) -> np.array:
     it returns an embedding for the entire protein using some combination methods.
     """
     if method == "average":
-        return raw_embedding.mean(axis=0)  # mean between the embeddings of the subsequences
+        return np.mean(raw_embedding, axis=0)  # mean between the embeddings of the subsequences
     else:
         raise Exception(f"Unknown combining method: {method} for dnabert")
     
