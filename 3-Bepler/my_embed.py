@@ -10,7 +10,7 @@ import prose.fasta as fasta
 
 # ********* SETTINGS **********
 
-FILE_PATH = "../dataset/NEIS2157.json" 
+FILE_PATH = "../dataset/globins/globins.json"
 ANNOTATION_KEY = "embedding3"
 POOL = "none"
 ALL_STACK = False

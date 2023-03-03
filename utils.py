@@ -51,10 +51,14 @@ def get_ordered_ids(seq_dict: dict) -> list:
         if ind_a != ind_b: # diffent main name
             return a < b
         
-        version_a = int(a[ind_a+1:])
-        version_b = int(b[ind_b+1:])
+        try:
+            version_a = int(a[ind_a+1:])
+            version_b = int(b[ind_b+1:])
 
-        return version_a - version_b
+            return version_a - version_b
+        except Exception:
+            print("exception in get ordered ids")
+            return a < b
 
 
     IDs = list(seq_dict.keys())
