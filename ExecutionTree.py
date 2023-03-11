@@ -9,14 +9,14 @@ class Node:
         self.childs = []
     
     def compute(self, input):
-        return self.function(input, **self.param)
+        return self.function(input, **self.param) # change in prev_stage, param
 
 class ExecutionTree:
 
     def __init__(self, input):
         self.input = input
-        self.frontier = []
         self.root = Node(lambda x:x, {})
+        self.frontier = [self.root]
     
     def add_stage(self, function, args):
         
@@ -57,9 +57,16 @@ class ExecutionTree:
 if __name__ == "__main__":
     et = ExecutionTree("ciao")
     
+    def test(prev_out, char):
+        return prev_out+char
 
     
     et.add_stage(lambda x: x+"+", {})
+    
+    et.add_multistage(test, [{"char": "l" }, {"char": "u"}] )
+
+    et.add_stage(lambda x: x+"-", {})
+    
     et.add_stage(lambda x: print(x), {})
 
     et.compute()
