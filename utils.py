@@ -1,5 +1,13 @@
-from Bio import SeqIO
+from Bio import SeqIO, Phylo
 import json
+import numpy as np
+import io
+import numpy as np
+import pandas as pd
+from ete3 import ClusterTree
+from scipy.spatial.distance import squareform
+from scipy.cluster.hierarchy import linkage
+
 
 def genbank_to_json(genbank_file_path: str, json_file_path : str):
     """
@@ -66,4 +74,37 @@ def get_ordered_ids(seq_dict: dict) -> list:
     IDs.sort(key=cmp_to_key(compare))
 
     return IDs
+
+
+def newick_to_linkage(newick: str, label_order: str = None):
+    
+    """
+    Convert newick tree into scipy linkage matrix
+
+    :param newick: newick string, e.g. '(A:0.1,B:0.2,(C:0.3,D:0.4):0.5);'
+    :param label_order: list of labels, e.g. ['A', 'B', 'C']
+    :returns: linkage matrix and list of labels
+    """
+
+    # newick string -> cophenetic_matrix
+    tree = ClusterTree(newick)
+    cophenetic_matrix, newick_labels = tree.cophenetic_matrix()
+    cophenetic_matrix = pd.DataFrame(cophenetic_matrix, columns=newick_labels, index=newick_labels)
+
+    if label_order is not None:
+        # sanity checks
+        missing_labels = set(label_order).difference(set(newick_labels))
+        superfluous_labels = set(newick_labels).difference(set(label_order))
+        assert len(missing_labels) == 0, f'Some labels are not in the newick string: {missing_labels}'
+        if len(superfluous_labels) > 0:
+            print.warning(f'Newick string contains unused labels: {superfluous_labels}')
+
+        # reorder the cophenetic_matrix
+        cophenetic_matrix = cophenetic_matrix.reindex(index=label_order, columns=label_order)
+
+    # reduce square distance matrix to condensed distance matrices
+    pairwise_distances = squareform(cophenetic_matrix)
+
+    # return linkage matrix and labels
+    return linkage(pairwise_distances), list(cophenetic_matrix.columns)
 
