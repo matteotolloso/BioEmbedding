@@ -106,5 +106,5 @@ def newick_to_linkage(newick: str, label_order: str = None):
     pairwise_distances = squareform(cophenetic_matrix)
 
     # return linkage matrix and labels
-    return linkage(pairwise_distances), list(cophenetic_matrix.columns)
+    return linkage(pairwise_distances, optimal_ordering=True), list(cophenetic_matrix.columns)
 
