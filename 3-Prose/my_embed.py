@@ -10,8 +10,8 @@ import prose.fasta as fasta
 
 # ********* SETTINGS **********
 
-FILE_PATH = "../dataset/globins/globins.json"
-ANNOTATION_KEY = "embedding3"
+FILE_PATH = "../dataset/globins/globins.json" # file containing the origina dataset. A key will be added on the dict and the file will be overwrited
+ANNOTATION_KEY = "prose"
 POOL = "none"
 ALL_STACK = False
 

@@ -6,7 +6,7 @@ from Bio.Seq import Seq
 # ********* SETTINGS **********
 
 FILE_PATH = "../dataset/globins/globins.json" # file containing the origina dataset. A key will be added on the dict and the file will be overwrited
-ANNOTATION_KEY = "embedding1"   # the key to add
+ANNOTATION_KEY = "rep"   # the key to add
 
 # ******************************
 
