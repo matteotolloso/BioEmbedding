@@ -7,15 +7,18 @@ class Node:
 
         self.parent = None
         self.childs = []
+
+        self.result = None
     
-    def compute(self, input):
-        return self.function(input, **self.param) # change in prev_stage, param
+    def compute(self, previous_stage_output):
+        self.result = self.function(previous_stage_output=previous_stage_output, **self.param)
+        return self.result
 
 class ExecutionTree:
 
     def __init__(self, input):
         self.input = input
-        self.root = Node(lambda x:x, {})
+        self.root = Node(lambda previous_stage_output : previous_stage_output, {})
         self.frontier = [self.root]
     
     def add_stage(self, function, args):
@@ -23,7 +26,7 @@ class ExecutionTree:
         new_frontier = []
         for n in self.frontier:
             new_n = Node(function, args)
-            new_n.parent = self
+            new_n.parent = n
             n.childs.append(new_n)
             new_frontier.append(new_n)
         
@@ -35,16 +38,16 @@ class ExecutionTree:
         for n in self.frontier:
             for args in list_args:
                 new_n = Node(function, args)
-                new_n.parent = self
+                new_n.parent = n
                 n.childs.append(new_n)
                 new_frontier.append(new_n)
         
         self.frontier = new_frontier
     
     
-    def recursive_dfs(self, node, parent_output):
+    def recursive_dfs(self, node, previous_stage_output):
         
-        current_output = node.compute(parent_output)
+        current_output = node.compute(previous_stage_output=previous_stage_output)
         for c in node.childs:
             self.recursive_dfs(c, current_output)
 
@@ -52,21 +55,22 @@ class ExecutionTree:
     def compute(self):
 
         self.recursive_dfs(self.root, self.input)
+
+    def get_args_path(self, node):
+        args_path = []
+        current_node = node
+        while current_node.parent != None:
+            args_path.append(str(current_node.function.__name__) + " " + str(current_node.param))
+            current_node = current_node.parent
+
+        args_path.reverse()
+
+        return args_path
+    
+    def get_results(self):
+        
+        results = [ (n.result, self.get_args_path(n)) for n in self.frontier]
+
+        return results
         
         
-if __name__ == "__main__":
-    et = ExecutionTree("ciao")
-    
-    def test(prev_out, char):
-        return prev_out+char
-
-    
-    et.add_stage(lambda x: x+"+", {})
-    
-    et.add_multistage(test, [{"char": "l" }, {"char": "u"}] )
-
-    et.add_stage(lambda x: x+"-", {})
-    
-    et.add_stage(lambda x: print(x), {})
-
-    et.compute()
