@@ -29,19 +29,19 @@ def build_embeddings_matrix(
 
         if embedder == "rep":
             final_embedding = combiner_for_rep(
-                raw_embedding=np.array(embeddings_dict[id]["embedding1"]),  # is a 64-dim array
+                raw_embedding=np.array(embeddings_dict[id][embedder]),  # is a 64-dim array
                 method = combiner_method
             )
         
         elif embedder == "dnabert":
             final_embedding = combiner_for_dnabert(
-                raw_embedding = np.array(embeddings_dict[id]["embedding2"]), # is a (seq_len % 512)*(768) matrix
+                raw_embedding = np.array(embeddings_dict[id][embedder]), # is a (seq_len % 512)*(768) matrix
                 method = combiner_method
             )
 
         elif embedder == "prose":
             final_embedding = combiner_for_prose(
-                raw_embedding = np.array(embeddings_dict[id]["embedding3"]),  # is a (seq_len)*(100) matrix (each row is the embedding of an amminoacid)
+                raw_embedding = np.array(embeddings_dict[id][embedder]),  # is a (seq_len)*(100) matrix (each row is the embedding of an amminoacid)
                 method = combiner_method
             ) 
         

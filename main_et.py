@@ -25,30 +25,23 @@ def main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH):
         )
         return {"IDs": IDs, "embeddings_matrix": embeddings_matrix}
 
-    et.add_stage(
+    et.add_multistage(
         function=pipeline_build_embeddings_matrix,
-        args={ "embedder" : "prose", "combiner_method" : "sum" }
+        list_args=[
+        {"embedder" : "rep", "combiner_method" : "none" },
+        {"embedder" : "dnabert", "combiner_method" : "average" },
+        {"embedder" : "prose", "combiner_method" : "sum" },
+        ]
     )
 
-    # SCALING
 
-    def pipeline_standard_scaler(previous_stage_output : dict) -> dict:
-        embeddings_matrix = previous_stage_output["embeddings_matrix"]
-        IDs = previous_stage_output["IDs"]
-        scaler = StandardScaler()
-        embeddings_matrix = scaler.fit_transform(embeddings_matrix)
-        return { "embeddings_matrix" : embeddings_matrix, "IDs": IDs}
-
-    et.add_stage(
-        function=pipeline_standard_scaler,
-        args={}
-    )
-
-    # PRINCIPAL COMPONENT ANALYSIS
+    # PRINCIPAL COMPONENT ANALYSIS (with scaling)
 
     def pipeline_pca(previous_stage_output : dict, n_components) -> dict:
         embeddings_matrix = previous_stage_output["embeddings_matrix"]
         IDs = previous_stage_output["IDs"]
+        scaler = StandardScaler()
+        embeddings_matrix = scaler.fit_transform(embeddings_matrix)
         pca = PCA(n_components=n_components)
         embeddings_matrix = pca.fit_transform(embeddings_matrix)
         return { "embeddings_matrix" : embeddings_matrix, "IDs": IDs}

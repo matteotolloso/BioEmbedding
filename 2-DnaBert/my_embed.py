@@ -6,7 +6,7 @@ import numpy as np
 # ********* SETTINGS **********
 
 DNABERT_PATH = Path("dnabert")
-FILE_PATH = "../dataset/globins/globins.json" # file containing the origina dataset. A key will be added on the dict and the file will be overwrited
+FILE_PATH = "../dataset/NEIS2157/NEIS2157.json" # file containing the origina dataset. A key will be added on the dict and the file will be overwrited
 ANNOTATION_KEY = "dnabert"   # the key to add
 
 
