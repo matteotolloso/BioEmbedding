@@ -1,3 +1,5 @@
+.idea
+
 # Usually dataset with embeddings, too large
 dataset/*.json
 
