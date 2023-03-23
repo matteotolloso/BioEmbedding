@@ -10,16 +10,16 @@ def build_embeddings_matrix(
 
     """
     Creates a numpy 2D matrix where each row is the embedding of a sequence. All the sequences that are keys of the embeddings_dict
-    are present in the matrix ordered by their id, taking account of the version (so not a strictly lexicographic order).
+    are present in the matrix.
     The number of columns depends on the embedder and the combining method.
 
     Returns:
-        A tuple. The first element is a list of strings: the IDs ordered by version.
+        A tuple. The first element is a list of strings: the IDs.
         The second element is a 2D np.array containig for each row the embedding of a sequence, in the same order of the IDs.
 
     """
 
-    IDs = utils.get_ordered_ids(embeddings_dict)
+    IDs = list(embeddings_dict.keys())
 
     embeddings_matrix = []
 
