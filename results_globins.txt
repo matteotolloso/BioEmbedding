@@ -1,0 +1,864 @@
+Score: 0.7916666666666666
+pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'sum'}
+pipeline_pca {'n_components': -1}
+pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'average'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/globins/globins.dnd'}
+
+Score: 0.7916666666666666
+pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'sum'}
+pipeline_pca {'n_components': -1}
+pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'complete'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/globins/globins.dnd'}
+
+Score: 0.7916666666666666
+pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'sum'}
+pipeline_pca {'n_components': -1}
+pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'ward'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/globins/globins.dnd'}
+
+Score: 0.7916666666666666
+pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'sum'}
+pipeline_pca {'n_components': -1}
+pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'centroid'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/globins/globins.dnd'}
+
+Score: 0.7916666666666666
+pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'sum'}
+pipeline_pca {'n_components': -1}
+pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'median'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/globins/globins.dnd'}
+
+Score: 0.7916666666666666
+pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'sum'}
+pipeline_pca {'n_components': -1}
+pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'average'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/globins/globins.dnd'}
+
+Score: 0.7916666666666666
+pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'sum'}
+pipeline_pca {'n_components': -1}
+pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'median'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/globins/globins.dnd'}
+
+Score: 0.7916666666666666
+pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'sum'}
+pipeline_pca {'n_components': 3}
+pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'average'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/globins/globins.dnd'}
+
+Score: 0.7916666666666666
+pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'sum'}
+pipeline_pca {'n_components': 3}
+pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'complete'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/globins/globins.dnd'}
+
+Score: 0.7916666666666666
+pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'sum'}
+pipeline_pca {'n_components': 3}
+pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'ward'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/globins/globins.dnd'}
+
+Score: 0.7916666666666666
+pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'sum'}
+pipeline_pca {'n_components': 3}
+pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'centroid'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/globins/globins.dnd'}
+
+Score: 0.7916666666666666
+pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'sum'}
+pipeline_pca {'n_components': 3}
+pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'median'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/globins/globins.dnd'}
+
+Score: 0.6743697478991596
+pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'max'}
+pipeline_pca {'n_components': -1}
+pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'complete'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/globins/globins.dnd'}
+
+Score: 0.6286231884057971
+pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'sum'}
+pipeline_pca {'n_components': -1}
+pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'ward'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/globins/globins.dnd'}
+
+Score: 0.6286231884057971
+pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'sum'}
+pipeline_pca {'n_components': 3}
+pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'complete'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/globins/globins.dnd'}
+
+Score: 0.6130952380952381
+pipeline_build_embeddings_matrix {'embedder': 'rep', 'combiner_method': 'none'}
+pipeline_pca {'n_components': 3}
+pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'average'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/globins/globins.dnd'}
+
+Score: 0.6130952380952381
+pipeline_build_embeddings_matrix {'embedder': 'rep', 'combiner_method': 'none'}
+pipeline_pca {'n_components': 3}
+pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'centroid'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/globins/globins.dnd'}
+
+Score: 0.6130952380952381
+pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'max'}
+pipeline_pca {'n_components': -1}
+pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'centroid'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/globins/globins.dnd'}
+
+Score: 0.6130952380952381
+pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'max'}
+pipeline_pca {'n_components': -1}
+pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'single'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/globins/globins.dnd'}
+
+Score: 0.6130952380952381
+pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'max'}
+pipeline_pca {'n_components': -1}
+pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'median'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/globins/globins.dnd'}
+
+Score: 0.6130952380952381
+pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'max'}
+pipeline_pca {'n_components': 3}
+pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'centroid'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/globins/globins.dnd'}
+
+Score: 0.6130952380952381
+pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'max'}
+pipeline_pca {'n_components': 3}
+pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'single'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/globins/globins.dnd'}
+
+Score: 0.6130952380952381
+pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'max'}
+pipeline_pca {'n_components': 3}
+pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'median'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/globins/globins.dnd'}
+
+Score: 0.5833333333333334
+pipeline_build_embeddings_matrix {'embedder': 'rep', 'combiner_method': 'none'}
+pipeline_pca {'n_components': -1}
+pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'average'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/globins/globins.dnd'}
+
+Score: 0.5833333333333334
+pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'max'}
+pipeline_pca {'n_components': -1}
+pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'average'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/globins/globins.dnd'}
+
+Score: 0.5833333333333334
+pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'max'}
+pipeline_pca {'n_components': -1}
+pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'complete'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/globins/globins.dnd'}
+
+Score: 0.5833333333333334
+pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'max'}
+pipeline_pca {'n_components': -1}
+pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'ward'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/globins/globins.dnd'}
+
+Score: 0.5833333333333334
+pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'max'}
+pipeline_pca {'n_components': -1}
+pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'centroid'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/globins/globins.dnd'}
+
+Score: 0.5833333333333334
+pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'max'}
+pipeline_pca {'n_components': -1}
+pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'single'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/globins/globins.dnd'}
+
+Score: 0.5833333333333334
+pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'max'}
+pipeline_pca {'n_components': -1}
+pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'median'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/globins/globins.dnd'}
+
+Score: 0.5833333333333334
+pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'max'}
+pipeline_pca {'n_components': 3}
+pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'average'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/globins/globins.dnd'}
+
+Score: 0.5833333333333334
+pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'max'}
+pipeline_pca {'n_components': 3}
+pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'complete'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/globins/globins.dnd'}
+
+Score: 0.5833333333333334
+pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'max'}
+pipeline_pca {'n_components': 3}
+pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'ward'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/globins/globins.dnd'}
+
+Score: 0.5833333333333334
+pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'max'}
+pipeline_pca {'n_components': 3}
+pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'centroid'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/globins/globins.dnd'}
+
+Score: 0.5833333333333334
+pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'max'}
+pipeline_pca {'n_components': 3}
+pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'single'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/globins/globins.dnd'}
+
+Score: 0.5833333333333334
+pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'max'}
+pipeline_pca {'n_components': 3}
+pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'median'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/globins/globins.dnd'}
+
+Score: 0.5833333333333334
+pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'average'}
+pipeline_pca {'n_components': -1}
+pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'average'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/globins/globins.dnd'}
+
+Score: 0.5833333333333334
+pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'average'}
+pipeline_pca {'n_components': -1}
+pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'complete'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/globins/globins.dnd'}
+
+Score: 0.5833333333333334
+pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'average'}
+pipeline_pca {'n_components': -1}
+pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'ward'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/globins/globins.dnd'}
+
+Score: 0.5833333333333334
+pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'average'}
+pipeline_pca {'n_components': -1}
+pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'centroid'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/globins/globins.dnd'}
+
+Score: 0.5833333333333334
+pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'average'}
+pipeline_pca {'n_components': -1}
+pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'single'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/globins/globins.dnd'}
+
+Score: 0.5833333333333334
+pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'average'}
+pipeline_pca {'n_components': -1}
+pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'median'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/globins/globins.dnd'}
+
+Score: 0.5833333333333334
+pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'average'}
+pipeline_pca {'n_components': -1}
+pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'centroid'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/globins/globins.dnd'}
+
+Score: 0.5833333333333334
+pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'average'}
+pipeline_pca {'n_components': -1}
+pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'single'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/globins/globins.dnd'}
+
+Score: 0.5833333333333334
+pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'average'}
+pipeline_pca {'n_components': -1}
+pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'median'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/globins/globins.dnd'}
+
+Score: 0.5833333333333334
+pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'average'}
+pipeline_pca {'n_components': 3}
+pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'average'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/globins/globins.dnd'}
+
+Score: 0.5833333333333334
+pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'average'}
+pipeline_pca {'n_components': 3}
+pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'complete'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/globins/globins.dnd'}
+
+Score: 0.5833333333333334
+pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'average'}
+pipeline_pca {'n_components': 3}
+pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'ward'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/globins/globins.dnd'}
+
+Score: 0.5833333333333334
+pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'average'}
+pipeline_pca {'n_components': 3}
+pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'centroid'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/globins/globins.dnd'}
+
+Score: 0.5833333333333334
+pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'average'}
+pipeline_pca {'n_components': 3}
+pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'single'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/globins/globins.dnd'}
+
+Score: 0.5833333333333334
+pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'average'}
+pipeline_pca {'n_components': 3}
+pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'median'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/globins/globins.dnd'}
+
+Score: 0.5833333333333334
+pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'average'}
+pipeline_pca {'n_components': 3}
+pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'average'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/globins/globins.dnd'}
+
+Score: 0.5833333333333334
+pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'average'}
+pipeline_pca {'n_components': 3}
+pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'centroid'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/globins/globins.dnd'}
+
+Score: 0.5833333333333334
+pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'average'}
+pipeline_pca {'n_components': 3}
+pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'single'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/globins/globins.dnd'}
+
+Score: 0.5833333333333334
+pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'average'}
+pipeline_pca {'n_components': 3}
+pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'median'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/globins/globins.dnd'}
+
+Score: 0.5416666666666667
+pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'sum'}
+pipeline_pca {'n_components': -1}
+pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'centroid'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/globins/globins.dnd'}
+
+Score: 0.5416666666666667
+pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'sum'}
+pipeline_pca {'n_components': 3}
+pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'centroid'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/globins/globins.dnd'}
+
+Score: 0.5416666666666667
+pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'sum'}
+pipeline_pca {'n_components': 3}
+pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'median'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/globins/globins.dnd'}
+
+Score: 0.4916666666666667
+pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'sum'}
+pipeline_pca {'n_components': -1}
+pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'single'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/globins/globins.dnd'}
+
+Score: 0.4916666666666667
+pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'sum'}
+pipeline_pca {'n_components': -1}
+pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'complete'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/globins/globins.dnd'}
+
+Score: 0.4916666666666667
+pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'sum'}
+pipeline_pca {'n_components': -1}
+pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'single'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/globins/globins.dnd'}
+
+Score: 0.4916666666666667
+pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'sum'}
+pipeline_pca {'n_components': 3}
+pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'single'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/globins/globins.dnd'}
+
+Score: 0.4916666666666667
+pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'sum'}
+pipeline_pca {'n_components': 3}
+pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'average'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/globins/globins.dnd'}
+
+Score: 0.4916666666666667
+pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'sum'}
+pipeline_pca {'n_components': 3}
+pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'single'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/globins/globins.dnd'}
+
+Score: 0.4500517598343685
+pipeline_build_embeddings_matrix {'embedder': 'rep', 'combiner_method': 'none'}
+pipeline_pca {'n_components': -1}
+pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'complete'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/globins/globins.dnd'}
+
+Score: 0.4500517598343685
+pipeline_build_embeddings_matrix {'embedder': 'rep', 'combiner_method': 'none'}
+pipeline_pca {'n_components': 3}
+pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'complete'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/globins/globins.dnd'}
+
+Score: 0.4500517598343685
+pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'max'}
+pipeline_pca {'n_components': -1}
+pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'average'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/globins/globins.dnd'}
+
+Score: 0.4500517598343685
+pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'max'}
+pipeline_pca {'n_components': 3}
+pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'average'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/globins/globins.dnd'}
+
+Score: 0.42436974789915966
+pipeline_build_embeddings_matrix {'embedder': 'rep', 'combiner_method': 'none'}
+pipeline_pca {'n_components': -1}
+pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'complete'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/globins/globins.dnd'}
+
+Score: 0.42436974789915966
+pipeline_build_embeddings_matrix {'embedder': 'rep', 'combiner_method': 'none'}
+pipeline_pca {'n_components': 3}
+pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'complete'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/globins/globins.dnd'}
+
+Score: 0.42234848484848486
+pipeline_build_embeddings_matrix {'embedder': 'rep', 'combiner_method': 'none'}
+pipeline_pca {'n_components': -1}
+pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'centroid'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/globins/globins.dnd'}
+
+Score: 0.42234848484848486
+pipeline_build_embeddings_matrix {'embedder': 'rep', 'combiner_method': 'none'}
+pipeline_pca {'n_components': -1}
+pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'median'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/globins/globins.dnd'}
+
+Score: 0.3946078431372549
+pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'sum'}
+pipeline_pca {'n_components': 3}
+pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'ward'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/globins/globins.dnd'}
+
+Score: 0.3932335780161867
+pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'max'}
+pipeline_pca {'n_components': -1}
+pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'ward'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/globins/globins.dnd'}
+
+Score: 0.3932335780161867
+pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'max'}
+pipeline_pca {'n_components': 3}
+pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'complete'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/globins/globins.dnd'}
+
+Score: 0.3932335780161867
+pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'max'}
+pipeline_pca {'n_components': 3}
+pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'ward'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/globins/globins.dnd'}
+
+Score: 0.37675070028011204
+pipeline_build_embeddings_matrix {'embedder': 'dnabert', 'combiner_method': 'cut'}
+pipeline_pca {'n_components': -1}
+pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'single'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/globins/globins.dnd'}
+
+Score: 0.3630952380952381
+pipeline_build_embeddings_matrix {'embedder': 'rep', 'combiner_method': 'none'}
+pipeline_pca {'n_components': 3}
+pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'median'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/globins/globins.dnd'}
+
+Score: 0.3385563711650668
+pipeline_build_embeddings_matrix {'embedder': 'rep', 'combiner_method': 'none'}
+pipeline_pca {'n_components': 3}
+pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'ward'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/globins/globins.dnd'}
+
+Score: 0.3345055413469736
+pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'average'}
+pipeline_pca {'n_components': -1}
+pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'average'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/globins/globins.dnd'}
+
+Score: 0.3345055413469736
+pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'average'}
+pipeline_pca {'n_components': -1}
+pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'complete'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/globins/globins.dnd'}
+
+Score: 0.3345055413469736
+pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'average'}
+pipeline_pca {'n_components': -1}
+pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'ward'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/globins/globins.dnd'}
+
+Score: 0.3345055413469736
+pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'average'}
+pipeline_pca {'n_components': 3}
+pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'complete'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/globins/globins.dnd'}
+
+Score: 0.3345055413469736
+pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'average'}
+pipeline_pca {'n_components': 3}
+pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'ward'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/globins/globins.dnd'}
+
+Score: 0.30736207526488857
+pipeline_build_embeddings_matrix {'embedder': 'rep', 'combiner_method': 'none'}
+pipeline_pca {'n_components': -1}
+pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'ward'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/globins/globins.dnd'}
+
+Score: 0.28746498599439774
+pipeline_build_embeddings_matrix {'embedder': 'dnabert', 'combiner_method': 'cut'}
+pipeline_pca {'n_components': -1}
+pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'average'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/globins/globins.dnd'}
+
+Score: 0.28746498599439774
+pipeline_build_embeddings_matrix {'embedder': 'dnabert', 'combiner_method': 'cut'}
+pipeline_pca {'n_components': -1}
+pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'complete'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/globins/globins.dnd'}
+
+Score: 0.28746498599439774
+pipeline_build_embeddings_matrix {'embedder': 'dnabert', 'combiner_method': 'cut'}
+pipeline_pca {'n_components': -1}
+pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'single'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/globins/globins.dnd'}
+
+Score: 0.28746498599439774
+pipeline_build_embeddings_matrix {'embedder': 'dnabert', 'combiner_method': 'cut'}
+pipeline_pca {'n_components': 3}
+pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'average'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/globins/globins.dnd'}
+
+Score: 0.28746498599439774
+pipeline_build_embeddings_matrix {'embedder': 'dnabert', 'combiner_method': 'cut'}
+pipeline_pca {'n_components': 3}
+pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'complete'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/globins/globins.dnd'}
+
+Score: 0.28746498599439774
+pipeline_build_embeddings_matrix {'embedder': 'dnabert', 'combiner_method': 'cut'}
+pipeline_pca {'n_components': 3}
+pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'centroid'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/globins/globins.dnd'}
+
+Score: 0.28746498599439774
+pipeline_build_embeddings_matrix {'embedder': 'dnabert', 'combiner_method': 'cut'}
+pipeline_pca {'n_components': 3}
+pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'single'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/globins/globins.dnd'}
+
+Score: 0.28746498599439774
+pipeline_build_embeddings_matrix {'embedder': 'dnabert', 'combiner_method': 'cut'}
+pipeline_pca {'n_components': 3}
+pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'median'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/globins/globins.dnd'}
+
+Score: 0.28746498599439774
+pipeline_build_embeddings_matrix {'embedder': 'dnabert', 'combiner_method': 'cut'}
+pipeline_pca {'n_components': 3}
+pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'single'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/globins/globins.dnd'}
+
+Score: 0.2833333333333333
+pipeline_build_embeddings_matrix {'embedder': 'rep', 'combiner_method': 'none'}
+pipeline_pca {'n_components': -1}
+pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'single'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/globins/globins.dnd'}
+
+Score: 0.2773109243697479
+pipeline_build_embeddings_matrix {'embedder': 'rep', 'combiner_method': 'none'}
+pipeline_pca {'n_components': -1}
+pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'average'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/globins/globins.dnd'}
+
+Score: 0.2773109243697479
+pipeline_build_embeddings_matrix {'embedder': 'rep', 'combiner_method': 'none'}
+pipeline_pca {'n_components': -1}
+pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'ward'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/globins/globins.dnd'}
+
+Score: 0.2773109243697479
+pipeline_build_embeddings_matrix {'embedder': 'rep', 'combiner_method': 'none'}
+pipeline_pca {'n_components': -1}
+pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'single'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/globins/globins.dnd'}
+
+Score: 0.23383266350018267
+pipeline_build_embeddings_matrix {'embedder': 'rep', 'combiner_method': 'none'}
+pipeline_pca {'n_components': -1}
+pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'centroid'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/globins/globins.dnd'}
+
+Score: 0.23383266350018267
+pipeline_build_embeddings_matrix {'embedder': 'rep', 'combiner_method': 'none'}
+pipeline_pca {'n_components': -1}
+pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'median'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/globins/globins.dnd'}
+
+Score: 0.23383266350018267
+pipeline_build_embeddings_matrix {'embedder': 'rep', 'combiner_method': 'none'}
+pipeline_pca {'n_components': 3}
+pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'ward'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/globins/globins.dnd'}
+
+Score: 0.23383266350018267
+pipeline_build_embeddings_matrix {'embedder': 'rep', 'combiner_method': 'none'}
+pipeline_pca {'n_components': 3}
+pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'average'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/globins/globins.dnd'}
+
+Score: 0.23383266350018267
+pipeline_build_embeddings_matrix {'embedder': 'rep', 'combiner_method': 'none'}
+pipeline_pca {'n_components': 3}
+pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'single'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/globins/globins.dnd'}
+
+Score: 0.2273109243697479
+pipeline_build_embeddings_matrix {'embedder': 'rep', 'combiner_method': 'none'}
+pipeline_pca {'n_components': 3}
+pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'single'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/globins/globins.dnd'}
+
+Score: 0.22389625650495215
+pipeline_build_embeddings_matrix {'embedder': 'rep', 'combiner_method': 'none'}
+pipeline_pca {'n_components': 3}
+pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'centroid'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/globins/globins.dnd'}
+
+Score: 0.22389625650495215
+pipeline_build_embeddings_matrix {'embedder': 'rep', 'combiner_method': 'none'}
+pipeline_pca {'n_components': 3}
+pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'median'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/globins/globins.dnd'}
+
+Score: 0.07279693486590039
+pipeline_build_embeddings_matrix {'embedder': 'dnabert', 'combiner_method': 'cut'}
+pipeline_pca {'n_components': -1}
+pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'centroid'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/globins/globins.dnd'}
+
+Score: 0.07279693486590039
+pipeline_build_embeddings_matrix {'embedder': 'dnabert', 'combiner_method': 'cut'}
+pipeline_pca {'n_components': -1}
+pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'median'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/globins/globins.dnd'}
+
+Score: 0.03746498599439776
+pipeline_build_embeddings_matrix {'embedder': 'dnabert', 'combiner_method': 'cut'}
+pipeline_pca {'n_components': -1}
+pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'complete'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/globins/globins.dnd'}
+
+Score: 0.03746498599439776
+pipeline_build_embeddings_matrix {'embedder': 'dnabert', 'combiner_method': 'cut'}
+pipeline_pca {'n_components': 3}
+pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'average'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/globins/globins.dnd'}
+
+Score: 0.03746498599439776
+pipeline_build_embeddings_matrix {'embedder': 'dnabert', 'combiner_method': 'cut'}
+pipeline_pca {'n_components': 3}
+pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'median'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/globins/globins.dnd'}
+
+Score: 0.009453781512605036
+pipeline_build_embeddings_matrix {'embedder': 'dnabert', 'combiner_method': 'average'}
+pipeline_pca {'n_components': -1}
+pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'complete'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/globins/globins.dnd'}
+
+Score: 0.009453781512605036
+pipeline_build_embeddings_matrix {'embedder': 'dnabert', 'combiner_method': 'average'}
+pipeline_pca {'n_components': -1}
+pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'ward'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/globins/globins.dnd'}
+
+Score: -0.006013274875167458
+pipeline_build_embeddings_matrix {'embedder': 'dnabert', 'combiner_method': 'cut'}
+pipeline_pca {'n_components': -1}
+pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'ward'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/globins/globins.dnd'}
+
+Score: -0.006013274875167458
+pipeline_build_embeddings_matrix {'embedder': 'dnabert', 'combiner_method': 'cut'}
+pipeline_pca {'n_components': -1}
+pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'average'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/globins/globins.dnd'}
+
+Score: -0.006013274875167458
+pipeline_build_embeddings_matrix {'embedder': 'dnabert', 'combiner_method': 'cut'}
+pipeline_pca {'n_components': -1}
+pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'ward'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/globins/globins.dnd'}
+
+Score: -0.006013274875167458
+pipeline_build_embeddings_matrix {'embedder': 'dnabert', 'combiner_method': 'cut'}
+pipeline_pca {'n_components': 3}
+pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'ward'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/globins/globins.dnd'}
+
+Score: -0.006013274875167458
+pipeline_build_embeddings_matrix {'embedder': 'dnabert', 'combiner_method': 'cut'}
+pipeline_pca {'n_components': 3}
+pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'ward'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/globins/globins.dnd'}
+
+Score: -0.006013274875167458
+pipeline_build_embeddings_matrix {'embedder': 'dnabert', 'combiner_method': 'cut'}
+pipeline_pca {'n_components': 3}
+pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'centroid'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/globins/globins.dnd'}
+
+Score: -0.024801587301587304
+pipeline_build_embeddings_matrix {'embedder': 'dnabert', 'combiner_method': 'average'}
+pipeline_pca {'n_components': -1}
+pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'centroid'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/globins/globins.dnd'}
+
+Score: -0.03869047619047619
+pipeline_build_embeddings_matrix {'embedder': 'dnabert', 'combiner_method': 'average'}
+pipeline_pca {'n_components': 3}
+pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'centroid'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/globins/globins.dnd'}
+
+Score: -0.04054621848739496
+pipeline_build_embeddings_matrix {'embedder': 'dnabert', 'combiner_method': 'average'}
+pipeline_pca {'n_components': -1}
+pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'complete'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/globins/globins.dnd'}
+
+Score: -0.04054621848739496
+pipeline_build_embeddings_matrix {'embedder': 'dnabert', 'combiner_method': 'average'}
+pipeline_pca {'n_components': -1}
+pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'ward'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/globins/globins.dnd'}
+
+Score: -0.06547619047619047
+pipeline_build_embeddings_matrix {'embedder': 'dnabert', 'combiner_method': 'cut'}
+pipeline_pca {'n_components': -1}
+pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'centroid'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/globins/globins.dnd'}
+
+Score: -0.06547619047619047
+pipeline_build_embeddings_matrix {'embedder': 'dnabert', 'combiner_method': 'cut'}
+pipeline_pca {'n_components': -1}
+pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'median'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/globins/globins.dnd'}
+
+Score: -0.07480158730158731
+pipeline_build_embeddings_matrix {'embedder': 'dnabert', 'combiner_method': 'average'}
+pipeline_pca {'n_components': -1}
+pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'centroid'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/globins/globins.dnd'}
+
+Score: -0.07480158730158731
+pipeline_build_embeddings_matrix {'embedder': 'dnabert', 'combiner_method': 'average'}
+pipeline_pca {'n_components': -1}
+pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'median'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/globins/globins.dnd'}
+
+Score: -0.08035714285714285
+pipeline_build_embeddings_matrix {'embedder': 'dnabert', 'combiner_method': 'average'}
+pipeline_pca {'n_components': 3}
+pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'median'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/globins/globins.dnd'}
+
+Score: -0.109593837535014
+pipeline_build_embeddings_matrix {'embedder': 'dnabert', 'combiner_method': 'cut'}
+pipeline_pca {'n_components': 3}
+pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'complete'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/globins/globins.dnd'}
+
+Score: -0.12447478991596639
+pipeline_build_embeddings_matrix {'embedder': 'dnabert', 'combiner_method': 'average'}
+pipeline_pca {'n_components': -1}
+pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'average'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/globins/globins.dnd'}
+
+Score: -0.12447478991596639
+pipeline_build_embeddings_matrix {'embedder': 'dnabert', 'combiner_method': 'average'}
+pipeline_pca {'n_components': 3}
+pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'average'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/globins/globins.dnd'}
+
+Score: -0.12447478991596639
+pipeline_build_embeddings_matrix {'embedder': 'dnabert', 'combiner_method': 'average'}
+pipeline_pca {'n_components': 3}
+pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'complete'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/globins/globins.dnd'}
+
+Score: -0.12447478991596639
+pipeline_build_embeddings_matrix {'embedder': 'dnabert', 'combiner_method': 'average'}
+pipeline_pca {'n_components': 3}
+pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'ward'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/globins/globins.dnd'}
+
+Score: -0.14285714285714285
+pipeline_build_embeddings_matrix {'embedder': 'dnabert', 'combiner_method': 'average'}
+pipeline_pca {'n_components': -1}
+pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'median'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/globins/globins.dnd'}
+
+Score: -0.17447478991596638
+pipeline_build_embeddings_matrix {'embedder': 'dnabert', 'combiner_method': 'average'}
+pipeline_pca {'n_components': -1}
+pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'average'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/globins/globins.dnd'}
+
+Score: -0.17447478991596638
+pipeline_build_embeddings_matrix {'embedder': 'dnabert', 'combiner_method': 'average'}
+pipeline_pca {'n_components': -1}
+pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'single'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/globins/globins.dnd'}
+
+Score: -0.17447478991596638
+pipeline_build_embeddings_matrix {'embedder': 'dnabert', 'combiner_method': 'average'}
+pipeline_pca {'n_components': 3}
+pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'complete'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/globins/globins.dnd'}
+
+Score: -0.17447478991596638
+pipeline_build_embeddings_matrix {'embedder': 'dnabert', 'combiner_method': 'average'}
+pipeline_pca {'n_components': 3}
+pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'ward'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/globins/globins.dnd'}
+
+Score: -0.19285714285714284
+pipeline_build_embeddings_matrix {'embedder': 'dnabert', 'combiner_method': 'average'}
+pipeline_pca {'n_components': 3}
+pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'median'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/globins/globins.dnd'}
+
+Score: -0.22757936507936508
+pipeline_build_embeddings_matrix {'embedder': 'dnabert', 'combiner_method': 'average'}
+pipeline_pca {'n_components': -1}
+pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'single'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/globins/globins.dnd'}
+
+Score: -0.22757936507936508
+pipeline_build_embeddings_matrix {'embedder': 'dnabert', 'combiner_method': 'average'}
+pipeline_pca {'n_components': 3}
+pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'average'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/globins/globins.dnd'}
+
+Score: -0.22757936507936508
+pipeline_build_embeddings_matrix {'embedder': 'dnabert', 'combiner_method': 'average'}
+pipeline_pca {'n_components': 3}
+pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'centroid'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/globins/globins.dnd'}
+
+Score: -0.22757936507936508
+pipeline_build_embeddings_matrix {'embedder': 'dnabert', 'combiner_method': 'average'}
+pipeline_pca {'n_components': 3}
+pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'single'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/globins/globins.dnd'}
+
+Score: -0.22757936507936508
+pipeline_build_embeddings_matrix {'embedder': 'dnabert', 'combiner_method': 'average'}
+pipeline_pca {'n_components': 3}
+pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'single'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/globins/globins.dnd'}
+

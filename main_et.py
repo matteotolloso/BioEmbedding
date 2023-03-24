@@ -7,6 +7,7 @@ from scipy.cluster.hierarchy import linkage
 from scipy.spatial.distance import pdist
 from scipy.cluster.hierarchy import cut_tree
 from sklearn.metrics import adjusted_rand_score
+import numpy as np
 
 
 def main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH):
@@ -79,7 +80,7 @@ def main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH):
         function=pipeline_pca,
         list_args=[
         {"n_components": -1},
-        {"n_components": 3},
+        {"n_components": 4},
         ]
     )
 
@@ -139,39 +140,36 @@ def main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH):
         """
         predict_linkage_matrix = previous_stage_output["linkage_matrix"]
         predict_IDs = previous_stage_output["IDs"]
-        gtrue_matrix, gtrue_IDs = utils.newick_to_linkage(ground_true_path)
+        gtrue_linkage_matrix, gtrue_IDs = utils.newick_to_linkage(ground_true_path)
 
         if len(predict_IDs) != len(gtrue_IDs):
-            raise Exception("Predicted IDs and ground true IDs have different lengths")
-        
-        def ars_fixed_clusters(curr_clusters, _predict_linkage_matrix, _gtrue_matrix, _predict_IDs, _gtrue_IDs):
-            """
-            Computes the adjusted rand score for a fixed number of clusters
-            """
-            predict_labels = cut_tree(_predict_linkage_matrix, n_clusters=curr_clusters)
-            gtrue_labels = cut_tree(_gtrue_matrix, n_clusters=curr_clusters)
-            predict_labels= [t[0] for t in predict_labels]
-            gtrue_labels = [t[0] for t in gtrue_labels]
-            predict_zip = [(name, cluster) for name, cluster in zip(_predict_IDs, predict_labels)]
-            gtrue_zip = [(name, cluster) for name, cluster in zip(_gtrue_IDs, gtrue_labels)]
-            predict_zip.sort(key=lambda x: x[0])
-            gtrue_zip.sort(key=lambda x : x[0])
-            predict_labels = [t[1] for t in predict_zip]
-            gtrue_labels = [t[1] for t in gtrue_zip]
-            return adjusted_rand_score(labels_true=gtrue_labels, labels_pred=predict_labels)
-        
+            raise Exception("The number of IDs in the ground true and the predicted clustering is different")
+        if cluster_range[0] < 2:
+            raise Exception("Cluster range must start at least from 2")
+        if not set(predict_IDs) == set(gtrue_IDs):
+            raise Exception("The IDs in the ground true and the predicted clustering are different")
+
         start = cluster_range[0]
         end = cluster_range[1]
         
         if end == -1:
             end = min(len(predict_IDs), len(gtrue_IDs))
         
-        sum = 0
-        for n_clusters in range(start, end):
-            sum+= ars_fixed_clusters(n_clusters, predict_linkage_matrix, gtrue_matrix, predict_IDs, gtrue_IDs)
-        mean = sum / (end - start)
+        predict_labels_matrix= cut_tree(predict_linkage_matrix, n_clusters=range(start, end))
+        gtrue_labels_matrix = cut_tree(gtrue_linkage_matrix, n_clusters=range(start, end))
+
+        # order the matrix rows based on the IDs
+        predict_labels_matrix = predict_labels_matrix[np.argsort(predict_IDs)]
+        gtrue_labels_matrix = gtrue_labels_matrix[np.argsort(gtrue_IDs)]
+
+        # for each iteration, extract the relative column and compute the adjusted rand score
+        adjusted_rand_scores = []
+        for i in range(predict_labels_matrix.shape[1]):
+            adjusted_rand_scores.append(adjusted_rand_score(predict_labels_matrix[:,i], gtrue_labels_matrix[:,i]))
         
-        return {"mean_adjusted_rand_score" : mean}
+        return {"mean_adjusted_rand_score" : np.mean(adjusted_rand_scores)}
+        
+
 
     et.add_stage(
         function=pipeline_mean_adjusted_rand_score,
@@ -198,8 +196,12 @@ if __name__ == "__main__":
     
     r = et.get_results()
     r.sort(key=lambda x : x[0]["mean_adjusted_rand_score"], reverse=True)
+    
     # save the list to a file
-    with open('results.txt', 'w') as f:
+    # get only the final name of the file
+    file_name = EMBEDDINGS_PATH.split("/")[-1].split(".")[0]
+    
+    with open(f"results_{file_name}.txt", 'w') as f:
         for result, pipeline in r:
             f.write(f"Score: {result['mean_adjusted_rand_score']}\n")
             for stage in pipeline:

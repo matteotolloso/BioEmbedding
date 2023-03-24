@@ -1,4 +1,4 @@
-Score: 0.320638349709536
+Score: 0.3206383497095359
 pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'max'}
 pipeline_pca {'n_components': -1}
 pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'median'}
@@ -10,52 +10,52 @@ pipeline_pca {'n_components': -1}
 pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'centroid'}
 pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
 
-Score: 0.2887389839472036
+Score: 0.28873898394720343
 pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'sum'}
 pipeline_pca {'n_components': -1}
 pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'centroid'}
 pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
 
-Score: 0.2796846274295052
+Score: 0.27968462742950523
 pipeline_build_embeddings_matrix {'embedder': 'rep', 'combiner_method': 'none'}
 pipeline_pca {'n_components': -1}
 pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'centroid'}
 pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
 
-Score: 0.2744670946810345
+Score: 0.2744670946810344
 pipeline_build_embeddings_matrix {'embedder': 'rep', 'combiner_method': 'none'}
 pipeline_pca {'n_components': -1}
 pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'single'}
 pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
 
-Score: 0.2662415363765955
+Score: 0.2662415363765954
 pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'max'}
 pipeline_pca {'n_components': -1}
 pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'median'}
 pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
 
-Score: 0.2618370260606589
+Score: 0.26183702606065884
 pipeline_build_embeddings_matrix {'embedder': 'rep', 'combiner_method': 'none'}
 pipeline_pca {'n_components': -1}
 pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'median'}
 pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
 
-Score: 0.23923483651203867
+Score: 0.24540921739324217
+pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'sum'}
+pipeline_pca {'n_components': 4}
+pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'median'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
+
+Score: 0.2392348365120387
 pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'max'}
 pipeline_pca {'n_components': -1}
 pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'centroid'}
 pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
 
-Score: 0.23733446700488436
+Score: 0.23733446700488425
 pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'average'}
 pipeline_pca {'n_components': -1}
 pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'centroid'}
-pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
-
-Score: 0.23503763297075536
-pipeline_build_embeddings_matrix {'embedder': 'dnabert', 'combiner_method': 'cut'}
-pipeline_pca {'n_components': 3}
-pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'centroid'}
 pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
 
 Score: 0.2281876398708279
@@ -64,37 +64,37 @@ pipeline_pca {'n_components': -1}
 pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'ward'}
 pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
 
-Score: 0.22731338511634155
-pipeline_build_embeddings_matrix {'embedder': 'dnabert', 'combiner_method': 'cut'}
-pipeline_pca {'n_components': 3}
-pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'median'}
-pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
-
-Score: 0.22699428163134716
+Score: 0.22699428163134713
 pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'average'}
 pipeline_pca {'n_components': -1}
 pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'median'}
 pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
 
-Score: 0.22390061320445467
+Score: 0.225715385793109
+pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'max'}
+pipeline_pca {'n_components': 4}
+pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'centroid'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
+
+Score: 0.22390061320445465
 pipeline_build_embeddings_matrix {'embedder': 'dnabert', 'combiner_method': 'cut'}
 pipeline_pca {'n_components': -1}
 pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'median'}
 pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
 
-Score: 0.22171747448498377
-pipeline_build_embeddings_matrix {'embedder': 'dnabert', 'combiner_method': 'cut'}
-pipeline_pca {'n_components': 3}
-pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'single'}
-pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
-
-Score: 0.21874737452185766
+Score: 0.21874737452185772
 pipeline_build_embeddings_matrix {'embedder': 'dnabert', 'combiner_method': 'cut'}
 pipeline_pca {'n_components': -1}
 pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'complete'}
 pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
 
-Score: 0.21694382734798776
+Score: 0.2176208775951105
+pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'average'}
+pipeline_pca {'n_components': 4}
+pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'median'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
+
+Score: 0.21694382734798778
 pipeline_build_embeddings_matrix {'embedder': 'dnabert', 'combiner_method': 'cut'}
 pipeline_pca {'n_components': -1}
 pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'average'}
@@ -106,31 +106,19 @@ pipeline_pca {'n_components': -1}
 pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'complete'}
 pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
 
-Score: 0.21403131189793675
+Score: 0.2140663076232679
+pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'max'}
+pipeline_pca {'n_components': 4}
+pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'median'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
+
+Score: 0.21403131189793678
 pipeline_build_embeddings_matrix {'embedder': 'dnabert', 'combiner_method': 'cut'}
 pipeline_pca {'n_components': -1}
 pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'median'}
 pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
 
-Score: 0.2130106075563251
-pipeline_build_embeddings_matrix {'embedder': 'dnabert', 'combiner_method': 'cut'}
-pipeline_pca {'n_components': 3}
-pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'centroid'}
-pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
-
-Score: 0.21247493241695317
-pipeline_build_embeddings_matrix {'embedder': 'dnabert', 'combiner_method': 'cut'}
-pipeline_pca {'n_components': 3}
-pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'single'}
-pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
-
-Score: 0.21243763308270974
-pipeline_build_embeddings_matrix {'embedder': 'dnabert', 'combiner_method': 'cut'}
-pipeline_pca {'n_components': 3}
-pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'ward'}
-pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
-
-Score: 0.21115992484113527
+Score: 0.21115992484113522
 pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'sum'}
 pipeline_pca {'n_components': -1}
 pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'median'}
@@ -148,73 +136,67 @@ pipeline_pca {'n_components': -1}
 pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'single'}
 pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
 
-Score: 0.20879640275425948
-pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'sum'}
-pipeline_pca {'n_components': 3}
-pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'median'}
-pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
-
 Score: 0.20830172261832064
 pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'max'}
 pipeline_pca {'n_components': -1}
 pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'single'}
 pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
 
-Score: 0.2082354631184048
-pipeline_build_embeddings_matrix {'embedder': 'dnabert', 'combiner_method': 'cut'}
-pipeline_pca {'n_components': 3}
-pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'average'}
-pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
-
-Score: 0.20790039182756176
+Score: 0.2079003918275617
 pipeline_build_embeddings_matrix {'embedder': 'dnabert', 'combiner_method': 'cut'}
 pipeline_pca {'n_components': -1}
 pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'centroid'}
 pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
 
-Score: 0.20768013911098634
+Score: 0.20768013911098637
 pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'max'}
 pipeline_pca {'n_components': -1}
 pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'average'}
 pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
 
-Score: 0.20754828662978436
-pipeline_build_embeddings_matrix {'embedder': 'dnabert', 'combiner_method': 'cut'}
-pipeline_pca {'n_components': 3}
-pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'complete'}
+Score: 0.2071877165531268
+pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'sum'}
+pipeline_pca {'n_components': 4}
+pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'centroid'}
 pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
 
-Score: 0.20676149346696338
-pipeline_build_embeddings_matrix {'embedder': 'dnabert', 'combiner_method': 'cut'}
-pipeline_pca {'n_components': 3}
-pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'median'}
+Score: 0.20261897888308003
+pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'sum'}
+pipeline_pca {'n_components': 4}
+pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'single'}
 pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
 
-Score: 0.20538231451282435
-pipeline_build_embeddings_matrix {'embedder': 'dnabert', 'combiner_method': 'cut'}
-pipeline_pca {'n_components': 3}
-pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'average'}
-pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
-
-Score: 0.20226641139009094
-pipeline_build_embeddings_matrix {'embedder': 'dnabert', 'combiner_method': 'cut'}
-pipeline_pca {'n_components': 3}
-pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'complete'}
-pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
-
-Score: 0.20116040707592917
+Score: 0.20116040707592908
 pipeline_build_embeddings_matrix {'embedder': 'rep', 'combiner_method': 'none'}
 pipeline_pca {'n_components': -1}
 pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'median'}
 pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
 
-Score: 0.19939936502230224
+Score: 0.20033197057652213
+pipeline_build_embeddings_matrix {'embedder': 'dnabert', 'combiner_method': 'cut'}
+pipeline_pca {'n_components': 4}
+pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'median'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
+
+Score: 0.1993993650223023
 pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'sum'}
 pipeline_pca {'n_components': -1}
 pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'single'}
 pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
 
-Score: 0.1958785931437499
+Score: 0.19843852760291963
+pipeline_build_embeddings_matrix {'embedder': 'dnabert', 'combiner_method': 'cut'}
+pipeline_pca {'n_components': 4}
+pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'single'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
+
+Score: 0.19650385655841876
+pipeline_build_embeddings_matrix {'embedder': 'dnabert', 'combiner_method': 'cut'}
+pipeline_pca {'n_components': 4}
+pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'single'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
+
+Score: 0.19587859314374984
 pipeline_build_embeddings_matrix {'embedder': 'dnabert', 'combiner_method': 'cut'}
 pipeline_pca {'n_components': -1}
 pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'ward'}
@@ -226,7 +208,7 @@ pipeline_pca {'n_components': -1}
 pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'average'}
 pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
 
-Score: 0.19453614518236556
+Score: 0.1945361451823656
 pipeline_build_embeddings_matrix {'embedder': 'dnabert', 'combiner_method': 'cut'}
 pipeline_pca {'n_components': -1}
 pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'single'}
@@ -238,10 +220,10 @@ pipeline_pca {'n_components': -1}
 pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'average'}
 pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
 
-Score: 0.19319670040668233
-pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'max'}
-pipeline_pca {'n_components': 3}
-pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'median'}
+Score: 0.19380599223451067
+pipeline_build_embeddings_matrix {'embedder': 'dnabert', 'combiner_method': 'cut'}
+pipeline_pca {'n_components': 4}
+pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'median'}
 pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
 
 Score: 0.19252199788291835
@@ -256,22 +238,64 @@ pipeline_pca {'n_components': -1}
 pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'single'}
 pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
 
-Score: 0.1849955461379642
-pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'sum'}
-pipeline_pca {'n_components': 3}
-pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'centroid'}
-pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
-
-Score: 0.1847355297272949
+Score: 0.19051815011187842
 pipeline_build_embeddings_matrix {'embedder': 'dnabert', 'combiner_method': 'cut'}
-pipeline_pca {'n_components': 3}
-pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'ward'}
+pipeline_pca {'n_components': 4}
+pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'centroid'}
 pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
 
-Score: 0.18145679343555912
+Score: 0.18561969750433524
+pipeline_build_embeddings_matrix {'embedder': 'dnabert', 'combiner_method': 'cut'}
+pipeline_pca {'n_components': 4}
+pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'centroid'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
+
+Score: 0.18547513410687774
 pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'average'}
-pipeline_pca {'n_components': 3}
+pipeline_pca {'n_components': 4}
 pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'centroid'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
+
+Score: 0.18535661409820844
+pipeline_build_embeddings_matrix {'embedder': 'dnabert', 'combiner_method': 'cut'}
+pipeline_pca {'n_components': 4}
+pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'average'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
+
+Score: 0.18356609262770984
+pipeline_build_embeddings_matrix {'embedder': 'dnabert', 'combiner_method': 'cut'}
+pipeline_pca {'n_components': 4}
+pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'complete'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
+
+Score: 0.18119304700008335
+pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'sum'}
+pipeline_pca {'n_components': 4}
+pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'average'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
+
+Score: 0.18081265072856287
+pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'sum'}
+pipeline_pca {'n_components': 4}
+pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'single'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
+
+Score: 0.18037382195642043
+pipeline_build_embeddings_matrix {'embedder': 'dnabert', 'combiner_method': 'cut'}
+pipeline_pca {'n_components': 4}
+pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'average'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
+
+Score: 0.18010942638232677
+pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'max'}
+pipeline_pca {'n_components': 4}
+pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'single'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
+
+Score: 0.17896338632560518
+pipeline_build_embeddings_matrix {'embedder': 'dnabert', 'combiner_method': 'cut'}
+pipeline_pca {'n_components': 4}
+pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'complete'}
 pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
 
 Score: 0.17830170487214883
@@ -280,76 +304,46 @@ pipeline_pca {'n_components': -1}
 pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'median'}
 pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
 
-Score: 0.1773835937696209
-pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'max'}
-pipeline_pca {'n_components': 3}
-pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'centroid'}
+Score: 0.1782567530279181
+pipeline_build_embeddings_matrix {'embedder': 'dnabert', 'combiner_method': 'cut'}
+pipeline_pca {'n_components': 4}
+pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'ward'}
 pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
 
-Score: 0.17620556479784014
+Score: 0.1762055647978401
 pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'average'}
 pipeline_pca {'n_components': -1}
 pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'complete'}
 pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
 
-Score: 0.17475486062968895
+Score: 0.1751500781209002
+pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'max'}
+pipeline_pca {'n_components': 4}
+pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'average'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
+
+Score: 0.17475486062968898
 pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'max'}
 pipeline_pca {'n_components': -1}
 pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'ward'}
 pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
 
-Score: 0.17394410206377253
+Score: 0.17394410206377248
 pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'average'}
 pipeline_pca {'n_components': -1}
 pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'single'}
 pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
 
-Score: 0.17330476065939324
+Score: 0.17330476065939318
 pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'sum'}
 pipeline_pca {'n_components': -1}
 pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'complete'}
 pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
 
-Score: 0.17277275973170952
-pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'max'}
-pipeline_pca {'n_components': 3}
-pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'single'}
-pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
-
-Score: 0.17157722242335346
-pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'sum'}
-pipeline_pca {'n_components': 3}
-pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'single'}
-pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
-
-Score: 0.16925928086622402
-pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'average'}
-pipeline_pca {'n_components': 3}
-pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'median'}
-pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
-
-Score: 0.16894475208545298
-pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'max'}
-pipeline_pca {'n_components': 3}
-pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'median'}
-pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
-
-Score: 0.16833421445405614
-pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'max'}
-pipeline_pca {'n_components': 3}
-pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'single'}
-pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
-
-Score: 0.166270539536024
+Score: 0.16627053953602403
 pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'max'}
 pipeline_pca {'n_components': -1}
 pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'single'}
-pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
-
-Score: 0.1661899823009683
-pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'sum'}
-pipeline_pca {'n_components': 3}
-pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'average'}
 pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
 
 Score: 0.1661466180672061
@@ -358,25 +352,19 @@ pipeline_pca {'n_components': -1}
 pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'ward'}
 pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
 
-Score: 0.16514316188563602
-pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'max'}
-pipeline_pca {'n_components': 3}
-pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'average'}
-pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
-
-Score: 0.1639086709751806
-pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'sum'}
-pipeline_pca {'n_components': 3}
+Score: 0.16389102230000674
+pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'average'}
+pipeline_pca {'n_components': 4}
 pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'complete'}
 pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
 
-Score: 0.16363076342113378
+Score: 0.16363076342113372
 pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'max'}
 pipeline_pca {'n_components': -1}
 pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'complete'}
 pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
 
-Score: 0.16276650529312225
+Score: 0.16276650529312228
 pipeline_build_embeddings_matrix {'embedder': 'dnabert', 'combiner_method': 'cut'}
 pipeline_pca {'n_components': -1}
 pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'centroid'}
@@ -388,16 +376,40 @@ pipeline_pca {'n_components': -1}
 pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'centroid'}
 pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
 
-Score: 0.15902013182122998
+Score: 0.1599851015634252
+pipeline_build_embeddings_matrix {'embedder': 'dnabert', 'combiner_method': 'cut'}
+pipeline_pca {'n_components': 4}
+pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'ward'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
+
+Score: 0.15989296931910132
 pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'average'}
-pipeline_pca {'n_components': 3}
+pipeline_pca {'n_components': 4}
+pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'single'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
+
+Score: 0.15980850146118347
+pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'max'}
+pipeline_pca {'n_components': 4}
+pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'centroid'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
+
+Score: 0.15899784309392012
+pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'average'}
+pipeline_pca {'n_components': 4}
 pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'average'}
 pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
 
-Score: 0.15876957937291264
+Score: 0.1587695793729126
 pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'sum'}
 pipeline_pca {'n_components': -1}
 pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'ward'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
+
+Score: 0.15618503909158182
+pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'max'}
+pipeline_pca {'n_components': 4}
+pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'complete'}
 pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
 
 Score: 0.15557854535725502
@@ -412,10 +424,34 @@ pipeline_pca {'n_components': -1}
 pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'single'}
 pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
 
+Score: 0.15440533074238846
+pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'max'}
+pipeline_pca {'n_components': 4}
+pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'ward'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
+
+Score: 0.1513828643555323
+pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'max'}
+pipeline_pca {'n_components': 4}
+pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'average'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
+
+Score: 0.1499511963706957
+pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'average'}
+pipeline_pca {'n_components': 4}
+pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'single'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
+
 Score: 0.1499002355149389
 pipeline_build_embeddings_matrix {'embedder': 'rep', 'combiner_method': 'none'}
 pipeline_pca {'n_components': -1}
 pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'average'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
+
+Score: 0.14978267827824693
+pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'max'}
+pipeline_pca {'n_components': 4}
+pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'single'}
 pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
 
 Score: 0.1492568355395092
@@ -424,22 +460,22 @@ pipeline_pca {'n_components': -1}
 pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'centroid'}
 pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
 
-Score: 0.1482903249504233
+Score: 0.14745383465076692
 pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'sum'}
-pipeline_pca {'n_components': 3}
+pipeline_pca {'n_components': 4}
+pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'complete'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
+
+Score: 0.14607928294994796
+pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'average'}
+pipeline_pca {'n_components': 4}
 pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'ward'}
 pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
 
-Score: 0.1480360365272945
-pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'max'}
-pipeline_pca {'n_components': 3}
-pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'complete'}
-pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
-
-Score: 0.1468422854293495
-pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'average'}
-pipeline_pca {'n_components': 3}
-pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'complete'}
+Score: 0.14576644437807584
+pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'sum'}
+pipeline_pca {'n_components': 4}
+pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'ward'}
 pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
 
 Score: 0.14392167410611947
@@ -460,49 +496,31 @@ pipeline_pca {'n_components': -1}
 pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'average'}
 pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
 
-Score: 0.1419778355302636
+Score: 0.13997417426001746
 pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'average'}
-pipeline_pca {'n_components': 3}
-pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'single'}
+pipeline_pca {'n_components': 4}
+pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'centroid'}
 pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
 
-Score: 0.1388780411603566
+Score: 0.13887804116035657
 pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'average'}
 pipeline_pca {'n_components': -1}
 pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'median'}
 pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
 
-Score: 0.13782869600070843
-pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'max'}
-pipeline_pca {'n_components': 3}
-pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'average'}
+Score: 0.13692774893971651
+pipeline_build_embeddings_matrix {'embedder': 'rep', 'combiner_method': 'none'}
+pipeline_pca {'n_components': 4}
+pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'single'}
 pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
 
-Score: 0.13554100413148895
-pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'max'}
-pipeline_pca {'n_components': 3}
-pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'centroid'}
-pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
-
-Score: 0.13495607446042573
-pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'average'}
-pipeline_pca {'n_components': 3}
-pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'ward'}
-pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
-
-Score: 0.1338521017371932
-pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'max'}
-pipeline_pca {'n_components': 3}
-pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'ward'}
-pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
-
-Score: 0.13092392076722242
+Score: 0.1309239207672224
 pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'average'}
 pipeline_pca {'n_components': -1}
 pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'average'}
 pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
 
-Score: 0.12981310325568257
+Score: 0.12981310325568254
 pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'max'}
 pipeline_pca {'n_components': -1}
 pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'complete'}
@@ -514,34 +532,52 @@ pipeline_pca {'n_components': -1}
 pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'single'}
 pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
 
-Score: 0.12956352486388542
-pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'sum'}
-pipeline_pca {'n_components': 3}
-pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'single'}
-pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
-
-Score: 0.12636528370641648
-pipeline_build_embeddings_matrix {'embedder': 'rep', 'combiner_method': 'none'}
-pipeline_pca {'n_components': 3}
-pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'single'}
-pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
-
-Score: 0.1215982730626674
+Score: 0.1289096446588869
 pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'average'}
-pipeline_pca {'n_components': 3}
-pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'centroid'}
+pipeline_pca {'n_components': 4}
+pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'average'}
 pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
 
-Score: 0.1166479740062239
+Score: 0.12051182598767272
+pipeline_build_embeddings_matrix {'embedder': 'rep', 'combiner_method': 'none'}
+pipeline_pca {'n_components': 4}
+pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'single'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
+
+Score: 0.11776080884326037
+pipeline_build_embeddings_matrix {'embedder': 'rep', 'combiner_method': 'none'}
+pipeline_pca {'n_components': 4}
+pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'median'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
+
+Score: 0.11739620521991988
+pipeline_build_embeddings_matrix {'embedder': 'rep', 'combiner_method': 'none'}
+pipeline_pca {'n_components': 4}
+pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'centroid'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
+
+Score: 0.11664797400622393
 pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'max'}
 pipeline_pca {'n_components': -1}
 pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'ward'}
 pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
 
-Score: 0.11660423667572546
+Score: 0.11660423667572545
 pipeline_build_embeddings_matrix {'embedder': 'rep', 'combiner_method': 'none'}
 pipeline_pca {'n_components': -1}
 pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'complete'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
+
+Score: 0.11506824007808404
+pipeline_build_embeddings_matrix {'embedder': 'rep', 'combiner_method': 'none'}
+pipeline_pca {'n_components': 4}
+pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'average'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
+
+Score: 0.11473522563964257
+pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'average'}
+pipeline_pca {'n_components': 4}
+pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'median'}
 pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
 
 Score: 0.11027536047912037
@@ -550,52 +586,46 @@ pipeline_pca {'n_components': -1}
 pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'ward'}
 pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
 
-Score: 0.10931568972949147
+Score: 0.11019511682882673
+pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'max'}
+pipeline_pca {'n_components': 4}
+pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'median'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
+
+Score: 0.11016820835725767
 pipeline_build_embeddings_matrix {'embedder': 'rep', 'combiner_method': 'none'}
-pipeline_pca {'n_components': 3}
-pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'single'}
+pipeline_pca {'n_components': 4}
+pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'centroid'}
 pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
 
-Score: 0.10929680426916738
-pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'average'}
-pipeline_pca {'n_components': 3}
-pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'single'}
+Score: 0.10947783427023923
+pipeline_build_embeddings_matrix {'embedder': 'rep', 'combiner_method': 'none'}
+pipeline_pca {'n_components': 4}
+pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'average'}
 pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
 
-Score: 0.10889143996700192
+Score: 0.10889143996700193
 pipeline_build_embeddings_matrix {'embedder': 'rep', 'combiner_method': 'none'}
 pipeline_pca {'n_components': -1}
 pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'ward'}
 pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
 
-Score: 0.10868588048479187
-pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'sum'}
-pipeline_pca {'n_components': 3}
-pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'average'}
-pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
-
-Score: 0.10812822517020247
+Score: 0.10668437403819088
 pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'max'}
-pipeline_pca {'n_components': 3}
+pipeline_pca {'n_components': 4}
 pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'ward'}
 pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
 
-Score: 0.10651387605297433
-pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'sum'}
-pipeline_pca {'n_components': 3}
-pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'centroid'}
-pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
-
-Score: 0.10609701849813397
+Score: 0.1046042332771834
 pipeline_build_embeddings_matrix {'embedder': 'rep', 'combiner_method': 'none'}
-pipeline_pca {'n_components': 3}
-pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'median'}
+pipeline_pca {'n_components': 4}
+pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'complete'}
 pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
 
-Score: 0.10424241250216724
-pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'sum'}
-pipeline_pca {'n_components': 3}
-pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'median'}
+Score: 0.10231243294120634
+pipeline_build_embeddings_matrix {'embedder': 'rep', 'combiner_method': 'none'}
+pipeline_pca {'n_components': 4}
+pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'median'}
 pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
 
 Score: 0.10211454676396921
@@ -604,130 +634,100 @@ pipeline_pca {'n_components': -1}
 pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'ward'}
 pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
 
-Score: 0.10058092963322164
-pipeline_build_embeddings_matrix {'embedder': 'rep', 'combiner_method': 'none'}
-pipeline_pca {'n_components': 3}
+Score: 0.10091270874715759
+pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'sum'}
+pipeline_pca {'n_components': 4}
+pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'average'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
+
+Score: 0.09872969990105013
+pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'max'}
+pipeline_pca {'n_components': 4}
+pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'complete'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
+
+Score: 0.09808617474393834
+pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'sum'}
+pipeline_pca {'n_components': 4}
 pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'centroid'}
 pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
 
-Score: 0.0994257520476379
+Score: 0.09207552240957406
 pipeline_build_embeddings_matrix {'embedder': 'rep', 'combiner_method': 'none'}
-pipeline_pca {'n_components': 3}
-pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'centroid'}
+pipeline_pca {'n_components': 4}
+pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'ward'}
 pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
 
-Score: 0.09790926411348823
-pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'average'}
-pipeline_pca {'n_components': 3}
-pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'average'}
-pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
-
-Score: 0.09734501806995556
+Score: 0.09089281294836757
 pipeline_build_embeddings_matrix {'embedder': 'rep', 'combiner_method': 'none'}
-pipeline_pca {'n_components': 3}
-pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'complete'}
-pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
-
-Score: 0.094806873408973
-pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'average'}
-pipeline_pca {'n_components': 3}
-pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'median'}
-pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
-
-Score: 0.09364554262562219
-pipeline_build_embeddings_matrix {'embedder': 'rep', 'combiner_method': 'none'}
-pipeline_pca {'n_components': 3}
-pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'average'}
-pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
-
-Score: 0.09085796218827812
-pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'max'}
-pipeline_pca {'n_components': 3}
-pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'complete'}
-pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
-
-Score: 0.08832299875142374
-pipeline_build_embeddings_matrix {'embedder': 'rep', 'combiner_method': 'none'}
-pipeline_pca {'n_components': 3}
-pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'average'}
-pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
-
-Score: 0.08640090383498386
-pipeline_build_embeddings_matrix {'embedder': 'rep', 'combiner_method': 'none'}
-pipeline_pca {'n_components': 3}
-pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'median'}
-pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
-
-Score: 0.08441583351891938
-pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'sum'}
-pipeline_pca {'n_components': 3}
-pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'complete'}
-pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
-
-Score: 0.08340219163132112
-pipeline_build_embeddings_matrix {'embedder': 'rep', 'combiner_method': 'none'}
-pipeline_pca {'n_components': 3}
+pipeline_pca {'n_components': 4}
 pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'ward'}
 pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
 
-Score: 0.07844645696657086
-pipeline_build_embeddings_matrix {'embedder': 'rep', 'combiner_method': 'none'}
-pipeline_pca {'n_components': 3}
+Score: 0.08826248535997198
+pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'sum'}
+pipeline_pca {'n_components': 4}
+pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'median'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
+
+Score: 0.08083784103367218
+pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'sum'}
+pipeline_pca {'n_components': 4}
 pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'ward'}
 pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
 
-Score: 0.0765479599659411
-pipeline_build_embeddings_matrix {'embedder': 'rep', 'combiner_method': 'none'}
-pipeline_pca {'n_components': 3}
-pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'complete'}
-pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
-
-Score: 0.07185480438620777
+Score: 0.07185480438620778
 pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'sum'}
 pipeline_pca {'n_components': -1}
 pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'complete'}
 pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
 
-Score: 0.06861486737937847
+Score: 0.06996278157975072
 pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'average'}
-pipeline_pca {'n_components': 3}
-pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'complete'}
+pipeline_pca {'n_components': 4}
+pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'ward'}
 pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
 
-Score: 0.06820043770863643
+Score: 0.06820043770863644
 pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'average'}
 pipeline_pca {'n_components': -1}
 pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'complete'}
 pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
 
-Score: 0.0664789495539193
-pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'sum'}
-pipeline_pca {'n_components': 3}
-pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'ward'}
-pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
-
-Score: 0.06618684232368605
-pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'average'}
-pipeline_pca {'n_components': -1}
-pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'ward'}
-pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
-
-Score: 0.06559739984391742
+Score: 0.0666928763357726
 pipeline_build_embeddings_matrix {'embedder': 'dnabert', 'combiner_method': 'average'}
-pipeline_pca {'n_components': 3}
+pipeline_pca {'n_components': 4}
+pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'ward'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
+
+Score: 0.06627539004925942
+pipeline_build_embeddings_matrix {'embedder': 'rep', 'combiner_method': 'none'}
+pipeline_pca {'n_components': 4}
+pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'complete'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
+
+Score: 0.06618684232368603
+pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'average'}
+pipeline_pca {'n_components': -1}
+pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'ward'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
+
+Score: 0.05965009655209018
+pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'sum'}
+pipeline_pca {'n_components': 4}
+pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'complete'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
+
+Score: 0.05524702830236637
+pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'average'}
+pipeline_pca {'n_components': 4}
+pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'complete'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
+
+Score: 0.0521411133354598
+pipeline_build_embeddings_matrix {'embedder': 'dnabert', 'combiner_method': 'average'}
+pipeline_pca {'n_components': 4}
 pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'single'}
-pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
-
-Score: 0.060177453347845515
-pipeline_build_embeddings_matrix {'embedder': 'dnabert', 'combiner_method': 'average'}
-pipeline_pca {'n_components': 3}
-pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'ward'}
-pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
-
-Score: 0.05804832842410175
-pipeline_build_embeddings_matrix {'embedder': 'prose', 'combiner_method': 'average'}
-pipeline_pca {'n_components': 3}
-pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'ward'}
 pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
 
 Score: 0.04810914359369822
@@ -736,103 +736,103 @@ pipeline_pca {'n_components': -1}
 pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'ward'}
 pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
 
-Score: 0.04192950778425566
-pipeline_build_embeddings_matrix {'embedder': 'dnabert', 'combiner_method': 'average'}
-pipeline_pca {'n_components': 3}
-pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'median'}
-pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
-
-Score: 0.03921369680529329
+Score: 0.039213696805293304
 pipeline_build_embeddings_matrix {'embedder': 'dnabert', 'combiner_method': 'average'}
 pipeline_pca {'n_components': -1}
 pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'median'}
 pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
 
-Score: 0.03703586679744398
+Score: 0.0389531854351715
 pipeline_build_embeddings_matrix {'embedder': 'dnabert', 'combiner_method': 'average'}
-pipeline_pca {'n_components': 3}
-pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'average'}
+pipeline_pca {'n_components': 4}
+pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'median'}
 pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
 
-Score: 0.0348718505079616
+Score: 0.036637405238175144
 pipeline_build_embeddings_matrix {'embedder': 'dnabert', 'combiner_method': 'average'}
-pipeline_pca {'n_components': 3}
+pipeline_pca {'n_components': 4}
 pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'single'}
 pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
 
-Score: 0.03176656677232731
+Score: 0.03656400978075657
+pipeline_build_embeddings_matrix {'embedder': 'dnabert', 'combiner_method': 'average'}
+pipeline_pca {'n_components': 4}
+pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'centroid'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
+
+Score: 0.034145101852126325
+pipeline_build_embeddings_matrix {'embedder': 'dnabert', 'combiner_method': 'average'}
+pipeline_pca {'n_components': 4}
+pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'average'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
+
+Score: 0.03176656677232732
 pipeline_build_embeddings_matrix {'embedder': 'dnabert', 'combiner_method': 'average'}
 pipeline_pca {'n_components': -1}
 pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'single'}
 pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
 
-Score: 0.031222049071626904
+Score: 0.02623932553612332
 pipeline_build_embeddings_matrix {'embedder': 'dnabert', 'combiner_method': 'average'}
-pipeline_pca {'n_components': 3}
+pipeline_pca {'n_components': 4}
 pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'complete'}
 pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
 
-Score: 0.02390955114771701
-pipeline_build_embeddings_matrix {'embedder': 'dnabert', 'combiner_method': 'average'}
-pipeline_pca {'n_components': 3}
-pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'average'}
-pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
-
-Score: 0.02390955114771701
-pipeline_build_embeddings_matrix {'embedder': 'dnabert', 'combiner_method': 'average'}
-pipeline_pca {'n_components': 3}
-pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'centroid'}
-pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
-
-Score: 0.022833941363077398
+Score: 0.02283394136307738
 pipeline_build_embeddings_matrix {'embedder': 'dnabert', 'combiner_method': 'average'}
 pipeline_pca {'n_components': -1}
 pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'median'}
 pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
 
-Score: 0.02132883835210716
+Score: 0.021770461557721194
 pipeline_build_embeddings_matrix {'embedder': 'dnabert', 'combiner_method': 'average'}
-pipeline_pca {'n_components': 3}
-pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'centroid'}
+pipeline_pca {'n_components': 4}
+pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'median'}
 pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
 
-Score: 0.018757212034867042
+Score: 0.02021391708067123
+pipeline_build_embeddings_matrix {'embedder': 'dnabert', 'combiner_method': 'average'}
+pipeline_pca {'n_components': 4}
+pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'average'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
+
+Score: 0.019984492071932373
+pipeline_build_embeddings_matrix {'embedder': 'dnabert', 'combiner_method': 'average'}
+pipeline_pca {'n_components': 4}
+pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'centroid'}
+pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
+
+Score: 0.018757212034867046
 pipeline_build_embeddings_matrix {'embedder': 'dnabert', 'combiner_method': 'average'}
 pipeline_pca {'n_components': -1}
 pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'average'}
 pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
 
-Score: 0.01875282153453882
+Score: 0.018752821534538805
 pipeline_build_embeddings_matrix {'embedder': 'dnabert', 'combiner_method': 'average'}
 pipeline_pca {'n_components': -1}
 pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'average'}
 pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
 
-Score: 0.018393787203119925
+Score: 0.01839378720311993
 pipeline_build_embeddings_matrix {'embedder': 'dnabert', 'combiner_method': 'average'}
 pipeline_pca {'n_components': -1}
 pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'centroid'}
 pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
 
-Score: 0.017609040994478287
+Score: 0.017609040994478277
 pipeline_build_embeddings_matrix {'embedder': 'dnabert', 'combiner_method': 'average'}
 pipeline_pca {'n_components': -1}
 pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'centroid'}
 pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
 
-Score: 0.014508755505676716
-pipeline_build_embeddings_matrix {'embedder': 'dnabert', 'combiner_method': 'average'}
-pipeline_pca {'n_components': 3}
-pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'ward'}
-pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
-
-Score: 0.013324581298147014
+Score: 0.013324581298146992
 pipeline_build_embeddings_matrix {'embedder': 'dnabert', 'combiner_method': 'average'}
 pipeline_pca {'n_components': -1}
 pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'single'}
 pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
 
-Score: 0.013166012482037312
+Score: 0.013166012482037305
 pipeline_build_embeddings_matrix {'embedder': 'dnabert', 'combiner_method': 'average'}
 pipeline_pca {'n_components': -1}
 pipeline_build_linkage_matrix {'metric': 'euclidean', 'method': 'complete'}
@@ -844,19 +844,19 @@ pipeline_pca {'n_components': -1}
 pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'complete'}
 pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
 
-Score: -0.007642392075256938
+Score: 0.00047824625756438447
 pipeline_build_embeddings_matrix {'embedder': 'dnabert', 'combiner_method': 'average'}
-pipeline_pca {'n_components': 3}
+pipeline_pca {'n_components': 4}
 pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'complete'}
 pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
 
-Score: -0.00953944053202913
+Score: -0.014130283483926491
 pipeline_build_embeddings_matrix {'embedder': 'dnabert', 'combiner_method': 'average'}
-pipeline_pca {'n_components': 3}
-pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'median'}
+pipeline_pca {'n_components': 4}
+pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'ward'}
 pipeline_mean_adjusted_rand_score {'cluster_range': (2, -1), 'ground_true_path': './dataset/NEIS2157/NEIS2157.dnd'}
 
-Score: -0.017145193324616656
+Score: -0.017145193324616653
 pipeline_build_embeddings_matrix {'embedder': 'dnabert', 'combiner_method': 'average'}
 pipeline_pca {'n_components': -1}
 pipeline_build_linkage_matrix {'metric': 'cosine', 'method': 'ward'}
