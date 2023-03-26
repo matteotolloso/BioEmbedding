@@ -1,4 +1,6 @@
 import numpy as np
+from sklearn.decomposition import PCA
+from sklearn.preprocessing import StandardScaler
 
 def combiner_for_prose(raw_embedding : np.array , method: str)-> np.array :
     """
@@ -12,6 +14,13 @@ def combiner_for_prose(raw_embedding : np.array , method: str)-> np.array :
         return np.max(raw_embedding, axis=0) 
     elif method == "sum":
         return np.sum(raw_embedding, axis=0)
+    elif method == "pca":
+        # transpose the vector to consider the columns as main elements, preform scaling and pca
+        raw_embedding = np.transpose(raw_embedding)
+        raw_embedding = StandardScaler().fit_transform(raw_embedding)
+        pca = PCA(n_components=1)
+        return pca.fit_transform(raw_embedding).reshape(-1)
+        
     else:
         raise Exception(f"Unknown combining method: {method} for prose")
     
@@ -26,8 +35,19 @@ def combiner_for_dnabert(raw_embedding: np.array, method: str) -> np.array:
 
     if method == "average":
         return np.mean(raw_embedding, axis=0)  # mean between the embeddings of the subsequences
-    elif method == "cut":
-        return raw_embedding[0]
+    elif method == "max":
+        return np.max(raw_embedding, axis=0) 
+    elif method == "sum":
+        return np.sum(raw_embedding, axis=0)
+    elif method == "pca":
+        # transpose the vector to consider the columns as main elements, preform scaling and pca
+        raw_embedding = np.transpose(raw_embedding)
+        raw_embedding = StandardScaler().fit_transform(raw_embedding)
+        pca = PCA(n_components=1)
+        return pca.fit_transform(raw_embedding).reshape(-1)
+        
+        
+    
     else:
         raise Exception(f"Unknown combining method: {method} for dnabert")
     

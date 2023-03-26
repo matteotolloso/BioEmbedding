@@ -60,7 +60,7 @@ class ExecutionTree:
         args_path = []
         current_node = node
         while current_node.parent != None:
-            args_path.append(str(current_node.function.__name__) + " " + str(current_node.param))
+            args_path.append((str(current_node.function.__name__), current_node.param))
             current_node = current_node.parent
 
         args_path.reverse()

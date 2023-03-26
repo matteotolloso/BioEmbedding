@@ -43,11 +43,17 @@ def main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH):
         function=pipeline_build_embeddings_matrix,
         list_args=[
         {"embedder" : "rep", "combiner_method" : "none" },
+        
+        {"embedder" : "dnabert", "combiner_method" : "pca" },
         {"embedder" : "dnabert", "combiner_method" : "average" },
-        {"embedder" : "dnabert", "combiner_method" : "cut" },
+        {"embedder" : "dnabert", "combiner_method" : "sum" },
+        {"embedder" : "dnabert", "combiner_method" : "max" },
+        
+        {"embedder" : "prose", "combiner_method" : "pca" },
+        {"embedder" : "prose", "combiner_method" : "average" },
         {"embedder" : "prose", "combiner_method" : "sum" },
         {"embedder" : "prose", "combiner_method" : "max" },
-        {"embedder" : "prose", "combiner_method" : "average" },
+        
         ]
     )
 
@@ -61,26 +67,32 @@ def main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH):
 
         Args:
             previous_stage_output (dict): The output of the previous stage, a dict containing the embeddings matrix and the IDs
-            n_components (int): The number of components to keep, if -1, keep all components possible (min(embeddings_matrix.shape))
+            n_components (int): The number of components to keep, if "default", the number of components will be (min(embeddings_matrix.shape)).
+            if "all", the PCA will not be performed
         Returns:
             dict: A dict containing the IDs and the embeddings matrix
         """
 
         embeddings_matrix = previous_stage_output["embeddings_matrix"]
         IDs = previous_stage_output["IDs"]
+
+        if n_components == "all":
+            return { "embeddings_matrix" : embeddings_matrix, "IDs": IDs}
+        
         scaler = StandardScaler()
         embeddings_matrix = scaler.fit_transform(embeddings_matrix)
-        if n_components == -1:
+        if n_components == "default":
             n_components = min(embeddings_matrix.shape)
         pca = PCA(n_components=n_components)
         embeddings_matrix = pca.fit_transform(embeddings_matrix)
+        
         return { "embeddings_matrix" : embeddings_matrix, "IDs": IDs}
 
     et.add_multistage(
         function=pipeline_pca,
         list_args=[
-        {"n_components": -1},
-        {"n_components": 4},
+        {"n_components": "default"},
+        {"n_components": "all"},
         ]
     )
 
@@ -109,18 +121,18 @@ def main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH):
         function=pipeline_build_linkage_matrix,
         list_args=[
         {"metric" : "euclidean", "method" : "average"},
-        {"metric" : "euclidean", "method" : "complete"},
-        {"metric" : "euclidean", "method" : "ward"},
-        {"metric" : "euclidean", "method" : "centroid"},
-        {"metric" : "euclidean", "method" : "single"},
-        {"metric" : "euclidean", "method" : "median"},
-        
-        {"metric" : "cosine", "method" : "average"},
-        {"metric" : "cosine", "method" : "complete"},
-        {"metric" : "cosine", "method" : "ward"},
-        {"metric" : "cosine", "method" : "centroid"},
-        {"metric" : "cosine", "method" : "single"},
-        {"metric" : "cosine", "method" : "median"},
+        #{"metric" : "euclidean", "method" : "complete"},
+        #{"metric" : "euclidean", "method" : "ward"},
+        #{"metric" : "euclidean", "method" : "centroid"},
+        #{"metric" : "euclidean", "method" : "single"},
+        #{"metric" : "euclidean", "method" : "median"},
+        #
+        #{"metric" : "cosine", "method" : "average"},
+        #{"metric" : "cosine", "method" : "complete"},
+        #{"metric" : "cosine", "method" : "ward"},
+        #{"metric" : "cosine", "method" : "centroid"},
+        #{"metric" : "cosine", "method" : "single"},
+        #{"metric" : "cosine", "method" : "median"},
         ]
     )
 
@@ -204,6 +216,32 @@ if __name__ == "__main__":
     with open(f"results_{file_name}.txt", 'w') as f:
         for result, pipeline in r:
             f.write(f"Score: {result['mean_adjusted_rand_score']}\n")
-            for stage in pipeline:
-                f.write(f"{stage}\n")
+            for stage, args in pipeline:
+                f.write(f"{stage} {args}\n")
             f.write("\n")
+
+    
+
+    computations_dict = {} # dict[combiner][pca][embedder] = score
+
+    combiners = ["pca", "average", "sum", "max"]
+    pcas = ["all", "default"]
+    embedders = ["rep", "dnabert", "prose"]
+
+    for combiner in combiners:
+        for pca in pcas:
+            for embedder in embedders:
+                computations_dict[combiner] = {}
+                computations_dict[combiner][pca] = {}
+                computations_dict[combiner][pca][embedder] = None
+    
+    for result, pipeline in r:
+        
+        for stage, args in pipeline:
+           
+            if stage == "embeddings_matrix":
+                embedder = args["embedder"]
+            if stage == "pca":
+                pca = args["n_components"]
+            if stage == "linkage_matrix":
+                combiner = args["method"]
