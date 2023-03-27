@@ -1,3 +1,4 @@
+import pickle
 
 class Node:
 
@@ -73,4 +74,6 @@ class ExecutionTree:
 
         return results
         
-        
+    def dump_results(self, r, path):
+        with open(path+".pkl", 'wb') as f:
+            pickle.dump(r, f)

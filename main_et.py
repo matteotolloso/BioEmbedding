@@ -8,6 +8,7 @@ from scipy.spatial.distance import pdist
 from scipy.cluster.hierarchy import cut_tree
 from sklearn.metrics import adjusted_rand_score
 import numpy as np
+import pickle
 
 
 def main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH):
@@ -42,7 +43,10 @@ def main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH):
     et.add_multistage(
         function=pipeline_build_embeddings_matrix,
         list_args=[
-        {"embedder" : "rep", "combiner_method" : "none" },
+        {"embedder" : "rep", "combiner_method" : "pca" },
+        {"embedder" : "rep", "combiner_method" : "average" },
+        {"embedder" : "rep", "combiner_method" : "sum" },
+        {"embedder" : "rep", "combiner_method" : "max" },
         
         {"embedder" : "dnabert", "combiner_method" : "pca" },
         {"embedder" : "dnabert", "combiner_method" : "average" },
@@ -205,43 +209,15 @@ if __name__ == "__main__":
     et = main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH)
     et.compute()
     
-    
     r = et.get_results()
-    r.sort(key=lambda x : x[0]["mean_adjusted_rand_score"], reverse=True)
-    
-    # save the list to a file
-    # get only the final name of the file
-    file_name = EMBEDDINGS_PATH.split("/")[-1].split(".")[0]
-    
-    with open(f"results_{file_name}.txt", 'w') as f:
-        for result, pipeline in r:
-            f.write(f"Score: {result['mean_adjusted_rand_score']}\n")
-            for stage, args in pipeline:
-                f.write(f"{stage} {args}\n")
-            f.write("\n")
 
+    file_name = "results_" + EMBEDDINGS_PATH.split("/")[-1].split(".")[0]
+
+    et.dump_results(r, file_name)
     
 
-    computations_dict = {} # dict[combiner][pca][embedder] = score
-
-    combiners = ["pca", "average", "sum", "max"]
-    pcas = ["all", "default"]
-    embedders = ["rep", "dnabert", "prose"]
-
-    for combiner in combiners:
-        for pca in pcas:
-            for embedder in embedders:
-                computations_dict[combiner] = {}
-                computations_dict[combiner][pca] = {}
-                computations_dict[combiner][pca][embedder] = None
     
-    for result, pipeline in r:
-        
-        for stage, args in pipeline:
-           
-            if stage == "embeddings_matrix":
-                embedder = args["embedder"]
-            if stage == "pca":
-                pca = args["n_components"]
-            if stage == "linkage_matrix":
-                combiner = args["method"]
+    
+
+    # dump the result with pickle
+    
