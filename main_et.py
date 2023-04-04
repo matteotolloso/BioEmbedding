@@ -8,7 +8,7 @@ from scipy.spatial.distance import pdist
 from scipy.cluster.hierarchy import cut_tree
 from sklearn.metrics import adjusted_rand_score
 import numpy as np
-import pickle
+from results_manager import results2file
 
 
 def main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH):
@@ -199,11 +199,11 @@ def main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH):
 
 if __name__ == "__main__":
     
-    #EMBEDDINGS_PATH = "./dataset/globins/globins.json"
-    #GROUND_TRUE_PATH = "./dataset/globins/globins.dnd"
+    EMBEDDINGS_PATH = "./dataset/globins/globins.json"
+    GROUND_TRUE_PATH = "./dataset/globins/globins.dnd"
 
-    EMBEDDINGS_PATH = "./dataset/NEIS2157/NEIS2157.json"
-    GROUND_TRUE_PATH = "./dataset/NEIS2157/NEIS2157.dnd"
+    #EMBEDDINGS_PATH = "./dataset/NEIS2157/NEIS2157.json"
+    #GROUND_TRUE_PATH = "./dataset/NEIS2157/NEIS2157.dnd"
     
     
     et = main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH)
@@ -211,13 +211,11 @@ if __name__ == "__main__":
     
     r = et.get_results()
 
-    file_name = "results_" + EMBEDDINGS_PATH.split("/")[-1].split(".")[0]
+    file_name = "./results/"+ "results_" + EMBEDDINGS_PATH.split("/")[-1].split(".")[0]
 
     et.dump_results(r, file_name)
-    
+
+    results2file(r, file_name)
 
     
-    
-
-    # dump the result with pickle
     

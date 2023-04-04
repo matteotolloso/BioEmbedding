@@ -51,3 +51,15 @@ def results2table(r):
 
     return df
 
+def results2file(r, filepath):
+    
+    r.sort(key = lambda x: x[0]['mean_adjusted_rand_score'], reverse=True)
+    
+    with open(filepath + ".txt", "w") as f:
+        for result, pipeline in r:
+            f.write(f"Score: {result['mean_adjusted_rand_score']} \n")
+            for name, args in pipeline:
+                f.write(f"{name}  {args} \n")
+            f.write(f"\n")
+ 
+
