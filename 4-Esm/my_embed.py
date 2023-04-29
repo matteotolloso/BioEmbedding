@@ -5,12 +5,15 @@ import json
 
 # ********* SETTINGS **********
 
-FILE_PATH = "../dataset/NEIS2157/NEIS2157.json" # file containing the origina dataset. A key will be added on the dict and the file will be overwrited
+FILE_PATH = "./dataset/NEIS2157/NEIS2157.json" # file containing the origina dataset. A key will be added on the dict and the file will be overwrited
 ANNOTATION_KEY = "esm"   # the key to add
 
 base_url = "https://api.esmatlas.com/fetchEmbedding/ESM2/"
 
 # ******************************
+
+def translate(id):
+    
 
 
 
