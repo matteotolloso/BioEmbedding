@@ -5,7 +5,9 @@ from Bio.Seq import Seq
 
 # ********* SETTINGS **********
 
-FILE_PATH = "../dataset/NEIS2157/NEIS2157.json" # file containing the origina dataset. A key will be added on the dict and the file will be overwrited
+# FILE_PATH = "../dataset/NEIS2157/NEIS2157.json" # file containing the origina dataset. A key will be added on the dict and the file will be overwrited
+# FILE_PATH = "../dataset/globins/globins.json"
+FILE_PATH = "../dataset/enrichment_test/proteins.json"
 ANNOTATION_KEY = "rep"   # the key to add
 
 # ******************************

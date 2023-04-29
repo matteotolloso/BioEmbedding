@@ -7,6 +7,8 @@ import numpy as np
 
 DNABERT_PATH = Path("dnabert")
 FILE_PATH = "../dataset/NEIS2157/NEIS2157.json" # file containing the origina dataset. A key will be added on the dict and the file will be overwrited
+# FILE_PATH = "../dataset/globins/globins.json"
+# FILE_PATH = "../dataset/enrichment_test/proteins.json"
 ANNOTATION_KEY = "dnabert"   # the key to add
 
 # *****************************
@@ -48,7 +50,7 @@ def load_dnabert() -> Tuple[BertModel, BertTokenizerFast]:
     tokenizer (BertTokenizerFast): the tokenizer
     """
     config = BertConfig.from_pretrained("zhihan1996/DNA_bert_6")
-    tokenizer = AutoTokenizer.from_pretrained("zhihan1996/DNA_bert_6")
+    tokenizer = AutoTokenizer.from_pretrained("zhihan1996/DNA_bert_6", trust_remote_code=True)
     model = BertModel.from_pretrained(DNABERT_PATH, config=config)
     return model, tokenizer
 
