@@ -22,7 +22,6 @@ DEVICE = -2
 
 
 
-
 def embed_sequence(model, x, pool='none', use_cuda=False):
     if len(x) == 0:
         n = model.embedding.proj.weight.size(1)
@@ -101,8 +100,10 @@ def main():
     for id in seq_dict.keys():
         seq_string = seq_dict[id]["sequence"]
 
+        seq_string = seq_string.replace(" ", "").replace("\n", "")
+        
         if set(seq_string).issubset(set(["A", "C", "G", "T"])):
-            seq_string = str(Seq(seq_string).translate())
+            seq_string = str(Seq(seq_string).translate(stop_symbol=""))
             print("The nucleotides sequence for ", id, " has been translated")
 
         seq_string = bytes(seq_string, "utf-8")

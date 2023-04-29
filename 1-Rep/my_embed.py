@@ -21,9 +21,11 @@ IDs = seq_dict.keys()
 list_seq_string = [] 
 for id in IDs:
     seq_string = seq_dict[id]["sequence"]
+
+    seq_string = seq_string.replace(" ", "").replace("\n", "")
     
     if set(seq_string).issubset(set(["A", "C", "G", "T"])):
-        seq_string = str(Seq(seq_string).translate())
+        seq_string = str(Seq(seq_string).translate(stop_symbol=""))
         print("The nucleotides sequence for ", id, " has been translated")
     
     list_seq_string.append(seq_string)

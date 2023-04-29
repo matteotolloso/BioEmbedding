@@ -9,6 +9,8 @@ DNABERT_PATH = Path("dnabert")
 FILE_PATH = "../dataset/NEIS2157/NEIS2157.json" # file containing the origina dataset. A key will be added on the dict and the file will be overwrited
 ANNOTATION_KEY = "dnabert"   # the key to add
 
+# *****************************
+
 
 import torch
 from transformers import BertModel, BertConfig, AutoTokenizer, BertTokenizerFast
@@ -65,6 +67,7 @@ def compute_embeddings(device: torch.device) -> None:
         
 
         string = seq_dict[k]["sequence"]
+        string = string.replace(" ", "").replace("\n", "")
         substrings = []
         for i in range(0, len(string), 510):
             substrings.append(string[i:i+510])
