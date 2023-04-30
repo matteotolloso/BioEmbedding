@@ -57,6 +57,11 @@ def main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH):
         {"embedder" : "prose", "combiner_method" : "average" },
         {"embedder" : "prose", "combiner_method" : "sum" },
         {"embedder" : "prose", "combiner_method" : "max" },
+
+        {"embedder" : "alphafold", "combiner_method" : "pca" },
+        {"embedder" : "alphafold", "combiner_method" : "average" },
+        {"embedder" : "alphafold", "combiner_method" : "sum" },
+        {"embedder" : "alphafold", "combiner_method" : "max" },
         
         ]
     )

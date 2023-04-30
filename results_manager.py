@@ -8,7 +8,7 @@ def results2table(r):
 
     combiners = ["pca", "average", "sum", "max"]
     pcas = ["all", "default"]
-    embedders = ["rep", "dnabert", "prose"]
+    embedders = ["rep", "dnabert", "prose", "alphafold"]
 
     # generate the empty dict with the argument that are relevant for the table
     for combiner in combiners:

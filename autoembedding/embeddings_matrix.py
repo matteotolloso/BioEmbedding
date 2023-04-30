@@ -1,6 +1,6 @@
 import numpy as np
 import utils
-from autoembedding.combiners import combiner_for_prose, combiner_for_dnabert, combiner_for_rep
+from autoembedding.combiners import combiner_for_prose, combiner_for_dnabert, combiner_for_rep, combiner_for_alphafold
 
 def build_embeddings_matrix(
         embeddings_dict : dict, 
@@ -41,6 +41,12 @@ def build_embeddings_matrix(
 
         elif embedder == "prose":
             final_embedding = combiner_for_prose(
+                raw_embedding = np.array(embeddings_dict[id][embedder]),  # is a (seq_len)*(100) matrix (each row is the embedding of an amminoacid)
+                method = combiner_method
+            ) 
+        
+        elif embedder == "alphafold":
+            final_embedding = combiner_for_alphafold(
                 raw_embedding = np.array(embeddings_dict[id][embedder]),  # is a (seq_len)*(100) matrix (each row is the embedding of an amminoacid)
                 method = combiner_method
             ) 

@@ -1,10 +1,24 @@
-import requests
-import numpy as np
+from Bio import SeqIO
 
+# specify the path to the UniProtKB text file
+filename = "dataset/enrichment_test/annotations.xml"
 
-url = "https://api.esmatlas.com/fetchEmbedding/ESM2/MGYP000677884904.bin"
-header = {"Accept": "application/octet-stream"}
-response = requests.get(url, headers=header)
-array = np.frombuffer(response.content, dtype=np.float16)
+# open the file and parse the records
+records = list(SeqIO.parse(filename, "uniprot-xml"))
 
-print(array)
+# loop over the records and extract the sequence and annotations
+for record in records:
+    # get the protein sequence
+    sequence = str(record.seq)
+
+    # get the functional annotations
+    annotations = record.annotations
+
+    #print(annotations['recommendedName_fullName'])
+    print(record.dbxrefs)
+
+   # print(annotations.keys())
+
+    # print the sequence and annotations
+    #print(annotations['comment_subcellularlocation_location'])
+    #print(annotations['taxonomy'])
