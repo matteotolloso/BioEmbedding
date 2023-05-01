@@ -216,7 +216,7 @@ if __name__ == "__main__":
     
     r = et.get_results()
 
-    file_name = "./results/"+ "results_" + EMBEDDINGS_PATH.split("/")[-1].split(".")[0]
+    file_name = "./results/"+ "phylogenetic_" +"results_" + EMBEDDINGS_PATH.split("/")[-1].split(".")[0]
 
     et.dump_results(r, file_name)
 

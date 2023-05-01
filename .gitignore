@@ -1,7 +1,7 @@
 .idea
 
 # Usually dataset with embeddings, too large
-dataset/*.json
+dataset/
 
 
 # Byte-compiled / optimized / DLL files

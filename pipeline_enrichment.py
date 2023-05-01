@@ -4,10 +4,11 @@ from sklearn.decomposition import PCA
 from sklearn.preprocessing import StandardScaler
 from autoembedding.embeddings_matrix import build_embeddings_matrix
 from scipy.cluster.hierarchy import linkage
-from scipy.spatial.distance import pdist
+from scipy.spatial.distance import pdist, squareform
 from scipy.cluster.hierarchy import cut_tree
 from sklearn.metrics import adjusted_rand_score
 import numpy as np
+from Bio import SeqIO
 from results_manager import results2file
 
 
@@ -107,94 +108,73 @@ def main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH):
 
     # BUILD LINKAGE MATRIX
 
-    def pipeline_build_linkage_matrix(previous_stage_output : dict, metric, method)-> dict:
+    def pipeline_enrichment(previous_stage_output : dict, metric, method, ground_true_path, cluster_range)-> dict:
         """
-        Builds the linkage matrix (in the scipy format) from the embeddings matrix
+        Performs the enrichment analysis comparing the number of common annotations between sequences and the distance in the ebmeddings space
         
         Args:
             previous_stage_output (dict): The output of the previous stage, a dict containing the embeddings matrix and the IDs
             metric (str): The metric to use (euclidean, cosine, etc.)
-            method (str): The method to use (average, complete, etc.)
         Returns:
             dict: A dict containing the linkage matrix and the IDs
         """
 
-
         embeddings_matrix = previous_stage_output["embeddings_matrix"]
         IDs = previous_stage_output["IDs"]
-        condensed_distances = pdist(embeddings_matrix, metric=metric)
-        linkage_matrix = linkage(condensed_distances, method=method)
-        return { "linkage_matrix" : linkage_matrix, "IDs": IDs}
 
-    et.add_multistage(
-        function=pipeline_build_linkage_matrix,
-        list_args=[
-        {"metric" : "euclidean", "method" : "average"},
-        #{"metric" : "euclidean", "method" : "complete"},
-        #{"metric" : "euclidean", "method" : "ward"},
-        #{"metric" : "euclidean", "method" : "centroid"},
-        #{"metric" : "euclidean", "method" : "single"},
-        #{"metric" : "euclidean", "method" : "median"},
-        #
-        #{"metric" : "cosine", "method" : "average"},
-        #{"metric" : "cosine", "method" : "complete"},
-        #{"metric" : "cosine", "method" : "ward"},
-        #{"metric" : "cosine", "method" : "centroid"},
-        #{"metric" : "cosine", "method" : "single"},
-        #{"metric" : "cosine", "method" : "median"},
-        ]
-    )
+        embedding_distances = pdist(embeddings_matrix, metric=metric) # distances of the embeddings in the embedding space
 
-    # COMPARE WITH GROUND TRUE
+        # preparing the matrix distance in the "enrichment space"
+        records = list(SeqIO.parse(ground_true_path, "uniprot-xml"))
+        annotation_dict = {}
+        for record in records:
+            name = f'sp|{record.id}|{record.name}'      # must be the same as the one in the embedding matrix parsed from the fasta file
+            annotation_dict[name] = {}
+            go_annotations = [i for i in record.dbxrefs if i.startswith('GO')]
+            annotation_dict[name]['go'] = go_annotations
+            annotation_dict[name]['keywords'] = record.annotations['keywords']
+            annotation_dict[name]['taxonomy'] = record.annotations['taxonomy']
+        gt_distances = np.zeros((len(IDs), len(IDs)))
+        for i, name_i in enumerate(IDs):
+            for j, name_j in enumerate(IDs):
+                # compute the number of common annotations
+                gt_distances[i][j] += len(set(annotation_dict[name_i]['go']).intersection(set(annotation_dict[name_j]['go'])))
+                gt_distances[i][j] += len(set(annotation_dict[name_i]['keywords']).intersection(set(annotation_dict[name_j]['keywords'])))
 
-    def pipeline_mean_adjusted_rand_score(previous_stage_output : dict, cluster_range : tuple, ground_true_path ) -> dict:
-        """
-        Computes the mean adjusted rand score between two hierarchical clustering averaging over all the cut
-        in a given range
 
-        Args:
-            previous_stage_output (dict): The output of the previous stage, a dict containing the linkage matrix and the IDs
-            cluster_range (tuple): The range of clusters to consider (the cut to the hierarchical clustering)
-            ground_true_path (str): The path to the ground true newick file
-        Returns:
-            dict: A dict containing the mean adjusted rand score
-        """
-        predict_linkage_matrix = previous_stage_output["linkage_matrix"]
-        predict_IDs = previous_stage_output["IDs"]
-        gtrue_linkage_matrix, gtrue_IDs = utils.newick_to_linkage(ground_true_path)
+        # the ground true distances is not a distance measure but a similarity, we have to make it a distance and also make the diagonal 0 (maybe not necessary)
+        gt_distances = gt_distances.max() - gt_distances
+        np.fill_diagonal(gt_distances, 0)
 
-        if len(predict_IDs) != len(gtrue_IDs):
-            raise Exception("The number of IDs in the ground true and the predicted clustering is different")
-        if cluster_range[0] < 2:
-            raise Exception("Cluster range must start at least from 2")
-        if not set(predict_IDs) == set(gtrue_IDs):
-            raise Exception("The IDs in the ground true and the predicted clustering are different")
+        # check is gt_distances is symmetric
+        assert np.allclose(gt_distances, gt_distances.T, atol=1e-8)
 
         start = cluster_range[0]
         end = cluster_range[1]
-        
         if end == -1:
-            end = min(len(predict_IDs), len(gtrue_IDs))
-        
+            end = len(IDs)
+
+        # make condensed distance matrices
+        gt_distances = squareform(gt_distances)
+
+        # compute the linkage matrices
+        predict_linkage_matrix = linkage(embedding_distances, method=method)
+        gt_linkage_matrix = linkage(gt_distances, method=method)
+
+        # compute the labels matrix: an array of shape (n_samples, n_clusters) where n_clusters is the number of clusters in the range
         predict_labels_matrix= cut_tree(predict_linkage_matrix, n_clusters=range(start, end))
-        gtrue_labels_matrix = cut_tree(gtrue_linkage_matrix, n_clusters=range(start, end))
+        gt_labels_matrix = cut_tree(gt_linkage_matrix, n_clusters=range(start, end))
 
-        # order the matrix rows based on the IDs
-        predict_labels_matrix = predict_labels_matrix[np.argsort(predict_IDs)]
-        gtrue_labels_matrix = gtrue_labels_matrix[np.argsort(gtrue_IDs)]
-
-        # for each iteration, extract the relative column and compute the adjusted rand score
         adjusted_rand_scores = []
         for i in range(predict_labels_matrix.shape[1]):
-            adjusted_rand_scores.append(adjusted_rand_score(predict_labels_matrix[:,i], gtrue_labels_matrix[:,i]))
-        
+            adjusted_rand_scores.append(adjusted_rand_score(predict_labels_matrix[:,i], gt_labels_matrix[:,i]))
+
         return {"mean_adjusted_rand_score" : np.mean(adjusted_rand_scores)}
-        
 
 
     et.add_stage(
-        function=pipeline_mean_adjusted_rand_score,
-        args={"cluster_range" : (2, -1), "ground_true_path" : GROUND_TRUE_PATH}
+        function=pipeline_enrichment,
+        args={"metric" : "euclidean", "ground_true_path" : GROUND_TRUE_PATH, "method" : "ward", "cluster_range" : (2, -1)}
     )
 
     # END
@@ -204,8 +184,8 @@ def main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH):
 
 if __name__ == "__main__":
     
-    EMBEDDINGS_PATH = "./dataset/globins/globins.json"
-    GROUND_TRUE_PATH = "./dataset/globins/globins.dnd"
+    EMBEDDINGS_PATH = "./dataset/enrichment_test/proteins.json"
+    GROUND_TRUE_PATH = "./dataset/enrichment_test/annotations.xml"
 
     #EMBEDDINGS_PATH = "./dataset/NEIS2157/NEIS2157.json"
     #GROUND_TRUE_PATH = "./dataset/NEIS2157/NEIS2157.dnd"
@@ -216,7 +196,10 @@ if __name__ == "__main__":
     
     r = et.get_results()
 
-    file_name = "./results/"+ "results_" + EMBEDDINGS_PATH.split("/")[-1].split(".")[0]
+    # get the name of the current file
+
+
+    file_name = "./results/"+ "enrichment_"+"results_" + EMBEDDINGS_PATH.split("/")[-1].split(".")[0] 
 
     et.dump_results(r, file_name)
 
