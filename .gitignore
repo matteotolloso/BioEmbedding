@@ -1,7 +1,8 @@
 .idea
 
-# Usually dataset with embeddings, too large
-dataset/
+# Usually dataset with embeddings, too large, but with the exception of the readme
+dataset/*
+!dataset/README.md
 
 
 # Byte-compiled / optimized / DLL files
