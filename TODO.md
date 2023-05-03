@@ -1,6 +1,0 @@
- # TODO
-
-
-
- 1) compile the numpy code with numba when it will be compatible with python 3.11
- 2) split sequences for rep?

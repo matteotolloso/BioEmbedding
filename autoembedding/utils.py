@@ -1,8 +1,5 @@
-from Bio import SeqIO, Phylo
+from Bio import SeqIO
 import json
-import numpy as np
-import io
-import numpy as np
 import pandas as pd
 from ete3 import ClusterTree
 from scipy.spatial.distance import squareform
@@ -43,37 +40,6 @@ def get_embeddings_dict(path : str) -> dict:
     with open(path) as file:
         seq_dict = json.load(file)
     return seq_dict
-
-
-def get_ordered_ids(seq_dict: dict) -> list:
-    """
-    Given a seqence dictionary, where the keys are the IDs of the sequences, it return an ordered list of IDs taking into account the version fo the protein (that is different from the lexicographic order). Example: NEIS2157_9 < NEIS2157_10.
-
-    """
-    from functools import cmp_to_key
-
-    def compare (a:str, b:str)-> int:
-        ind_a = a.index("_")
-        ind_b = b.index("_")
-        
-        if ind_a != ind_b: # diffent main name
-            return a < b
-        
-        try:
-            version_a = int(a[ind_a+1:])
-            version_b = int(b[ind_b+1:])
-
-            return version_a - version_b
-        except Exception:
-            print("exception in get ordered ids")
-            return a < b
-
-
-    IDs = list(seq_dict.keys())
-
-    IDs.sort(key=cmp_to_key(compare))
-
-    return IDs
 
 
 def newick_to_linkage(newick: str):

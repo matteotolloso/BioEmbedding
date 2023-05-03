@@ -1,5 +1,5 @@
 import numpy as np
-import utils
+import autoembedding.utils as utils
 from autoembedding.combiners import combiner_for_prose, combiner_for_dnabert, combiner_for_rep, combiner_for_alphafold
 
 def build_embeddings_matrix(

@@ -1,5 +1,5 @@
-from ExecutionTree import ExecutionTree
-import utils
+from autoembedding.ExecutionTree import ExecutionTree
+import autoembedding.utils as utils
 from sklearn.decomposition import PCA
 from sklearn.preprocessing import StandardScaler
 from autoembedding.embeddings_matrix import build_embeddings_matrix
@@ -8,7 +8,7 @@ from scipy.spatial.distance import pdist
 from scipy.cluster.hierarchy import cut_tree
 from sklearn.metrics import adjusted_rand_score
 import numpy as np
-from results_manager import results2file
+from autoembedding.results_manager import results2file
 
 
 def main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH):
