@@ -1,6 +1,6 @@
 import pandas as pd
 
-def results2table(r):
+def results2table(r, metric="mean_adjusted_rand_score"):
     
     computations_dict = {} # dict[combiner][pca][embedder] = score
 
@@ -29,7 +29,7 @@ def results2table(r):
             if stage == "pipeline_pca":
                 pca = args["n_components"]
         
-        computations_dict[combiner][pca][embedder] = result["mean_adjusted_rand_score"]
+        computations_dict[combiner][pca][embedder] = result[metric]
 
     
     data_matrix = [] # the matrix that will be converted to a dataframe, the order of the rows and columns must be consistent whith the one created by the MultiIndex and the "columns" parameter of the DataFrame constructor
@@ -51,11 +51,12 @@ def results2table(r):
 
 def results2file(r, filepath):
     
-    r.sort(key = lambda x: x[0]['mean_adjusted_rand_score'], reverse=True)
+    r.sort(key = lambda x: x[0]['max_adjusted_rand_score'], reverse=True)
     
     with open(filepath + ".txt", "w") as f:
         for result, pipeline in r:
-            f.write(f"Score: {result['mean_adjusted_rand_score']} \n")
+            f.write(f"max_adjusted_rand_score: {result['max_adjusted_rand_score']} \n")
+            f.write(f"mean_adjusted_rand_score: {result['mean_adjusted_rand_score']} \n")
             for name, args in pipeline:
                 f.write(f"{name}  {args} \n")
             f.write(f"\n")

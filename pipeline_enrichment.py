@@ -107,6 +107,42 @@ def main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH):
     )
 
     # BUILD LINKAGE MATRIX
+    def pipeline_build_linkage_matrix(previous_stage_output : dict, metric, method)-> dict:
+        """
+        Builds the linkage matrix (in the scipy format) from the embeddings matrix
+        
+        Args:
+            previous_stage_output (dict): The output of the previous stage, a dict containing the embeddings matrix and the IDs
+            metric (str): The metric to use (euclidean, cosine, etc.)
+            method (str): The method to use (average, complete, etc.)
+        Returns:
+            dict: A dict containing the linkage matrix and the IDs
+        """
+
+        embeddings_matrix = previous_stage_output["embeddings_matrix"]
+        IDs = previous_stage_output["IDs"]
+        condensed_distances = pdist(embeddings_matrix, metric=metric)
+        linkage_matrix = linkage(condensed_distances, method=method)
+        return { "linkage_matrix" : linkage_matrix, "IDs": IDs}
+
+    et.add_multistage(
+        function=pipeline_build_linkage_matrix,
+        list_args=[
+        #{"metric" : "euclidean", "method" : "average"},
+        #{"metric" : "euclidean", "method" : "complete"},
+        #{"metric" : "euclidean", "method" : "ward"},
+        #{"metric" : "euclidean", "method" : "centroid"},
+        #{"metric" : "euclidean", "method" : "single"},
+        #{"metric" : "euclidean", "method" : "median"},
+        
+        {"metric" : "cosine", "method" : "average"},
+        #{"metric" : "cosine", "method" : "complete"},
+        #{"metric" : "cosine", "method" : "ward"},
+        #{"metric" : "cosine", "method" : "centroid"},
+        #{"metric" : "cosine", "method" : "single"},
+        #{"metric" : "cosine", "method" : "median"},
+        ]
+    )
 
     def pipeline_enrichment(previous_stage_output : dict, metric, method, ground_true_path, cluster_range)-> dict:
         """
@@ -119,10 +155,8 @@ def main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH):
             dict: A dict containing the linkage matrix and the IDs
         """
 
-        embeddings_matrix = previous_stage_output["embeddings_matrix"]
         IDs = previous_stage_output["IDs"]
-
-        embedding_distances = pdist(embeddings_matrix, metric=metric) # distances of the embeddings in the embedding space
+        predict_linkage_matrix = previous_stage_output["linkage_matrix"]
 
         # preparing the matrix distance in the "enrichment space"
         records = list(SeqIO.parse(ground_true_path, "uniprot-xml"))
@@ -137,14 +171,26 @@ def main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH):
         gt_distances = np.zeros((len(IDs), len(IDs)))
         for i, name_i in enumerate(IDs):
             for j, name_j in enumerate(IDs):
-                # compute the number of common annotations
-                gt_distances[i][j] += len(set(annotation_dict[name_i]['go']).intersection(set(annotation_dict[name_j]['go'])))
-                gt_distances[i][j] += len(set(annotation_dict[name_i]['keywords']).intersection(set(annotation_dict[name_j]['keywords'])))
+                # compute the number of common annotations: n = (2*|A inter B|) / (|A| + |B|)
+                capacity =\
+                    len(set(annotation_dict[name_i]['go']).intersection(set(annotation_dict[name_j]['go']))) +\
+                    len(set(annotation_dict[name_i]['keywords']).intersection(set(annotation_dict[name_j]['keywords'])))+\
+                    len(set(annotation_dict[name_i]['taxonomy']).intersection(set(annotation_dict[name_j]['taxonomy'])))
 
+                normalization =\
+                    len(set(annotation_dict[name_i]['go'])) + len(set(annotation_dict[name_j]['go'])) +\
+                    len(set(annotation_dict[name_i]['keywords'])) + len(set(annotation_dict[name_j]['keywords']))+\
+                    len(set(annotation_dict[name_i]['taxonomy'])) + len(set(annotation_dict[name_j]['taxonomy']))
+
+                gt_distances[i][j] += 2*capacity/normalization
 
         # the ground true distances is not a distance measure but a similarity, we have to make it a distance and also make the diagonal 0 (maybe not necessary)
         gt_distances = gt_distances.max() - gt_distances
-        np.fill_diagonal(gt_distances, 0)
+        
+        # the max should be 1, the min 0 and the diagonal 0
+        assert np.allclose(gt_distances.diagonal(), np.zeros(len(IDs)), atol=1e-8)
+        assert gt_distances.max() <= 1
+        assert gt_distances.min() >= 0
 
         # check is gt_distances is symmetric
         assert np.allclose(gt_distances, gt_distances.T, atol=1e-8)
@@ -158,7 +204,6 @@ def main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH):
         gt_distances = squareform(gt_distances)
 
         # compute the linkage matrices
-        predict_linkage_matrix = linkage(embedding_distances, method=method)
         gt_linkage_matrix = linkage(gt_distances, method=method)
 
         # compute the labels matrix: an array of shape (n_samples, n_clusters) where n_clusters is the number of clusters in the range
@@ -169,7 +214,7 @@ def main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH):
         for i in range(predict_labels_matrix.shape[1]):
             adjusted_rand_scores.append(adjusted_rand_score(predict_labels_matrix[:,i], gt_labels_matrix[:,i]))
 
-        return {"mean_adjusted_rand_score" : np.mean(adjusted_rand_scores)}
+        return {"mean_adjusted_rand_score" : np.mean(adjusted_rand_scores), "max_adjusted_rand_score" : np.max(adjusted_rand_scores)}
 
 
     et.add_stage(
