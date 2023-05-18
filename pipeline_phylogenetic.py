@@ -204,11 +204,11 @@ def main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH):
 
 if __name__ == "__main__":
     
-    EMBEDDINGS_PATH = "./dataset/globins/globins.json"
-    GROUND_TRUE_PATH = "./dataset/globins/globins.dnd"
+    #EMBEDDINGS_PATH = "./dataset/globins/globins.json"
+    #GROUND_TRUE_PATH = "./dataset/globins/globins.dnd"
 
-    #EMBEDDINGS_PATH = "./dataset/NEIS2157/NEIS2157.json"
-    #GROUND_TRUE_PATH = "./dataset/NEIS2157/NEIS2157.dnd"
+    EMBEDDINGS_PATH = "./dataset/emoglobina/emoglobina.json"
+    GROUND_TRUE_PATH = "./dataset/emoglobina/emoglobina.dnd"
     
     
     et = main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH)
