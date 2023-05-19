@@ -51,7 +51,7 @@ def results2table(r, metric="mean_adjusted_rand_score"):
 
 def results2file(r, filepath):
     
-    r.sort(key = lambda x: x[0]['max_adjusted_rand_score'], reverse=True)
+    r.sort(key = lambda x: x[0]['mean_adjusted_rand_score'], reverse=True)
     
     with open(filepath + ".txt", "w") as f:
         for result, pipeline in r:

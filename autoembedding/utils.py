@@ -5,6 +5,7 @@ from ete3 import ClusterTree, ClusterNode
 from phylodm import PhyloDM
 from scipy.spatial.distance import squareform
 from scipy.cluster.hierarchy import linkage
+import numpy as np
 
 
 def genbank_to_json(genbank_file_path: str, json_file_path : str):
@@ -61,6 +62,8 @@ def newick_to_linkage(newick: str):
 
     dm = pdm.dm(norm=False)
     labels = pdm.taxa()
+
+    return linkage(squareform(dm)), labels
     """
 
     # newick string -> cophenetic_matrix
@@ -73,3 +76,36 @@ def newick_to_linkage(newick: str):
     
     return linkage(pairwise_distances), list(cophenetic_matrix.columns)
 
+
+# TODO use the distance matrix in the code instead of the newick file
+
+def read_distance_matrix(path: str) -> tuple:
+    """
+    Given the path of a distance matrix file, it returns a tuple of two elements:
+    - the first element is a list of IDs
+    - the second element is a numpy simmetric matrix of pairwise distances
+    """
+
+    IDs = []
+    distances = []
+
+    # open the file
+    with open(path, "r") as f:
+        # the first line is the size of the matrix
+        size = int(f.readline())
+        # each subsequent line is a row of the matrix preceded by the ID of the sequence
+        for line in f:
+            # split the line by spaces
+            line = line.split()
+            # the first element is the ID
+            IDs.append(line[0])
+            # the remaining elements are the distances
+            distances.append(line[1:])
+    
+    assert len(IDs) == len(distances), "The number of IDs and the number of rows of the matrix are different"
+
+    distances = np.array(distances, dtype=np.float32)
+
+    assert distances.shape == (size, size), "The size of the matrix is different from the one specified in the first line"
+
+    return IDs, distances

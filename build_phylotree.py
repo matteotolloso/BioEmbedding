@@ -1,8 +1,9 @@
 
 # TODO make a proper script
+# TODO remeber that 0 is fully equals, the max value is completely different
 
 
-# ./clustalo-1.2.4-Ubuntu-x86_64 -i dataset/emoglobina/emoglobina.fasta -o dataset/emoglobina/emoglobina.aln
+# ./clustalo-1.2.4-Ubuntu-x86_64 -i dataset/globins/globins.fasta -o dataset/globins/globins.aln2 --distmat-out=dataset/globis/globins.dist --full --force
 
 
 # protein by default, nucleotide with -nt

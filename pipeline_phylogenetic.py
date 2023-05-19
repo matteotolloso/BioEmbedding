@@ -4,7 +4,7 @@ from sklearn.decomposition import PCA
 from sklearn.preprocessing import StandardScaler
 from autoembedding.embeddings_matrix import build_embeddings_matrix
 from scipy.cluster.hierarchy import linkage
-from scipy.spatial.distance import pdist
+from scipy.spatial.distance import pdist, squareform
 from scipy.cluster.hierarchy import cut_tree
 from sklearn.metrics import adjusted_rand_score
 import numpy as np
@@ -161,7 +161,13 @@ def main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH):
         """
         predict_linkage_matrix = previous_stage_output["linkage_matrix"]
         predict_IDs = previous_stage_output["IDs"]
-        gtrue_linkage_matrix, gtrue_IDs = utils.newick_to_linkage(ground_true_path)
+        # TODO move this part in the previous stage
+        #gtrue_linkage_matrix, gtrue_IDs = utils.newick_to_linkage(ground_true_path)
+
+        gtrue_IDs, gt_distances = utils.read_distance_matrix(ground_true_path)
+        gt_distances = squareform(gt_distances)
+        gtrue_linkage_matrix = linkage(gt_distances, method="average")
+
 
         if len(predict_IDs) != len(gtrue_IDs):
             raise Exception("The number of IDs in the ground true and the predicted clustering is different")
@@ -204,11 +210,11 @@ def main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH):
 
 if __name__ == "__main__":
     
-    #EMBEDDINGS_PATH = "./dataset/globins/globins.json"
-    #GROUND_TRUE_PATH = "./dataset/globins/globins.dnd"
+    # EMBEDDINGS_PATH = "./dataset/globins/globins.json"
+    # GROUND_TRUE_PATH = "./dataset/globins/globins.dist"
 
     EMBEDDINGS_PATH = "./dataset/emoglobina/emoglobina.json"
-    GROUND_TRUE_PATH = "./dataset/emoglobina/emoglobina.dnd"
+    GROUND_TRUE_PATH = "./dataset/emoglobina/emoglobina.dist"
     
     
     et = main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH)
