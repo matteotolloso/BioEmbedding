@@ -6,4 +6,4 @@ topo: annotate solo le sequenze corte sulla gpu, running sequenze lunghe sulla v
 
 covid19: impossible to run alphafold, da fare matrix e phylo
 
-meningite: da fare tutto
+meningite: impossible to run alphafold
