@@ -33,35 +33,35 @@ def main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH):
 
         embeddings_dict = previous_stage_output["embeddings_dict"]
 
-        IDs, embeddings_matrix = build_embeddings_matrix(
+        embeddings_IDs, embeddings_matrix = build_embeddings_matrix(
             embeddings_dict=embeddings_dict,
             embedder=embedder,
             combiner_method=combiner_method
         )
-        return {"IDs": IDs, "embeddings_matrix": embeddings_matrix}
+        return {"embeddings_IDs": embeddings_IDs, "embeddings_matrix": embeddings_matrix}
 
     et.add_multistage(
         function=pipeline_build_embeddings_matrix,
         list_args=[
-        {"embedder" : "rep", "combiner_method" : "pca" },
-        {"embedder" : "rep", "combiner_method" : "average" },
-        {"embedder" : "rep", "combiner_method" : "sum" },
-        {"embedder" : "rep", "combiner_method" : "max" },
-        
-        {"embedder" : "dnabert", "combiner_method" : "pca" },
-        {"embedder" : "dnabert", "combiner_method" : "average" },
-        {"embedder" : "dnabert", "combiner_method" : "sum" },
-        {"embedder" : "dnabert", "combiner_method" : "max" },
-        
-        {"embedder" : "prose", "combiner_method" : "pca" },
-        {"embedder" : "prose", "combiner_method" : "average" },
-        {"embedder" : "prose", "combiner_method" : "sum" },
-        {"embedder" : "prose", "combiner_method" : "max" },
+            {"embedder" : "rep", "combiner_method" : "pca" },
+            {"embedder" : "rep", "combiner_method" : "average" },
+            {"embedder" : "rep", "combiner_method" : "sum" },
+            {"embedder" : "rep", "combiner_method" : "max" },
+            
+            {"embedder" : "dnabert", "combiner_method" : "pca" },
+            {"embedder" : "dnabert", "combiner_method" : "average" },
+            {"embedder" : "dnabert", "combiner_method" : "sum" },
+            {"embedder" : "dnabert", "combiner_method" : "max" },
+            
+            {"embedder" : "prose", "combiner_method" : "pca" },
+            {"embedder" : "prose", "combiner_method" : "average" },
+            {"embedder" : "prose", "combiner_method" : "sum" },
+            {"embedder" : "prose", "combiner_method" : "max" },
 
-        {"embedder" : "alphafold", "combiner_method" : "pca" },
-        {"embedder" : "alphafold", "combiner_method" : "average" },
-        {"embedder" : "alphafold", "combiner_method" : "sum" },
-        {"embedder" : "alphafold", "combiner_method" : "max" },
+            {"embedder" : "alphafold", "combiner_method" : "pca" },
+            {"embedder" : "alphafold", "combiner_method" : "average" },
+            {"embedder" : "alphafold", "combiner_method" : "sum" },
+            {"embedder" : "alphafold", "combiner_method" : "max" },
         
         ]
     )
@@ -83,25 +83,23 @@ def main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH):
         """
 
         embeddings_matrix = previous_stage_output["embeddings_matrix"]
-        IDs = previous_stage_output["IDs"]
+        embeddings_IDs = previous_stage_output["embeddings_IDs"]
 
-        if n_components == "all":
-            return { "embeddings_matrix" : embeddings_matrix, "IDs": IDs}
+        if n_components != "all":
+            scaler = StandardScaler()
+            embeddings_matrix = scaler.fit_transform(embeddings_matrix)
+            if n_components == "default":
+                n_components = min(embeddings_matrix.shape)
+            pca = PCA(n_components=n_components)
+            embeddings_matrix = pca.fit_transform(embeddings_matrix)
         
-        scaler = StandardScaler()
-        embeddings_matrix = scaler.fit_transform(embeddings_matrix)
-        if n_components == "default":
-            n_components = min(embeddings_matrix.shape)
-        pca = PCA(n_components=n_components)
-        embeddings_matrix = pca.fit_transform(embeddings_matrix)
-        
-        return { "embeddings_matrix" : embeddings_matrix, "embeddings_IDs": IDs}
+        return { "embeddings_matrix" : embeddings_matrix, "embeddings_IDs": embeddings_IDs}
 
     et.add_multistage(
         function=pipeline_pca,
         list_args=[
-        {"n_components": "default"},
-        {"n_components": "all"},
+            {"n_components": "default"},
+            {"n_components": "all"},
         ]
     )
 
@@ -121,26 +119,25 @@ def main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH):
 
         embeddings_matrix = previous_stage_output["embeddings_matrix"]
         embeddings_IDs = previous_stage_output["embeddings_IDs"]
-        condensed_distances = pdist(embeddings_matrix, metric=metric)
-        embeddings_linkage_matrix = linkage(condensed_distances, method=method)
+        embeddings_linkage_matrix = linkage(embeddings_matrix, method=method, metric=metric)
         return { "embeddings_linkage_matrix" : embeddings_linkage_matrix, "embeddings_IDs": embeddings_IDs}
 
     et.add_multistage(
         function=pipeline_build_embeddings_linkage_matrix,
         list_args=[
-        {"metric" : "euclidean", "method" : "average"},
-        #{"metric" : "euclidean", "method" : "complete"},
-        #{"metric" : "euclidean", "method" : "ward"},
-        #{"metric" : "euclidean", "method" : "centroid"},
-        #{"metric" : "euclidean", "method" : "single"},
-        #{"metric" : "euclidean", "method" : "median"},
-        #
-        #{"metric" : "cosine", "method" : "average"},
-        #{"metric" : "cosine", "method" : "complete"},
-        #{"metric" : "cosine", "method" : "ward"},
-        #{"metric" : "cosine", "method" : "centroid"},
-        #{"metric" : "cosine", "method" : "single"},
-        #{"metric" : "cosine", "method" : "median"},
+            {"metric" : "euclidean", "method" : "average"},
+            {"metric" : "euclidean", "method" : "complete"},
+            {"metric" : "euclidean", "method" : "ward"},
+            {"metric" : "euclidean", "method" : "centroid"},
+            {"metric" : "euclidean", "method" : "single"},
+            {"metric" : "euclidean", "method" : "median"},
+            
+            {"metric" : "cosine", "method" : "average"},
+            {"metric" : "cosine", "method" : "complete"},
+            {"metric" : "cosine", "method" : "ward"},
+            {"metric" : "cosine", "method" : "centroid"},
+            {"metric" : "cosine", "method" : "single"},
+            {"metric" : "cosine", "method" : "median"},
         ]
     )
 
@@ -166,19 +163,19 @@ def main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH):
         function=pipeline_build_gt_linkage_matrix,
         fixed_args={"ground_true_path" : GROUND_TRUE_PATH},
         list_args=[
-        {"metric" : "euclidean", "method" : "average"},
-        #{"metric" : "euclidean", "method" : "complete"},
-        #{"metric" : "euclidean", "method" : "ward"},
-        #{"metric" : "euclidean", "method" : "centroid"},
-        #{"metric" : "euclidean", "method" : "single"},
-        #{"metric" : "euclidean", "method" : "median"},
-        #
-        #{"metric" : "cosine", "method" : "average"},
-        #{"metric" : "cosine", "method" : "complete"},
-        #{"metric" : "cosine", "method" : "ward"},
-        #{"metric" : "cosine", "method" : "centroid"},
-        #{"metric" : "cosine", "method" : "single"},
-        #{"metric" : "cosine", "method" : "median"},
+            {"metric" : "euclidean", "method" : "average"},
+            {"metric" : "euclidean", "method" : "complete"},
+            {"metric" : "euclidean", "method" : "ward"},
+            {"metric" : "euclidean", "method" : "centroid"},
+            {"metric" : "euclidean", "method" : "single"},
+            {"metric" : "euclidean", "method" : "median"},
+            
+            {"metric" : "cosine", "method" : "average"},
+            {"metric" : "cosine", "method" : "complete"},
+            {"metric" : "cosine", "method" : "ward"},
+            {"metric" : "cosine", "method" : "centroid"},
+            {"metric" : "cosine", "method" : "single"},
+            {"metric" : "cosine", "method" : "median"},
         ]
     )
 
@@ -242,11 +239,11 @@ def main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH):
 
 if __name__ == "__main__":
     
-    EMBEDDINGS_PATH = "./dataset/globins/globins.json"
-    GROUND_TRUE_PATH = "./dataset/globins/globins.dist"
+    # EMBEDDINGS_PATH = "./dataset/globins/globins.json"
+    # GROUND_TRUE_PATH = "./dataset/globins/globins.dist"
 
-    # EMBEDDINGS_PATH = "./dataset/emoglobina/emoglobina.json"
-    # GROUND_TRUE_PATH = "./dataset/emoglobina/emoglobina.dist"
+    EMBEDDINGS_PATH = "./dataset/emoglobina/emoglobina.json"
+    GROUND_TRUE_PATH = "./dataset/emoglobina/emoglobina.dist"
     
     
     et = main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH)
