@@ -139,10 +139,7 @@ def main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH):
         
         {"metric" : "cosine", "method" : "average"},
         {"metric" : "cosine", "method" : "complete"},
-        {"metric" : "cosine", "method" : "ward"},
-        {"metric" : "cosine", "method" : "centroid"},
         {"metric" : "cosine", "method" : "single"},
-        {"metric" : "cosine", "method" : "median"},
         ]
     )
 
@@ -171,7 +168,7 @@ def main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH):
         for i, name_i in enumerate(embeddings_IDs):
             for j, name_j in enumerate(embeddings_IDs):
                 
-                if edge_weight == 'method_1':
+                if edge_weight == 'method_1':   # TODO: implement other methods
                     # compute the number of common annotations: n = (2*|A inter B|) / (|A| + |B|) 
                     capacity =\
                         len(set(annotation_dict[name_i]['go']).intersection(set(annotation_dict[name_j]['go']))) +\
@@ -222,12 +219,9 @@ def main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH):
             { "metric" : "euclidean",   "method" : "single",      "edge_weight" : "method_1" },
             { "metric" : "euclidean",   "method" : "median",      "edge_weight" : "method_1" },
             
-            { "metric" : "cosine",      "method" : "ward",           "edge_weight" : "method_1" },
             { "metric" : "cosine",      "method" : "average",        "edge_weight" : "method_1" },
             { "metric" : "cosine",      "method" : "complete",       "edge_weight" : "method_1" },
-            { "metric" : "cosine",      "method" : "centroid",       "edge_weight" : "method_1" },
             { "metric" : "cosine",      "method" : "single",         "edge_weight" : "method_1" },
-            { "metric" : "cosine",      "method" : "median",         "edge_weight" : "method_1" },
         ]
     )
 
