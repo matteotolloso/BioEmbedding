@@ -2,7 +2,7 @@ import pickle
 
 class Node:
 
-    def __init__(self, function, param):
+    def __init__(self, function, param = {}):
         self.function = function
         self.param = param
 
@@ -33,12 +33,13 @@ class ExecutionTree:
         
         self.frontier = new_frontier
 
-    def add_multistage(self, function, list_args):
+    def add_multistage(self, function, list_args, fixed_args = {}):
 
         new_frontier = []
         for n in self.frontier:
             for args in list_args:
-                new_n = Node(function, args)
+                args.update(fixed_args)
+                new_n = Node(function,args )
                 new_n.parent = n
                 n.childs.append(new_n)
                 new_frontier.append(new_n)

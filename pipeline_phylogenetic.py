@@ -95,7 +95,7 @@ def main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH):
         pca = PCA(n_components=n_components)
         embeddings_matrix = pca.fit_transform(embeddings_matrix)
         
-        return { "embeddings_matrix" : embeddings_matrix, "IDs": IDs}
+        return { "embeddings_matrix" : embeddings_matrix, "embeddings_IDs": IDs}
 
     et.add_multistage(
         function=pipeline_pca,
@@ -107,7 +107,7 @@ def main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH):
 
     # BUILD LINKAGE MATRIX
 
-    def pipeline_build_linkage_matrix(previous_stage_output : dict, metric, method)-> dict:
+    def pipeline_build_embeddings_linkage_matrix(previous_stage_output : dict, metric, method)-> dict:
         """
         Builds the linkage matrix (in the scipy format) from the embeddings matrix
         
@@ -119,15 +119,52 @@ def main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH):
             dict: A dict containing the linkage matrix and the IDs
         """
 
-
         embeddings_matrix = previous_stage_output["embeddings_matrix"]
-        IDs = previous_stage_output["IDs"]
+        embeddings_IDs = previous_stage_output["embeddings_IDs"]
         condensed_distances = pdist(embeddings_matrix, metric=metric)
-        linkage_matrix = linkage(condensed_distances, method=method)
-        return { "linkage_matrix" : linkage_matrix, "IDs": IDs}
+        embeddings_linkage_matrix = linkage(condensed_distances, method=method)
+        return { "embeddings_linkage_matrix" : embeddings_linkage_matrix, "embeddings_IDs": embeddings_IDs}
 
     et.add_multistage(
-        function=pipeline_build_linkage_matrix,
+        function=pipeline_build_embeddings_linkage_matrix,
+        list_args=[
+        {"metric" : "euclidean", "method" : "average"},
+        #{"metric" : "euclidean", "method" : "complete"},
+        #{"metric" : "euclidean", "method" : "ward"},
+        #{"metric" : "euclidean", "method" : "centroid"},
+        #{"metric" : "euclidean", "method" : "single"},
+        #{"metric" : "euclidean", "method" : "median"},
+        #
+        #{"metric" : "cosine", "method" : "average"},
+        #{"metric" : "cosine", "method" : "complete"},
+        #{"metric" : "cosine", "method" : "ward"},
+        #{"metric" : "cosine", "method" : "centroid"},
+        #{"metric" : "cosine", "method" : "single"},
+        #{"metric" : "cosine", "method" : "median"},
+        ]
+    )
+
+    def pipeline_build_gt_linkage_matrix(
+        ground_true_path : str, 
+        previous_stage_output : dict, 
+        metric, 
+        method)-> dict:
+        
+        embeddings_linkage_matrix = previous_stage_output["embeddings_linkage_matrix"]
+        embeddings_IDs = previous_stage_output["embeddings_IDs"]
+        
+        
+        gtrue_IDs, gt_distances = utils.read_distance_matrix(ground_true_path)
+        gt_distances = squareform(gt_distances)
+        gtrue_linkage_matrix = linkage(gt_distances, method=method, metric=metric)
+
+        return { "embeddings_linkage_matrix" : embeddings_linkage_matrix, "embeddings_IDs": embeddings_IDs, 
+                "gtrue_linkage_matrix" : gtrue_linkage_matrix, "gtrue_IDs" : gtrue_IDs}
+
+
+    et.add_multistage(
+        function=pipeline_build_gt_linkage_matrix,
+        fixed_args={"ground_true_path" : GROUND_TRUE_PATH},
         list_args=[
         {"metric" : "euclidean", "method" : "average"},
         #{"metric" : "euclidean", "method" : "complete"},
@@ -147,7 +184,7 @@ def main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH):
 
     # COMPARE WITH GROUND TRUE
 
-    def pipeline_mean_adjusted_rand_score(previous_stage_output : dict, cluster_range : tuple, ground_true_path ) -> dict:
+    def pipeline_mean_adjusted_rand_score(previous_stage_output : dict, cluster_range : tuple ) -> dict:
         """
         Computes the mean adjusted rand score between two hierarchical clustering averaging over all the cut
         in a given range
@@ -159,34 +196,29 @@ def main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH):
         Returns:
             dict: A dict containing the mean adjusted rand score
         """
-        predict_linkage_matrix = previous_stage_output["linkage_matrix"]
-        predict_IDs = previous_stage_output["IDs"]
-        # TODO move this part in the previous stage
-        #gtrue_linkage_matrix, gtrue_IDs = utils.newick_to_linkage(ground_true_path)
+        embeddings_linkage_matrix = previous_stage_output["embeddings_linkage_matrix"]
+        embeddings_IDs = previous_stage_output["embeddings_IDs"]
+        gtrue_linkage_matrix = previous_stage_output["gtrue_linkage_matrix"]
+        gtrue_IDs = previous_stage_output["gtrue_IDs"]
 
-        gtrue_IDs, gt_distances = utils.read_distance_matrix(ground_true_path)
-        gt_distances = squareform(gt_distances)
-        gtrue_linkage_matrix = linkage(gt_distances, method="average")
-
-
-        if len(predict_IDs) != len(gtrue_IDs):
+        if len(embeddings_IDs) != len(gtrue_IDs):
             raise Exception("The number of IDs in the ground true and the predicted clustering is different")
         if cluster_range[0] < 2:
             raise Exception("Cluster range must start at least from 2")
-        if not set(predict_IDs) == set(gtrue_IDs):
+        if not set(embeddings_IDs) == set(gtrue_IDs):
             raise Exception("The IDs in the ground true and the predicted clustering are different")
 
         start = cluster_range[0]
         end = cluster_range[1]
         
         if end == -1:
-            end = min(len(predict_IDs), len(gtrue_IDs))
+            end = min(len(embeddings_IDs), len(gtrue_IDs))
         
-        predict_labels_matrix= cut_tree(predict_linkage_matrix, n_clusters=range(start, end))
+        predict_labels_matrix= cut_tree(embeddings_linkage_matrix, n_clusters=range(start, end))
         gtrue_labels_matrix = cut_tree(gtrue_linkage_matrix, n_clusters=range(start, end))
 
         # order the matrix rows based on the IDs
-        predict_labels_matrix = predict_labels_matrix[np.argsort(predict_IDs)]
+        predict_labels_matrix = predict_labels_matrix[np.argsort(embeddings_IDs)]
         gtrue_labels_matrix = gtrue_labels_matrix[np.argsort(gtrue_IDs)]
 
         # for each iteration, extract the relative column and compute the adjusted rand score
@@ -200,7 +232,7 @@ def main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH):
 
     et.add_stage(
         function=pipeline_mean_adjusted_rand_score,
-        args={"cluster_range" : (2, -1), "ground_true_path" : GROUND_TRUE_PATH}
+        args={"cluster_range" : (2, -1)}
     )
 
     # END
@@ -210,11 +242,11 @@ def main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH):
 
 if __name__ == "__main__":
     
-    # EMBEDDINGS_PATH = "./dataset/globins/globins.json"
-    # GROUND_TRUE_PATH = "./dataset/globins/globins.dist"
+    EMBEDDINGS_PATH = "./dataset/globins/globins.json"
+    GROUND_TRUE_PATH = "./dataset/globins/globins.dist"
 
-    EMBEDDINGS_PATH = "./dataset/emoglobina/emoglobina.json"
-    GROUND_TRUE_PATH = "./dataset/emoglobina/emoglobina.dist"
+    # EMBEDDINGS_PATH = "./dataset/emoglobina/emoglobina.json"
+    # GROUND_TRUE_PATH = "./dataset/emoglobina/emoglobina.dist"
     
     
     et = main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH)
