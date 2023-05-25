@@ -2,7 +2,6 @@ from Bio import SeqIO
 import json
 import pandas as pd
 from ete3 import ClusterTree, ClusterNode
-from phylodm import PhyloDM
 from scipy.spatial.distance import squareform
 from scipy.cluster.hierarchy import linkage
 import numpy as np
