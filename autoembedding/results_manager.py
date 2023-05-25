@@ -6,7 +6,7 @@ def results2table(r, metric="mean_adjusted_rand_score"):
 
     combiners = ["pca", "average", "sum", "max"]
     pcas = ["all", "default"]
-    embedders = ["rep", "dnabert", "prose", "alphafold"]
+    embedders = ["rep", "dnabert", "prose", "alphafold", "esm"	]
 
     # generate the empty dict with the argument that are relevant for the table
     for combiner in combiners:
@@ -17,6 +17,7 @@ def results2table(r, metric="mean_adjusted_rand_score"):
                 computations_dict[combiner][pca][embedder] = None
     
     # fill the dict
+    # TODO improve this, implement the possibility to choose among different metrics to show
     for result, pipeline in r:  # for each result and the pipeline that generated it
         combiner = None
         pca = None

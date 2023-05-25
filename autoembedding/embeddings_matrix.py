@@ -50,6 +50,12 @@ def build_embeddings_matrix(
                 raw_embedding = np.array(embeddings_dict[id][embedder]),  # is a (seq_len)*(100) matrix (each row is the embedding of an amminoacid)
                 method = combiner_method
             ) 
+
+        elif embedder == "esm":
+            final_embedding = combiner_for_alphafold(
+                raw_embedding = np.array(embeddings_dict[id][embedder]),  # is a (seq_len)*(100) matrix (each row is the embedding of an amminoacid)
+                method = combiner_method
+            ) 
         
         embeddings_matrix.append(final_embedding)
 
