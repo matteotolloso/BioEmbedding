@@ -6,7 +6,8 @@ def results2table(
     preferred_metric_embedding="euclidean",
     preferred_method_embedding="ward",
     preferred_metric_gt="euclidean",
-    preferred_method_gt="ward"
+    preferred_method_gt="ward", 
+    preferred_edge_weight="method_1",
     ):
     
     computations_dict = {} # dict[combiner][pca][embedder] = score
@@ -42,11 +43,13 @@ def results2table(
             if stage == "pipeline_build_gt_linkage_matrix":
                 metric_gt = args["metric"]
                 method_gt = args["method"]
+                edge_weight = args["edge_weight"]
         
         if  metric_embedding == preferred_metric_embedding and \
             method_embedding == preferred_method_embedding and \
             metric_gt == preferred_metric_gt and \
-            method_gt == preferred_method_gt:
+            method_gt == preferred_method_gt and \
+            edge_weight == preferred_edge_weight:
         
             computations_dict[combiner][pca][embedder] = result[metric]
 
