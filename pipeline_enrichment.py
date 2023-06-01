@@ -168,21 +168,30 @@ def main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH):
         for i, name_i in enumerate(embeddings_IDs):
             for j, name_j in enumerate(embeddings_IDs):
                 
-                if edge_weight == 'method_1':   # TODO: implement other methods
+                # the amount of common annotations between the two sequences, i.e. A inter B
+                capacity =\
+                    len(set(annotation_dict[name_i]['go']).intersection(set(annotation_dict[name_j]['go']))) +\
+                    len(set(annotation_dict[name_i]['keywords']).intersection(set(annotation_dict[name_j]['keywords'])))+\
+                    len(set(annotation_dict[name_i]['taxonomy']).intersection(set(annotation_dict[name_j]['taxonomy'])))
+                # the amount of annotations of the first sequence
+                A =\
+                    len(set(annotation_dict[name_i]['go'])) +\
+                    len(set(annotation_dict[name_i]['keywords'])) +\
+                    len(set(annotation_dict[name_i]['taxonomy']))
+                # the amount of annotations of the second sequence
+                B =\
+                    len(set(annotation_dict[name_j]['go'])) +\
+                    len(set(annotation_dict[name_j]['keywords'])) +\
+                    len(set(annotation_dict[name_j]['taxonomy']))
+                
+                if edge_weight == 'method_1':
                     # compute the number of common annotations: n = (2*|A inter B|) / (|A| + |B|) 
-                    capacity =\
-                        len(set(annotation_dict[name_i]['go']).intersection(set(annotation_dict[name_j]['go']))) +\
-                        len(set(annotation_dict[name_i]['keywords']).intersection(set(annotation_dict[name_j]['keywords'])))+\
-                        len(set(annotation_dict[name_i]['taxonomy']).intersection(set(annotation_dict[name_j]['taxonomy'])))
+                    gtrue_distance_matrix[i][j] += 2*capacity/(A+B)
+                
+                elif edge_weight == 'method_2':
+                    # compute the weight as max( (A inter B)/A, (A inter B)/B )
+                    gtrue_distance_matrix[i][j] += max(capacity/A, capacity/B)
 
-                    normalization =\
-                        len(set(annotation_dict[name_i]['go'])) + len(set(annotation_dict[name_j]['go'])) +\
-                        len(set(annotation_dict[name_i]['keywords'])) + len(set(annotation_dict[name_j]['keywords']))+\
-                        len(set(annotation_dict[name_i]['taxonomy'])) + len(set(annotation_dict[name_j]['taxonomy']))
-
-                    gtrue_distance_matrix[i][j] += 2*capacity/normalization
-
-       
         # the ground true distances is not a distance measure but a similarity, we have to make it a distance and also make the diagonal 0 (maybe not necessary)
         gtrue_distance_matrix = gtrue_distance_matrix.max() - gtrue_distance_matrix
         
