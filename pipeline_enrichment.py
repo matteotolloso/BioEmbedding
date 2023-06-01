@@ -63,6 +63,11 @@ def main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH):
             {"embedder" : "alphafold", "combiner_method" : "average" },
             {"embedder" : "alphafold", "combiner_method" : "sum" },
             {"embedder" : "alphafold", "combiner_method" : "max" },
+
+            {"embedder" : "esm", "combiner_method" : "pca" },
+            {"embedder" : "esm", "combiner_method" : "average" },
+            {"embedder" : "esm", "combiner_method" : "sum" },
+            {"embedder" : "esm", "combiner_method" : "max" },
         
         ]
     )
@@ -283,11 +288,11 @@ def main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH):
 
 if __name__ == "__main__":
     
-    EMBEDDINGS_PATH = "./dataset/enrichment_test/proteins.json"
-    GROUND_TRUE_PATH = "./dataset/enrichment_test/annotations.xml"
+    # EMBEDDINGS_PATH = "./dataset/enrichment_test/proteins.json"
+    # GROUND_TRUE_PATH = "./dataset/enrichment_test/annotations.xml"
 
-    #EMBEDDINGS_PATH = "./dataset/NEIS2157/NEIS2157.json"
-    #GROUND_TRUE_PATH = "./dataset/NEIS2157/NEIS2157.dnd"
+    EMBEDDINGS_PATH =  "./dataset/emoglobina/emoglobina.json"
+    GROUND_TRUE_PATH = "./dataset/emoglobina/emoglobina.xml"
     
     
     et = main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH)
