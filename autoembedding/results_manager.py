@@ -24,6 +24,7 @@ def results2table(
                 computations_dict[combiner][pca][embedder] = None
     
     # fill the dict
+    # TODO add the weght of the enrichment method in the preferred method
     for result, pipeline in r:  # for each result and the pipeline that generated it
         combiner = None
         pca = None
