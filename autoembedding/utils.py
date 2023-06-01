@@ -76,7 +76,6 @@ def newick_to_linkage(newick: str):
     return linkage(pairwise_distances), list(cophenetic_matrix.columns)
 
 
-# TODO use the distance matrix in the code instead of the newick file
 
 def read_distance_matrix(path: str) -> tuple:
     """

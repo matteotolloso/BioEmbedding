@@ -24,7 +24,6 @@ def results2table(
                 computations_dict[combiner][pca][embedder] = None
     
     # fill the dict
-    # TODO improve this, implement the possibility to choose among different metrics to show
     for result, pipeline in r:  # for each result and the pipeline that generated it
         combiner = None
         pca = None

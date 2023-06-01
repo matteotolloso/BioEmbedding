@@ -11,6 +11,7 @@ import numpy as np
 from Bio import SeqIO
 from autoembedding.results_manager import results2file
 
+# TODO check if the execution tree works well swapping the order of hyperparamenters
 
 def main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH):
     # Loading the embeddings dict
@@ -214,7 +215,7 @@ def main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH):
         # compute the linkage matrices
         gtrue_linkage_matrix = linkage(gtrue_distance_matrix, method=method, metric=metric)
 
-        gtrue_IDs = embeddings_IDs # TODO hopefully this is correct and nothing strande with the order of the IDs has happened
+        gtrue_IDs = embeddings_IDs # TODO hopefully this is correct and nothing strange with the order of the IDs has happened
 
         return {"gtrue_linkage_matrix" : gtrue_linkage_matrix, 
                 "gtrue_IDs": gtrue_IDs, 
@@ -233,9 +234,20 @@ def main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH):
             { "metric" : "euclidean",   "method" : "single",      "edge_weight" : "method_1" },
             { "metric" : "euclidean",   "method" : "median",      "edge_weight" : "method_1" },
             
-            { "metric" : "cosine",      "method" : "average",        "edge_weight" : "method_1" },
-            { "metric" : "cosine",      "method" : "complete",       "edge_weight" : "method_1" },
-            { "metric" : "cosine",      "method" : "single",         "edge_weight" : "method_1" },
+            { "metric" : "cosine",      "method" : "average",     "edge_weight" : "method_1" },
+            { "metric" : "cosine",      "method" : "complete",    "edge_weight" : "method_1" },
+            { "metric" : "cosine",      "method" : "single",      "edge_weight" : "method_1" },
+
+            { "metric" : "euclidean",   "method" : "ward",        "edge_weight" : "method_2" },
+            { "metric" : "euclidean",   "method" : "average",     "edge_weight" : "method_2" },
+            { "metric" : "euclidean",   "method" : "complete",    "edge_weight" : "method_2" },
+            { "metric" : "euclidean",   "method" : "centroid",    "edge_weight" : "method_2" },
+            { "metric" : "euclidean",   "method" : "single",      "edge_weight" : "method_2" },
+            { "metric" : "euclidean",   "method" : "median",      "edge_weight" : "method_2" },
+        
+            { "metric" : "cosine",      "method" : "average",     "edge_weight" : "method_2" },
+            { "metric" : "cosine",      "method" : "complete",    "edge_weight" : "method_2" },
+            { "metric" : "cosine",      "method" : "single",      "edge_weight" : "method_2" },
         ]
     )
 
