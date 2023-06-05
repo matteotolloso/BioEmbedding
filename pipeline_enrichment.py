@@ -16,11 +16,33 @@ from autoembedding.results_manager import results2file
 def main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH):
     # Loading the embeddings dict
     embeddings_dict = utils.get_embeddings_dict(EMBEDDINGS_PATH)
-    et = ExecutionTree(input = {"embeddings_dict" : embeddings_dict} )
+    
+    et = ExecutionTree(input = {"embeddings_path" : EMBEDDINGS_PATH} )
+
+    def pipeline_load_embeddings_dict(previous_stage_output : dict, embedder : str) -> dict:
+
+        embedding_path = previous_stage_output["embeddings_path"]
+
+        embedding_path = embedding_path + embedder + '.json'
+
+        embeddings_dict = utils.get_embeddings_dict(embedding_path)
+
+        return {"embeddings_dict" : embeddings_dict}
+    
+    et.add_multistage(
+        function=pipeline_load_embeddings_dict,
+        list_args=[
+            {"embedder" : "rep"},
+            {"embedder" : "dnabert"},
+            {"embedder" : "prose"},
+            {"embedder" : "alphafold"},
+            {"embedder" : "esmfold_650M"},
+        ]
+    )
 
     # BUILD EMBEDDING MATRIX (WITH COMBINER)
 
-    def pipeline_build_embeddings_matrix(previous_stage_output : dict, embedder, combiner_method) -> dict:
+    def pipeline_build_embeddings_matrix(previous_stage_output : dict, combiner_method : str) -> dict:
         
         """
         Built the embeddings matrix from the embeddings dict
@@ -37,14 +59,14 @@ def main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH):
 
         embeddings_IDs, embeddings_matrix = build_embeddings_matrix(
             embeddings_dict=embeddings_dict,
-            embedder=embedder,
+            embedder=embedder,  # TODO change the structure of the json file s.t. doesn't need to pass the embedder
             combiner_method=combiner_method
         )
         return {"embeddings_IDs": embeddings_IDs, "embeddings_matrix": embeddings_matrix}
 
     et.add_multistage(
         function=pipeline_build_embeddings_matrix,
-        list_args=[
+        list_args=[     # TODO split the pipeline in two: load the file, calculate the combiner because I will have a file for each embedder, while the combiners methods will be the same applied to all the embedder
             {"embedder" : "rep", "combiner_method" : "pca" },
             {"embedder" : "rep", "combiner_method" : "average" },
             {"embedder" : "rep", "combiner_method" : "sum" },

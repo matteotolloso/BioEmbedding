@@ -1,6 +1,6 @@
 import numpy as np
 import autoembedding.utils as utils
-from autoembedding.combiners import combiner_for_prose, combiner_for_dnabert, combiner_for_rep, combiner_for_alphafold, combiner_for_esm
+from autoembedding.combiners import combiner
 
 # TODO check id is more efficient to have each combiner in a separate file
 
@@ -29,35 +29,10 @@ def build_embeddings_matrix(
 
         final_embedding = []
 
-        if embedder == "rep":
-            final_embedding = combiner_for_rep(
-                raw_embedding = embeddings_dict[id][embedder],  # is a 64-dim array
-                method = combiner_method
-            )
-        
-        elif embedder == "dnabert":
-            final_embedding = combiner_for_dnabert(
-                raw_embedding = embeddings_dict[id][embedder], # is a (seq_len % 512)*(768) matrix
-                method = combiner_method
-            )
-
-        elif embedder == "prose":
-            final_embedding = combiner_for_prose(
-                raw_embedding = embeddings_dict[id][embedder],  # is a (seq_len)*(100) matrix (each row is the embedding of an amminoacid)
-                method = combiner_method
-            ) 
-        
-        elif embedder == "alphafold":
-            final_embedding = combiner_for_alphafold(
-                raw_embedding = embeddings_dict[id][embedder],  # is a (seq_len)*(100) matrix (each row is the embedding of an amminoacid)
-                method = combiner_method
-            ) 
-
-        elif embedder == "esmfold_650M":
-            final_embedding = combiner_for_esm(
-                raw_embedding = embeddings_dict[id][embedder],  
-                method = combiner_method
-            ) 
+        final_embedding = combiner(
+            raw_embedding = embeddings_dict[id][embedder],  # is a 64-dim array
+            method = combiner_method
+        )
         
         embeddings_matrix.append(final_embedding)
 
