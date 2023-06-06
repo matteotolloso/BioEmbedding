@@ -13,36 +13,12 @@ from autoembedding.results_manager import results2file
 
 # TODO check if the execution tree works well swapping the order of hyperparamenters
 
-def main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH):
-    # Loading the embeddings dict
-    embeddings_dict = utils.get_embeddings_dict(EMBEDDINGS_PATH)
+def main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH):    
     
     et = ExecutionTree(input = {"embeddings_path" : EMBEDDINGS_PATH} )
 
-    def pipeline_load_embeddings_dict(previous_stage_output : dict, embedder : str) -> dict:
-
-        embedding_path = previous_stage_output["embeddings_path"]
-
-        embedding_path = embedding_path + embedder + '.json'
-
-        embeddings_dict = utils.get_embeddings_dict(embedding_path)
-
-        return {"embeddings_dict" : embeddings_dict}
-    
-    et.add_multistage(
-        function=pipeline_load_embeddings_dict,
-        list_args=[
-            {"embedder" : "rep"},
-            {"embedder" : "dnabert"},
-            {"embedder" : "prose"},
-            {"embedder" : "alphafold"},
-            {"embedder" : "esmfold_650M"},
-        ]
-    )
-
     # BUILD EMBEDDING MATRIX (WITH COMBINER)
-
-    def pipeline_build_embeddings_matrix(previous_stage_output : dict, combiner_method : str) -> dict:
+    def pipeline_build_embeddings_matrix(previous_stage_output : dict, embedder: str, combiner_method : str) -> dict:
         
         """
         Built the embeddings matrix from the embeddings dict
@@ -55,18 +31,18 @@ def main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH):
             dict: A dict containing the IDs and the embeddings matrix where each row is the embedding of the corresponding ID
         """
 
-        embeddings_dict = previous_stage_output["embeddings_dict"]
+        embeddings_path = previous_stage_output["embeddings_path"]
 
         embeddings_IDs, embeddings_matrix = build_embeddings_matrix(
-            embeddings_dict=embeddings_dict,
-            embedder=embedder,  # TODO change the structure of the json file s.t. doesn't need to pass the embedder
+            embeddings_path=embeddings_path,
+            embedder=embedder,
             combiner_method=combiner_method
         )
         return {"embeddings_IDs": embeddings_IDs, "embeddings_matrix": embeddings_matrix}
 
     et.add_multistage(
         function=pipeline_build_embeddings_matrix,
-        list_args=[     # TODO split the pipeline in two: load the file, calculate the combiner because I will have a file for each embedder, while the combiners methods will be the same applied to all the embedder
+        list_args=[   
             {"embedder" : "rep", "combiner_method" : "pca" },
             {"embedder" : "rep", "combiner_method" : "average" },
             {"embedder" : "rep", "combiner_method" : "sum" },
@@ -325,8 +301,8 @@ if __name__ == "__main__":
     # EMBEDDINGS_PATH = "./dataset/enrichment_test/proteins.json"
     # GROUND_TRUE_PATH = "./dataset/enrichment_test/annotations.xml"
 
-    EMBEDDINGS_PATH =  "./dataset/emoglobina/emoglobina.json"
-    GROUND_TRUE_PATH = "./dataset/emoglobina/emoglobina.xml"
+    EMBEDDINGS_PATH =  "./dataset/globins/embeddings"
+    GROUND_TRUE_PATH = "./dataset/globins/globins.xml"
     
     
     et = main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH)
