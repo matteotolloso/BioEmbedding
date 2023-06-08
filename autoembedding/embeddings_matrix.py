@@ -1,9 +1,12 @@
 import numpy as np
-import autoembedding.utils as utils
-from autoembedding.combiners import combiner_for_prose, combiner_for_dnabert, combiner_for_rep, combiner_for_alphafold
+from autoembedding.combiners import combiner
+from os import listdir
+from os.path import isfile, join
+from pathlib import Path
+
 
 def build_embeddings_matrix(
-        embeddings_dict : dict, 
+        embeddings_path : str, 
         embedder : str,
         combiner_method : str
     ) -> tuple[list[str] , np.array]:
@@ -19,43 +22,21 @@ def build_embeddings_matrix(
 
     """
 
-    IDs = list(embeddings_dict.keys())
+    folder_path = embeddings_path + "/" + embedder
+
+    # list of files in the folder without the extension
+    IDs = [Path(f).stem for f in listdir(folder_path) if isfile(join(folder_path, f))]
 
     embeddings_matrix = []
 
     for id in IDs:
+        # load the file as a numpy array
+        raw_embedding = np.load(folder_path + "/" + id + ".npy")
 
-        final_embedding = []
-
-        if embedder == "rep":
-            final_embedding = combiner_for_rep(
-                raw_embedding=np.array(embeddings_dict[id][embedder]),  # is a 64-dim array
-                method = combiner_method
-            )
-        
-        elif embedder == "dnabert":
-            final_embedding = combiner_for_dnabert(
-                raw_embedding = np.array(embeddings_dict[id][embedder]), # is a (seq_len % 512)*(768) matrix
-                method = combiner_method
-            )
-
-        elif embedder == "prose":
-            final_embedding = combiner_for_prose(
-                raw_embedding = np.array(embeddings_dict[id][embedder]),  # is a (seq_len)*(100) matrix (each row is the embedding of an amminoacid)
-                method = combiner_method
-            ) 
-        
-        elif embedder == "alphafold":
-            final_embedding = combiner_for_alphafold(
-                raw_embedding = np.array(embeddings_dict[id][embedder]),  # is a (seq_len)*(100) matrix (each row is the embedding of an amminoacid)
-                method = combiner_method
-            ) 
-
-        elif embedder == "esm":
-            final_embedding = combiner_for_alphafold(
-                raw_embedding = np.array(embeddings_dict[id][embedder]),  # is a (seq_len)*(100) matrix (each row is the embedding of an amminoacid)
-                method = combiner_method
-            ) 
+        final_embedding = combiner(
+            raw_embedding = raw_embedding,
+            method = combiner_method
+        )
         
         embeddings_matrix.append(final_embedding)
 

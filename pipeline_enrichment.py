@@ -11,15 +11,14 @@ import numpy as np
 from Bio import SeqIO
 from autoembedding.results_manager import results2file
 
+# TODO check if the execution tree works well swapping the order of hyperparamenters
 
-def main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH):
-    # Loading the embeddings dict
-    embeddings_dict = utils.get_embeddings_dict(EMBEDDINGS_PATH)
-    et = ExecutionTree(input = {"embeddings_dict" : embeddings_dict} )
+def main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH):    
+    
+    et = ExecutionTree(input = {"embeddings_path" : EMBEDDINGS_PATH} )
 
     # BUILD EMBEDDING MATRIX (WITH COMBINER)
-
-    def pipeline_build_embeddings_matrix(previous_stage_output : dict, embedder, combiner_method) -> dict:
+    def pipeline_build_embeddings_matrix(previous_stage_output : dict, embedder: str, combiner_method : str) -> dict:
         
         """
         Built the embeddings matrix from the embeddings dict
@@ -32,10 +31,10 @@ def main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH):
             dict: A dict containing the IDs and the embeddings matrix where each row is the embedding of the corresponding ID
         """
 
-        embeddings_dict = previous_stage_output["embeddings_dict"]
+        embeddings_path = previous_stage_output["embeddings_path"]
 
         embeddings_IDs, embeddings_matrix = build_embeddings_matrix(
-            embeddings_dict=embeddings_dict,
+            embeddings_path=embeddings_path,
             embedder=embedder,
             combiner_method=combiner_method
         )
@@ -43,7 +42,7 @@ def main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH):
 
     et.add_multistage(
         function=pipeline_build_embeddings_matrix,
-        list_args=[
+        list_args=[   
             {"embedder" : "rep", "combiner_method" : "pca" },
             {"embedder" : "rep", "combiner_method" : "average" },
             {"embedder" : "rep", "combiner_method" : "sum" },
@@ -63,6 +62,11 @@ def main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH):
             {"embedder" : "alphafold", "combiner_method" : "average" },
             {"embedder" : "alphafold", "combiner_method" : "sum" },
             {"embedder" : "alphafold", "combiner_method" : "max" },
+
+            {"embedder" : "esm", "combiner_method" : "pca" },
+            {"embedder" : "esm", "combiner_method" : "average" },
+            {"embedder" : "esm", "combiner_method" : "sum" },
+            {"embedder" : "esm", "combiner_method" : "max" },
         
         ]
     )
@@ -168,21 +172,30 @@ def main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH):
         for i, name_i in enumerate(embeddings_IDs):
             for j, name_j in enumerate(embeddings_IDs):
                 
-                if edge_weight == 'method_1':   # TODO: implement other methods
+                # the amount of common annotations between the two sequences, i.e. A inter B
+                capacity =\
+                    len(set(annotation_dict[name_i]['go']).intersection(set(annotation_dict[name_j]['go']))) +\
+                    len(set(annotation_dict[name_i]['keywords']).intersection(set(annotation_dict[name_j]['keywords'])))+\
+                    len(set(annotation_dict[name_i]['taxonomy']).intersection(set(annotation_dict[name_j]['taxonomy'])))
+                # the amount of annotations of the first sequence
+                A =\
+                    len(set(annotation_dict[name_i]['go'])) +\
+                    len(set(annotation_dict[name_i]['keywords'])) +\
+                    len(set(annotation_dict[name_i]['taxonomy']))
+                # the amount of annotations of the second sequence
+                B =\
+                    len(set(annotation_dict[name_j]['go'])) +\
+                    len(set(annotation_dict[name_j]['keywords'])) +\
+                    len(set(annotation_dict[name_j]['taxonomy']))
+                
+                if edge_weight == 'method_1':
                     # compute the number of common annotations: n = (2*|A inter B|) / (|A| + |B|) 
-                    capacity =\
-                        len(set(annotation_dict[name_i]['go']).intersection(set(annotation_dict[name_j]['go']))) +\
-                        len(set(annotation_dict[name_i]['keywords']).intersection(set(annotation_dict[name_j]['keywords'])))+\
-                        len(set(annotation_dict[name_i]['taxonomy']).intersection(set(annotation_dict[name_j]['taxonomy'])))
+                    gtrue_distance_matrix[i][j] += 2*capacity/(A+B)
+                
+                elif edge_weight == 'method_2':
+                    # compute the weight as max( (A inter B)/A, (A inter B)/B )
+                    gtrue_distance_matrix[i][j] += max(capacity/A, capacity/B)
 
-                    normalization =\
-                        len(set(annotation_dict[name_i]['go'])) + len(set(annotation_dict[name_j]['go'])) +\
-                        len(set(annotation_dict[name_i]['keywords'])) + len(set(annotation_dict[name_j]['keywords']))+\
-                        len(set(annotation_dict[name_i]['taxonomy'])) + len(set(annotation_dict[name_j]['taxonomy']))
-
-                    gtrue_distance_matrix[i][j] += 2*capacity/normalization
-
-       
         # the ground true distances is not a distance measure but a similarity, we have to make it a distance and also make the diagonal 0 (maybe not necessary)
         gtrue_distance_matrix = gtrue_distance_matrix.max() - gtrue_distance_matrix
         
@@ -200,7 +213,7 @@ def main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH):
         # compute the linkage matrices
         gtrue_linkage_matrix = linkage(gtrue_distance_matrix, method=method, metric=metric)
 
-        gtrue_IDs = embeddings_IDs # TODO hopefully this is correct and nothing strande with the order of the IDs has happened
+        gtrue_IDs = embeddings_IDs # TODO hopefully this is correct and nothing strange with the order of the IDs has happened
 
         return {"gtrue_linkage_matrix" : gtrue_linkage_matrix, 
                 "gtrue_IDs": gtrue_IDs, 
@@ -219,9 +232,20 @@ def main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH):
             { "metric" : "euclidean",   "method" : "single",      "edge_weight" : "method_1" },
             { "metric" : "euclidean",   "method" : "median",      "edge_weight" : "method_1" },
             
-            { "metric" : "cosine",      "method" : "average",        "edge_weight" : "method_1" },
-            { "metric" : "cosine",      "method" : "complete",       "edge_weight" : "method_1" },
-            { "metric" : "cosine",      "method" : "single",         "edge_weight" : "method_1" },
+            { "metric" : "cosine",      "method" : "average",     "edge_weight" : "method_1" },
+            { "metric" : "cosine",      "method" : "complete",    "edge_weight" : "method_1" },
+            { "metric" : "cosine",      "method" : "single",      "edge_weight" : "method_1" },
+
+            { "metric" : "euclidean",   "method" : "ward",        "edge_weight" : "method_2" },
+            { "metric" : "euclidean",   "method" : "average",     "edge_weight" : "method_2" },
+            { "metric" : "euclidean",   "method" : "complete",    "edge_weight" : "method_2" },
+            { "metric" : "euclidean",   "method" : "centroid",    "edge_weight" : "method_2" },
+            { "metric" : "euclidean",   "method" : "single",      "edge_weight" : "method_2" },
+            { "metric" : "euclidean",   "method" : "median",      "edge_weight" : "method_2" },
+        
+            { "metric" : "cosine",      "method" : "average",     "edge_weight" : "method_2" },
+            { "metric" : "cosine",      "method" : "complete",    "edge_weight" : "method_2" },
+            { "metric" : "cosine",      "method" : "single",      "edge_weight" : "method_2" },
         ]
     )
 
@@ -274,11 +298,11 @@ def main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH):
 
 if __name__ == "__main__":
     
-    EMBEDDINGS_PATH = "./dataset/enrichment_test/proteins.json"
-    GROUND_TRUE_PATH = "./dataset/enrichment_test/annotations.xml"
+    # EMBEDDINGS_PATH = "./dataset/enrichment_test/proteins.json"
+    # GROUND_TRUE_PATH = "./dataset/enrichment_test/annotations.xml"
 
-    #EMBEDDINGS_PATH = "./dataset/NEIS2157/NEIS2157.json"
-    #GROUND_TRUE_PATH = "./dataset/NEIS2157/NEIS2157.dnd"
+    EMBEDDINGS_PATH =  "./dataset/globins/embeddings"
+    GROUND_TRUE_PATH = "./dataset/globins/globins.xml"
     
     
     et = main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH)

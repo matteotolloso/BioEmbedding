@@ -1,6 +1,14 @@
 import pandas as pd
 
-def results2table(r, metric="mean_adjusted_rand_score"):
+def results2table(
+    r, 
+    metric="mean_adjusted_rand_score", 
+    preferred_metric_embedding="euclidean",
+    preferred_method_embedding="ward",
+    preferred_metric_gt="euclidean",
+    preferred_method_gt="ward", 
+    preferred_edge_weight="method_1",
+    ):
     
     computations_dict = {} # dict[combiner][pca][embedder] = score
 
@@ -17,7 +25,7 @@ def results2table(r, metric="mean_adjusted_rand_score"):
                 computations_dict[combiner][pca][embedder] = None
     
     # fill the dict
-    # TODO improve this, implement the possibility to choose among different metrics to show
+    # TODO add the weght of the enrichment method in the preferred method
     for result, pipeline in r:  # for each result and the pipeline that generated it
         combiner = None
         pca = None
@@ -29,8 +37,21 @@ def results2table(r, metric="mean_adjusted_rand_score"):
                 combiner = args["combiner_method"]
             if stage == "pipeline_pca":
                 pca = args["n_components"]
+            if stage == "pipeline_build_embeddings_linkage_matrix":
+                metric_embedding = args["metric"]
+                method_embedding = args["method"]
+            if stage == "pipeline_build_gt_linkage_matrix":
+                metric_gt = args["metric"]
+                method_gt = args["method"]
+                edge_weight = args["edge_weight"]
         
-        computations_dict[combiner][pca][embedder] = result[metric]
+        if  metric_embedding == preferred_metric_embedding and \
+            method_embedding == preferred_method_embedding and \
+            metric_gt == preferred_metric_gt and \
+            method_gt == preferred_method_gt and \
+            edge_weight == preferred_edge_weight:
+        
+            computations_dict[combiner][pca][embedder] = result[metric]
 
     
     data_matrix = [] # the matrix that will be converted to a dataframe, the order of the rows and columns must be consistent whith the one created by the MultiIndex and the "columns" parameter of the DataFrame constructor
