@@ -41,10 +41,10 @@ def main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH):
     et.add_multistage(
         function=pipeline_build_embeddings_matrix,
         list_args=[ 
-            {"embedder" : "rep", "combiner_method" : "pca" },
-            {"embedder" : "rep", "combiner_method" : "average" },
-            {"embedder" : "rep", "combiner_method" : "sum" },
-            {"embedder" : "rep", "combiner_method" : "max" },
+            # {"embedder" : "rep", "combiner_method" : "pca" },
+            # {"embedder" : "rep", "combiner_method" : "average" },
+            # {"embedder" : "rep", "combiner_method" : "sum" },
+            # {"embedder" : "rep", "combiner_method" : "max" },
             
             {"embedder" : "dnabert", "combiner_method" : "pca" },
             {"embedder" : "dnabert", "combiner_method" : "average" },
@@ -129,15 +129,15 @@ def main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH):
         function=pipeline_build_embeddings_linkage_matrix,
         list_args=[
             {"metric" : "euclidean", "method" : "average"},
-            {"metric" : "euclidean", "method" : "complete"},
-            {"metric" : "euclidean", "method" : "ward"},
-            {"metric" : "euclidean", "method" : "centroid"},
-            {"metric" : "euclidean", "method" : "single"},
-            {"metric" : "euclidean", "method" : "median"},
+            # {"metric" : "euclidean", "method" : "complete"},
+            # {"metric" : "euclidean", "method" : "ward"},
+            # {"metric" : "euclidean", "method" : "centroid"},
+            # {"metric" : "euclidean", "method" : "single"},
+            # {"metric" : "euclidean", "method" : "median"},
             
-            {"metric" : "cosine", "method" : "average"},
-            {"metric" : "cosine", "method" : "complete"},
-            {"metric" : "cosine", "method" : "single"},
+            # {"metric" : "cosine", "method" : "average"},
+            # {"metric" : "cosine", "method" : "complete"},
+            # {"metric" : "cosine", "method" : "single"},
         ]
     )
 
@@ -164,15 +164,15 @@ def main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH):
         fixed_args={"ground_true_path" : GROUND_TRUE_PATH},
         list_args=[
             {"metric" : "euclidean", "method" : "average"},
-            {"metric" : "euclidean", "method" : "complete"},
-            {"metric" : "euclidean", "method" : "ward"},
-            {"metric" : "euclidean", "method" : "centroid"},
-            {"metric" : "euclidean", "method" : "single"},
-            {"metric" : "euclidean", "method" : "median"},
+            # {"metric" : "euclidean", "method" : "complete"},
+            # {"metric" : "euclidean", "method" : "ward"},
+            # {"metric" : "euclidean", "method" : "centroid"},
+            # {"metric" : "euclidean", "method" : "single"},
+            # {"metric" : "euclidean", "method" : "median"},
             
-            {"metric" : "cosine", "method" : "average"},
-            {"metric" : "cosine", "method" : "complete"},
-            {"metric" : "cosine", "method" : "single"},
+            # {"metric" : "cosine", "method" : "average"},
+            # {"metric" : "cosine", "method" : "complete"},
+            # {"metric" : "cosine", "method" : "single"},
         ]
     )
 
@@ -239,8 +239,8 @@ if __name__ == "__main__":
     # EMBEDDINGS_PATH = "./dataset/globins/globins.json"
     # GROUND_TRUE_PATH = "./dataset/globins/globins.dist"
 
-    EMBEDDINGS_PATH =  "./dataset/globins/embeddings"
-    GROUND_TRUE_PATH = "./dataset/globins/globins.dist"
+    EMBEDDINGS_PATH =  "./dataset/emoglobina/embeddings"
+    GROUND_TRUE_PATH = "./dataset/emoglobina/emoglobina.dist"
     
     
     et = main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH)
@@ -248,7 +248,7 @@ if __name__ == "__main__":
     
     r = et.get_results()
 
-    file_name = "./results/"+ "phylogenetic_" +"results_" + EMBEDDINGS_PATH.split("/")[-1].split(".")[0]
+    file_name = "./results/"+ "phylogenetic_" +"results_" + GROUND_TRUE_PATH.split("/")[-1].split(".")[0]
 
     et.dump_results(r, file_name)
 

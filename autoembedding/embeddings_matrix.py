@@ -12,8 +12,7 @@ def build_embeddings_matrix(
     ) -> tuple[list[str] , np.array]:
 
     """
-    Creates a numpy 2D matrix where each row is the embedding of a sequence. All the sequences that are keys of the embeddings_dict
-    are present in the matrix.
+    Creates a numpy 2D matrix where each row is the embedding of a sequence.
     The number of columns depends on the embedder and the combining method.
 
     Returns:
@@ -30,8 +29,14 @@ def build_embeddings_matrix(
     embeddings_matrix = []
 
     for id in IDs:
+
         # load the file as a numpy array
-        raw_embedding = np.load(folder_path + "/" + id + ".npy")
+        raw_embedding = None
+        try:
+            raw_embedding = np.load(folder_path + "/" + id + ".npy") 
+        except:
+            print(f"Error while loading the embedding of sequence {id} from embedder {embedder}")
+            raise
 
         final_embedding = combiner(
             raw_embedding = raw_embedding,
