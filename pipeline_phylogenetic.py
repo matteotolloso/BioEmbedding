@@ -65,7 +65,7 @@ def main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH):
             {"embedder" : "esm", "combiner_method" : "average" },
             {"embedder" : "esm", "combiner_method" : "sum" },
             {"embedder" : "esm", "combiner_method" : "max" },
-        
+            
         ]
     )
 
@@ -101,8 +101,9 @@ def main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH):
     et.add_multistage(
         function=pipeline_pca,
         list_args=[
-            {"n_components": "default"},
             {"n_components": "all"},
+            {"n_components": "default"},
+
         ]
     )
 
@@ -220,7 +221,7 @@ def main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH):
         for i in range(predict_labels_matrix.shape[1]):
             adjusted_rand_scores.append(adjusted_rand_score(predict_labels_matrix[:,i], gtrue_labels_matrix[:,i]))
         
-        return {"mean_adjusted_rand_score" : np.mean(adjusted_rand_scores), "max_adjusted_rand_score" : np.max(adjusted_rand_scores)}
+        return {"mean_adjusted_rand_score" : np.mean(adjusted_rand_scores)}
         
 
 
@@ -236,11 +237,11 @@ def main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH):
 
 if __name__ == "__main__":
     
-    # EMBEDDINGS_PATH = "./dataset/globins/globins.json"
-    # GROUND_TRUE_PATH = "./dataset/globins/globins.dist"
-
-    EMBEDDINGS_PATH =  "./dataset/emoglobina/embeddings"
+    EMBEDDINGS_PATH = "./dataset/emoglobina/embeddings"
     GROUND_TRUE_PATH = "./dataset/emoglobina/emoglobina.dist"
+
+    # EMBEDDINGS_PATH =  "./dataset/batterio/embeddings"
+    # GROUND_TRUE_PATH = "./dataset/batterio/batterio.dist"
     
     
     et = main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH)

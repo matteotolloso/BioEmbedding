@@ -43,10 +43,10 @@ def main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH):
     et.add_multistage(
         function=pipeline_build_embeddings_matrix,
         list_args=[   
-            {"embedder" : "rep", "combiner_method" : "pca" },
-            {"embedder" : "rep", "combiner_method" : "average" },
-            {"embedder" : "rep", "combiner_method" : "sum" },
-            {"embedder" : "rep", "combiner_method" : "max" },
+            # {"embedder" : "rep", "combiner_method" : "pca" },
+            # {"embedder" : "rep", "combiner_method" : "average" },
+            # {"embedder" : "rep", "combiner_method" : "sum" },
+            # {"embedder" : "rep", "combiner_method" : "max" },
             
             {"embedder" : "dnabert", "combiner_method" : "pca" },
             {"embedder" : "dnabert", "combiner_method" : "average" },
@@ -135,15 +135,15 @@ def main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH):
         function=pipeline_build_embeddings_linkage_matrix,
         list_args=[
         {"metric" : "euclidean", "method" : "average"},
-        {"metric" : "euclidean", "method" : "complete"},
-        {"metric" : "euclidean", "method" : "ward"},
-        {"metric" : "euclidean", "method" : "centroid"},
-        {"metric" : "euclidean", "method" : "single"},
-        {"metric" : "euclidean", "method" : "median"},
+        # {"metric" : "euclidean", "method" : "complete"},
+        # {"metric" : "euclidean", "method" : "ward"},
+        # {"metric" : "euclidean", "method" : "centroid"},
+        # {"metric" : "euclidean", "method" : "single"},
+        # {"metric" : "euclidean", "method" : "median"},
         
-        {"metric" : "cosine", "method" : "average"},
-        {"metric" : "cosine", "method" : "complete"},
-        {"metric" : "cosine", "method" : "single"},
+        # {"metric" : "cosine", "method" : "average"},
+        # {"metric" : "cosine", "method" : "complete"},
+        # {"metric" : "cosine", "method" : "single"},
         ]
     )
 
@@ -161,6 +161,8 @@ def main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH):
         annotation_dict = {}
         
         for record in records:
+            # TODO this line cause problems because the prefix of the name is not always "sp" and is not possible to 
+            # retrieve the prefix from the xml file but only from the fasta file. The way file are saved must be changed
             name = f'sp|{record.id}|{record.name}'      # must be the same as the one in the embedding matrix parsed from the fasta file
             annotation_dict[name] = {}
             go_annotations = [i for i in record.dbxrefs if i.startswith('GO')]
@@ -225,27 +227,27 @@ def main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH):
         function=pipeline_build_gt_linkage_matrix,
         fixed_args={ "ground_true_path" : GROUND_TRUE_PATH},
         list_args=[
-            { "metric" : "euclidean",   "method" : "ward",        "edge_weight" : "method_1" },
+            # { "metric" : "euclidean",   "method" : "ward",        "edge_weight" : "method_1" },
             { "metric" : "euclidean",   "method" : "average",     "edge_weight" : "method_1" },
-            { "metric" : "euclidean",   "method" : "complete",    "edge_weight" : "method_1" },
-            { "metric" : "euclidean",   "method" : "centroid",    "edge_weight" : "method_1" },
-            { "metric" : "euclidean",   "method" : "single",      "edge_weight" : "method_1" },
-            { "metric" : "euclidean",   "method" : "median",      "edge_weight" : "method_1" },
+            # { "metric" : "euclidean",   "method" : "complete",    "edge_weight" : "method_1" },
+            # { "metric" : "euclidean",   "method" : "centroid",    "edge_weight" : "method_1" },
+            # { "metric" : "euclidean",   "method" : "single",      "edge_weight" : "method_1" },
+            # { "metric" : "euclidean",   "method" : "median",      "edge_weight" : "method_1" },
             
-            { "metric" : "cosine",      "method" : "average",     "edge_weight" : "method_1" },
-            { "metric" : "cosine",      "method" : "complete",    "edge_weight" : "method_1" },
-            { "metric" : "cosine",      "method" : "single",      "edge_weight" : "method_1" },
+            # { "metric" : "cosine",      "method" : "average",     "edge_weight" : "method_1" },
+            # { "metric" : "cosine",      "method" : "complete",    "edge_weight" : "method_1" },
+            # { "metric" : "cosine",      "method" : "single",      "edge_weight" : "method_1" },
 
-            { "metric" : "euclidean",   "method" : "ward",        "edge_weight" : "method_2" },
-            { "metric" : "euclidean",   "method" : "average",     "edge_weight" : "method_2" },
-            { "metric" : "euclidean",   "method" : "complete",    "edge_weight" : "method_2" },
-            { "metric" : "euclidean",   "method" : "centroid",    "edge_weight" : "method_2" },
-            { "metric" : "euclidean",   "method" : "single",      "edge_weight" : "method_2" },
-            { "metric" : "euclidean",   "method" : "median",      "edge_weight" : "method_2" },
+            # { "metric" : "euclidean",   "method" : "ward",        "edge_weight" : "method_2" },
+            # { "metric" : "euclidean",   "method" : "average",     "edge_weight" : "method_2" },
+            # { "metric" : "euclidean",   "method" : "complete",    "edge_weight" : "method_2" },
+            # { "metric" : "euclidean",   "method" : "centroid",    "edge_weight" : "method_2" },
+            # { "metric" : "euclidean",   "method" : "single",      "edge_weight" : "method_2" },
+            # { "metric" : "euclidean",   "method" : "median",      "edge_weight" : "method_2" },
         
-            { "metric" : "cosine",      "method" : "average",     "edge_weight" : "method_2" },
-            { "metric" : "cosine",      "method" : "complete",    "edge_weight" : "method_2" },
-            { "metric" : "cosine",      "method" : "single",      "edge_weight" : "method_2" },
+            # { "metric" : "cosine",      "method" : "average",     "edge_weight" : "method_2" },
+            # { "metric" : "cosine",      "method" : "complete",    "edge_weight" : "method_2" },
+            # { "metric" : "cosine",      "method" : "single",      "edge_weight" : "method_2" },
         ]
     )
 
@@ -301,8 +303,8 @@ if __name__ == "__main__":
     # EMBEDDINGS_PATH = "./dataset/enrichment_test/proteins.json"
     # GROUND_TRUE_PATH = "./dataset/enrichment_test/annotations.xml"
 
-    EMBEDDINGS_PATH =  "./dataset/globins/embeddings"
-    GROUND_TRUE_PATH = "./dataset/globins/globins.xml"
+    EMBEDDINGS_PATH =  "./dataset/batterio/embeddings"
+    GROUND_TRUE_PATH = "./dataset/batterio/batterio.xml"
     
     
     et = main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH)
