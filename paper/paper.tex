@@ -1,4 +1,10 @@
 \documentclass[12pt, letterpaper, twocolumn]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{placeins}
+
+
 \title{Title}
 \author{Author}
 \date{Date}
@@ -18,22 +24,29 @@
 \onecolumn
 \begin{table}[h]
 \centering
-\begin{tabular}{|c c c|} 
+\begin{tabular}{|l c c|} 
     \hline
     Name & input length & embedding dimension  \\ 
     \hline
-    embedding reproduction (rep)        & 64    & 64    \\
-    dnabert                             & 512     & 768  \\
-    prose                               & 545   & 100    \\
-    alphafold                           & 1024   & 18744 \\
-    evolutionary scale modeling (esm)   & 1024    & 1280 \\  
+    embedding reproduction (rep)\cite{yang2018learned}       & 64    & 64    \\
+    dnabert \cite{ji2021dnabert}                     & 512     & 768  \\
+    prose   \cite{bepler2021learning}                   & 512   & 100    \\
+    alphafold  \cite{jumper2021highly}                 & 1024   & 384 \\
+    evolutionary scale modeling (esm2) \cite{lin2022language}   & 1024    & 1280 \\  
     \hline
 \end{tabular}
-\caption{Table to test captions and labels.}
+\caption{Embedders used in the experiments.}
 \label{table:data}
 \end{table}
 \twocolumn
 
 \section{Results}
+
+\onecolumn
+\newpage
+\FloatBarrier
+\bibliographystyle{plain}
+\bibliography{bibliography}
+
 
 \end{document}
