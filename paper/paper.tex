@@ -20,19 +20,25 @@
 
 \section{Methods}
 
+In this section we describe the pipeline used to analyze the embeddings. As shown in Table \ref{table:data}, the input length is different between the models as well as the output produced. We want to address the following problems: 1) compare different methods to join togheter the amminoacid-specific contextual representations in order to have a representation for the whole chunk; 2) compare different methods to join togheter the representations of the chunks in order to have a representation for the whole protein; 3) find out if these representations reflect known properties of the proteins.
+
+\subsection{Single amminoacid contextual representation}
+
+
+
 
 \onecolumn
 \begin{table}[h]
 \centering
 \begin{tabular}{|l c c|} 
     \hline
-    Name & input length & embedding dimension  \\ 
+    Name & input length (chunk) & embedding dimension  \\ 
     \hline
-    embedding reproduction (rep)\cite{yang2018learned}       & 64    & 64    \\
-    dnabert \cite{ji2021dnabert}                     & 512     & 768  \\
-    prose   \cite{bepler2021learning}                   & 512   & 100    \\
-    alphafold  \cite{jumper2021highly}                 & 1024   & 384 \\
-    evolutionary scale modeling (esm2) \cite{lin2022language}   & 1024    & 1280 \\  
+    embedding reproduction (rep)\cite{yang2018learned}       & 64    & 64 per chunk   \\
+    dnabert \cite{ji2021dnabert}                     & 512     & 768 per chunk \\
+    prose   \cite{bepler2021learning}                   & 512   & 100 per amino acid   \\
+    alphafold  \cite{jumper2021highly}                 & 1024   & 384 per ammino acid\\
+    evolutionary scale modeling (esm2) \cite{lin2022language}   & 1024    & 1280 per ammino acid \\  
     \hline
 \end{tabular}
 \caption{Embedders used in the experiments.}
