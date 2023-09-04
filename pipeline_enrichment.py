@@ -11,7 +11,6 @@ import numpy as np
 from Bio import SeqIO
 from autoembedding.results_manager import results2file
 
-# TODO check if the execution tree works well swapping the order of hyperparamenters
 
 def main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH):    
     

@@ -2,7 +2,6 @@ import numpy as np
 from sklearn.decomposition import PCA
 from sklearn.preprocessing import StandardScaler
 
-# TODO rewrite also the embedders to be compatible with the combiners
 
 def combiner(raw_embedding : np.array , method: str)-> np.array :
     """
