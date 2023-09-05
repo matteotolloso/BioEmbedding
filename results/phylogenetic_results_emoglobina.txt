@@ -1,0 +1,224 @@
+mean_adjusted_rand_score: 0.7408365087635836 
+pipeline_build_embeddings_matrix  {'embedder': 'esm', 'combiner_method': 'max'} 
+pipeline_pca  {'n_components': 'default'} 
+pipeline_build_embeddings_linkage_matrix  {'metric': 'euclidean', 'method': 'average'} 
+pipeline_build_gt_linkage_matrix  {'metric': 'euclidean', 'method': 'average', 'ground_true_path': './dataset/emoglobina/emoglobina.dist'} 
+pipeline_mean_adjusted_rand_score  {'cluster_range': (2, -1)} 
+
+mean_adjusted_rand_score: 0.7405083234383667 
+pipeline_build_embeddings_matrix  {'embedder': 'esm', 'combiner_method': 'max'} 
+pipeline_pca  {'n_components': 'all'} 
+pipeline_build_embeddings_linkage_matrix  {'metric': 'euclidean', 'method': 'average'} 
+pipeline_build_gt_linkage_matrix  {'metric': 'euclidean', 'method': 'average', 'ground_true_path': './dataset/emoglobina/emoglobina.dist'} 
+pipeline_mean_adjusted_rand_score  {'cluster_range': (2, -1)} 
+
+mean_adjusted_rand_score: 0.6967230057483557 
+pipeline_build_embeddings_matrix  {'embedder': 'esm', 'combiner_method': 'sum'} 
+pipeline_pca  {'n_components': 'default'} 
+pipeline_build_embeddings_linkage_matrix  {'metric': 'euclidean', 'method': 'average'} 
+pipeline_build_gt_linkage_matrix  {'metric': 'euclidean', 'method': 'average', 'ground_true_path': './dataset/emoglobina/emoglobina.dist'} 
+pipeline_mean_adjusted_rand_score  {'cluster_range': (2, -1)} 
+
+mean_adjusted_rand_score: 0.6907847673600261 
+pipeline_build_embeddings_matrix  {'embedder': 'esm', 'combiner_method': 'average'} 
+pipeline_pca  {'n_components': 'default'} 
+pipeline_build_embeddings_linkage_matrix  {'metric': 'euclidean', 'method': 'average'} 
+pipeline_build_gt_linkage_matrix  {'metric': 'euclidean', 'method': 'average', 'ground_true_path': './dataset/emoglobina/emoglobina.dist'} 
+pipeline_mean_adjusted_rand_score  {'cluster_range': (2, -1)} 
+
+mean_adjusted_rand_score: 0.6738350289039671 
+pipeline_build_embeddings_matrix  {'embedder': 'esm', 'combiner_method': 'average'} 
+pipeline_pca  {'n_components': 'all'} 
+pipeline_build_embeddings_linkage_matrix  {'metric': 'euclidean', 'method': 'average'} 
+pipeline_build_gt_linkage_matrix  {'metric': 'euclidean', 'method': 'average', 'ground_true_path': './dataset/emoglobina/emoglobina.dist'} 
+pipeline_mean_adjusted_rand_score  {'cluster_range': (2, -1)} 
+
+mean_adjusted_rand_score: 0.6658317285763315 
+pipeline_build_embeddings_matrix  {'embedder': 'esm', 'combiner_method': 'sum'} 
+pipeline_pca  {'n_components': 'all'} 
+pipeline_build_embeddings_linkage_matrix  {'metric': 'euclidean', 'method': 'average'} 
+pipeline_build_gt_linkage_matrix  {'metric': 'euclidean', 'method': 'average', 'ground_true_path': './dataset/emoglobina/emoglobina.dist'} 
+pipeline_mean_adjusted_rand_score  {'cluster_range': (2, -1)} 
+
+mean_adjusted_rand_score: 0.6644993517292885 
+pipeline_build_embeddings_matrix  {'embedder': 'esm', 'combiner_method': 'pca'} 
+pipeline_pca  {'n_components': 'default'} 
+pipeline_build_embeddings_linkage_matrix  {'metric': 'euclidean', 'method': 'average'} 
+pipeline_build_gt_linkage_matrix  {'metric': 'euclidean', 'method': 'average', 'ground_true_path': './dataset/emoglobina/emoglobina.dist'} 
+pipeline_mean_adjusted_rand_score  {'cluster_range': (2, -1)} 
+
+mean_adjusted_rand_score: 0.6511719561515663 
+pipeline_build_embeddings_matrix  {'embedder': 'esm', 'combiner_method': 'pca'} 
+pipeline_pca  {'n_components': 'all'} 
+pipeline_build_embeddings_linkage_matrix  {'metric': 'euclidean', 'method': 'average'} 
+pipeline_build_gt_linkage_matrix  {'metric': 'euclidean', 'method': 'average', 'ground_true_path': './dataset/emoglobina/emoglobina.dist'} 
+pipeline_mean_adjusted_rand_score  {'cluster_range': (2, -1)} 
+
+mean_adjusted_rand_score: 0.602112295475016 
+pipeline_build_embeddings_matrix  {'embedder': 'alphafold', 'combiner_method': 'sum'} 
+pipeline_pca  {'n_components': 'default'} 
+pipeline_build_embeddings_linkage_matrix  {'metric': 'euclidean', 'method': 'average'} 
+pipeline_build_gt_linkage_matrix  {'metric': 'euclidean', 'method': 'average', 'ground_true_path': './dataset/emoglobina/emoglobina.dist'} 
+pipeline_mean_adjusted_rand_score  {'cluster_range': (2, -1)} 
+
+mean_adjusted_rand_score: 0.5942494015073646 
+pipeline_build_embeddings_matrix  {'embedder': 'alphafold', 'combiner_method': 'pca'} 
+pipeline_pca  {'n_components': 'all'} 
+pipeline_build_embeddings_linkage_matrix  {'metric': 'euclidean', 'method': 'average'} 
+pipeline_build_gt_linkage_matrix  {'metric': 'euclidean', 'method': 'average', 'ground_true_path': './dataset/emoglobina/emoglobina.dist'} 
+pipeline_mean_adjusted_rand_score  {'cluster_range': (2, -1)} 
+
+mean_adjusted_rand_score: 0.5909483965069142 
+pipeline_build_embeddings_matrix  {'embedder': 'prose', 'combiner_method': 'max'} 
+pipeline_pca  {'n_components': 'all'} 
+pipeline_build_embeddings_linkage_matrix  {'metric': 'euclidean', 'method': 'average'} 
+pipeline_build_gt_linkage_matrix  {'metric': 'euclidean', 'method': 'average', 'ground_true_path': './dataset/emoglobina/emoglobina.dist'} 
+pipeline_mean_adjusted_rand_score  {'cluster_range': (2, -1)} 
+
+mean_adjusted_rand_score: 0.5879855880660294 
+pipeline_build_embeddings_matrix  {'embedder': 'alphafold', 'combiner_method': 'max'} 
+pipeline_pca  {'n_components': 'default'} 
+pipeline_build_embeddings_linkage_matrix  {'metric': 'euclidean', 'method': 'average'} 
+pipeline_build_gt_linkage_matrix  {'metric': 'euclidean', 'method': 'average', 'ground_true_path': './dataset/emoglobina/emoglobina.dist'} 
+pipeline_mean_adjusted_rand_score  {'cluster_range': (2, -1)} 
+
+mean_adjusted_rand_score: 0.5862100932705271 
+pipeline_build_embeddings_matrix  {'embedder': 'prose', 'combiner_method': 'max'} 
+pipeline_pca  {'n_components': 'default'} 
+pipeline_build_embeddings_linkage_matrix  {'metric': 'euclidean', 'method': 'average'} 
+pipeline_build_gt_linkage_matrix  {'metric': 'euclidean', 'method': 'average', 'ground_true_path': './dataset/emoglobina/emoglobina.dist'} 
+pipeline_mean_adjusted_rand_score  {'cluster_range': (2, -1)} 
+
+mean_adjusted_rand_score: 0.577500675416642 
+pipeline_build_embeddings_matrix  {'embedder': 'alphafold', 'combiner_method': 'pca'} 
+pipeline_pca  {'n_components': 'default'} 
+pipeline_build_embeddings_linkage_matrix  {'metric': 'euclidean', 'method': 'average'} 
+pipeline_build_gt_linkage_matrix  {'metric': 'euclidean', 'method': 'average', 'ground_true_path': './dataset/emoglobina/emoglobina.dist'} 
+pipeline_mean_adjusted_rand_score  {'cluster_range': (2, -1)} 
+
+mean_adjusted_rand_score: 0.5680998741331942 
+pipeline_build_embeddings_matrix  {'embedder': 'alphafold', 'combiner_method': 'average'} 
+pipeline_pca  {'n_components': 'default'} 
+pipeline_build_embeddings_linkage_matrix  {'metric': 'euclidean', 'method': 'average'} 
+pipeline_build_gt_linkage_matrix  {'metric': 'euclidean', 'method': 'average', 'ground_true_path': './dataset/emoglobina/emoglobina.dist'} 
+pipeline_mean_adjusted_rand_score  {'cluster_range': (2, -1)} 
+
+mean_adjusted_rand_score: 0.44949570165164354 
+pipeline_build_embeddings_matrix  {'embedder': 'prose', 'combiner_method': 'pca'} 
+pipeline_pca  {'n_components': 'all'} 
+pipeline_build_embeddings_linkage_matrix  {'metric': 'euclidean', 'method': 'average'} 
+pipeline_build_gt_linkage_matrix  {'metric': 'euclidean', 'method': 'average', 'ground_true_path': './dataset/emoglobina/emoglobina.dist'} 
+pipeline_mean_adjusted_rand_score  {'cluster_range': (2, -1)} 
+
+mean_adjusted_rand_score: 0.43937870753430225 
+pipeline_build_embeddings_matrix  {'embedder': 'prose', 'combiner_method': 'sum'} 
+pipeline_pca  {'n_components': 'default'} 
+pipeline_build_embeddings_linkage_matrix  {'metric': 'euclidean', 'method': 'average'} 
+pipeline_build_gt_linkage_matrix  {'metric': 'euclidean', 'method': 'average', 'ground_true_path': './dataset/emoglobina/emoglobina.dist'} 
+pipeline_mean_adjusted_rand_score  {'cluster_range': (2, -1)} 
+
+mean_adjusted_rand_score: 0.43506433331588357 
+pipeline_build_embeddings_matrix  {'embedder': 'prose', 'combiner_method': 'pca'} 
+pipeline_pca  {'n_components': 'default'} 
+pipeline_build_embeddings_linkage_matrix  {'metric': 'euclidean', 'method': 'average'} 
+pipeline_build_gt_linkage_matrix  {'metric': 'euclidean', 'method': 'average', 'ground_true_path': './dataset/emoglobina/emoglobina.dist'} 
+pipeline_mean_adjusted_rand_score  {'cluster_range': (2, -1)} 
+
+mean_adjusted_rand_score: 0.43458057190351923 
+pipeline_build_embeddings_matrix  {'embedder': 'prose', 'combiner_method': 'average'} 
+pipeline_pca  {'n_components': 'default'} 
+pipeline_build_embeddings_linkage_matrix  {'metric': 'euclidean', 'method': 'average'} 
+pipeline_build_gt_linkage_matrix  {'metric': 'euclidean', 'method': 'average', 'ground_true_path': './dataset/emoglobina/emoglobina.dist'} 
+pipeline_mean_adjusted_rand_score  {'cluster_range': (2, -1)} 
+
+mean_adjusted_rand_score: 0.4284296600739569 
+pipeline_build_embeddings_matrix  {'embedder': 'prose', 'combiner_method': 'sum'} 
+pipeline_pca  {'n_components': 'all'} 
+pipeline_build_embeddings_linkage_matrix  {'metric': 'euclidean', 'method': 'average'} 
+pipeline_build_gt_linkage_matrix  {'metric': 'euclidean', 'method': 'average', 'ground_true_path': './dataset/emoglobina/emoglobina.dist'} 
+pipeline_mean_adjusted_rand_score  {'cluster_range': (2, -1)} 
+
+mean_adjusted_rand_score: 0.4271625165784288 
+pipeline_build_embeddings_matrix  {'embedder': 'prose', 'combiner_method': 'average'} 
+pipeline_pca  {'n_components': 'all'} 
+pipeline_build_embeddings_linkage_matrix  {'metric': 'euclidean', 'method': 'average'} 
+pipeline_build_gt_linkage_matrix  {'metric': 'euclidean', 'method': 'average', 'ground_true_path': './dataset/emoglobina/emoglobina.dist'} 
+pipeline_mean_adjusted_rand_score  {'cluster_range': (2, -1)} 
+
+mean_adjusted_rand_score: 0.41125791893194863 
+pipeline_build_embeddings_matrix  {'embedder': 'alphafold', 'combiner_method': 'max'} 
+pipeline_pca  {'n_components': 'all'} 
+pipeline_build_embeddings_linkage_matrix  {'metric': 'euclidean', 'method': 'average'} 
+pipeline_build_gt_linkage_matrix  {'metric': 'euclidean', 'method': 'average', 'ground_true_path': './dataset/emoglobina/emoglobina.dist'} 
+pipeline_mean_adjusted_rand_score  {'cluster_range': (2, -1)} 
+
+mean_adjusted_rand_score: 0.38901092206820886 
+pipeline_build_embeddings_matrix  {'embedder': 'alphafold', 'combiner_method': 'sum'} 
+pipeline_pca  {'n_components': 'all'} 
+pipeline_build_embeddings_linkage_matrix  {'metric': 'euclidean', 'method': 'average'} 
+pipeline_build_gt_linkage_matrix  {'metric': 'euclidean', 'method': 'average', 'ground_true_path': './dataset/emoglobina/emoglobina.dist'} 
+pipeline_mean_adjusted_rand_score  {'cluster_range': (2, -1)} 
+
+mean_adjusted_rand_score: 0.3729462383235949 
+pipeline_build_embeddings_matrix  {'embedder': 'alphafold', 'combiner_method': 'average'} 
+pipeline_pca  {'n_components': 'all'} 
+pipeline_build_embeddings_linkage_matrix  {'metric': 'euclidean', 'method': 'average'} 
+pipeline_build_gt_linkage_matrix  {'metric': 'euclidean', 'method': 'average', 'ground_true_path': './dataset/emoglobina/emoglobina.dist'} 
+pipeline_mean_adjusted_rand_score  {'cluster_range': (2, -1)} 
+
+mean_adjusted_rand_score: 0.14931746372358723 
+pipeline_build_embeddings_matrix  {'embedder': 'dnabert', 'combiner_method': 'sum'} 
+pipeline_pca  {'n_components': 'all'} 
+pipeline_build_embeddings_linkage_matrix  {'metric': 'euclidean', 'method': 'average'} 
+pipeline_build_gt_linkage_matrix  {'metric': 'euclidean', 'method': 'average', 'ground_true_path': './dataset/emoglobina/emoglobina.dist'} 
+pipeline_mean_adjusted_rand_score  {'cluster_range': (2, -1)} 
+
+mean_adjusted_rand_score: 0.146882192681823 
+pipeline_build_embeddings_matrix  {'embedder': 'dnabert', 'combiner_method': 'average'} 
+pipeline_pca  {'n_components': 'all'} 
+pipeline_build_embeddings_linkage_matrix  {'metric': 'euclidean', 'method': 'average'} 
+pipeline_build_gt_linkage_matrix  {'metric': 'euclidean', 'method': 'average', 'ground_true_path': './dataset/emoglobina/emoglobina.dist'} 
+pipeline_mean_adjusted_rand_score  {'cluster_range': (2, -1)} 
+
+mean_adjusted_rand_score: 0.1421782642969405 
+pipeline_build_embeddings_matrix  {'embedder': 'dnabert', 'combiner_method': 'average'} 
+pipeline_pca  {'n_components': 'default'} 
+pipeline_build_embeddings_linkage_matrix  {'metric': 'euclidean', 'method': 'average'} 
+pipeline_build_gt_linkage_matrix  {'metric': 'euclidean', 'method': 'average', 'ground_true_path': './dataset/emoglobina/emoglobina.dist'} 
+pipeline_mean_adjusted_rand_score  {'cluster_range': (2, -1)} 
+
+mean_adjusted_rand_score: 0.1420701346328658 
+pipeline_build_embeddings_matrix  {'embedder': 'dnabert', 'combiner_method': 'max'} 
+pipeline_pca  {'n_components': 'all'} 
+pipeline_build_embeddings_linkage_matrix  {'metric': 'euclidean', 'method': 'average'} 
+pipeline_build_gt_linkage_matrix  {'metric': 'euclidean', 'method': 'average', 'ground_true_path': './dataset/emoglobina/emoglobina.dist'} 
+pipeline_mean_adjusted_rand_score  {'cluster_range': (2, -1)} 
+
+mean_adjusted_rand_score: 0.1377512889622892 
+pipeline_build_embeddings_matrix  {'embedder': 'dnabert', 'combiner_method': 'sum'} 
+pipeline_pca  {'n_components': 'default'} 
+pipeline_build_embeddings_linkage_matrix  {'metric': 'euclidean', 'method': 'average'} 
+pipeline_build_gt_linkage_matrix  {'metric': 'euclidean', 'method': 'average', 'ground_true_path': './dataset/emoglobina/emoglobina.dist'} 
+pipeline_mean_adjusted_rand_score  {'cluster_range': (2, -1)} 
+
+mean_adjusted_rand_score: 0.11537455845948005 
+pipeline_build_embeddings_matrix  {'embedder': 'dnabert', 'combiner_method': 'max'} 
+pipeline_pca  {'n_components': 'default'} 
+pipeline_build_embeddings_linkage_matrix  {'metric': 'euclidean', 'method': 'average'} 
+pipeline_build_gt_linkage_matrix  {'metric': 'euclidean', 'method': 'average', 'ground_true_path': './dataset/emoglobina/emoglobina.dist'} 
+pipeline_mean_adjusted_rand_score  {'cluster_range': (2, -1)} 
+
+mean_adjusted_rand_score: 0.08449401935803275 
+pipeline_build_embeddings_matrix  {'embedder': 'dnabert', 'combiner_method': 'pca'} 
+pipeline_pca  {'n_components': 'default'} 
+pipeline_build_embeddings_linkage_matrix  {'metric': 'euclidean', 'method': 'average'} 
+pipeline_build_gt_linkage_matrix  {'metric': 'euclidean', 'method': 'average', 'ground_true_path': './dataset/emoglobina/emoglobina.dist'} 
+pipeline_mean_adjusted_rand_score  {'cluster_range': (2, -1)} 
+
+mean_adjusted_rand_score: 0.07842264520338339 
+pipeline_build_embeddings_matrix  {'embedder': 'dnabert', 'combiner_method': 'pca'} 
+pipeline_pca  {'n_components': 'all'} 
+pipeline_build_embeddings_linkage_matrix  {'metric': 'euclidean', 'method': 'average'} 
+pipeline_build_gt_linkage_matrix  {'metric': 'euclidean', 'method': 'average', 'ground_true_path': './dataset/emoglobina/emoglobina.dist'} 
+pipeline_mean_adjusted_rand_score  {'cluster_range': (2, -1)} 
+
