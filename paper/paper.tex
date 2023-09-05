@@ -23,6 +23,11 @@
 In this section we describe the pipeline used to analyze the embeddings. As shown in Table \ref{table:data}, the input length is different between the models as well as the output produced. We want to address the following problems: 1) compare different methods to join togheter the amminoacid-specific contextual representations in order to have a representation for the whole chunk; 2) compare different methods to join togheter the representations of the chunks in order to have a representation for the whole protein; 3) find out if these representations reflect known properties of the proteins.
 
 \subsection{Single amminoacid contextual representation}
+We tried four methods to join togheter the amminoacid embeddings in order to produce a fixed size embedding for the chunk: average, maximum, sum and principal component analysis (PCA). Note that even if these operators are commutative, the overall process do takes into account the order of the amminoacids precisely because the embeddings are contextual.
+
+The same operator used to combine the amminoacid embeddings is also used to combine the embeddings of the chunks of the sequence.
+
+
 
 
 
@@ -41,7 +46,7 @@ In this section we describe the pipeline used to analyze the embeddings. As show
     evolutionary scale modeling (esm2) \cite{lin2022language}   & 1024    & 1280 per ammino acid \\  
     \hline
 \end{tabular}
-\caption{Embedders used in the experiments.}
+\caption{Embedders used in the experiments, their maximum imput length and the dimension of the embedding produced.}
 \label{table:data}
 \end{table}
 \twocolumn
