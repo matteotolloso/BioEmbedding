@@ -5,6 +5,16 @@ Tristan Bepler and Bonnie Berger.
 \newblock Learning the protein language: Evolution, structure, and function.
 \newblock {\em Cell systems}, 12(6):654--669, 2021.
 
+\bibitem{uniprot23}
+The~UniProt Consortium.
+\newblock {UniProt: the Universal Protein Knowledgebase in 2023}.
+\newblock {\em Nucleic Acids Research}, 51(D1):D523--D531, 11 2022.
+
+\bibitem{hubert1985comparing}
+Lawrence Hubert and Phipps Arabie.
+\newblock Comparing partitions.
+\newblock {\em Journal of classification}, 2:193--218, 1985.
+
 \bibitem{ji2021dnabert}
 Yanrong Ji, Zhihan Zhou, Han Liu, and Ramana~V Davuluri.
 \newblock Dnabert: pre-trained bidirectional encoder representations from
@@ -25,6 +35,14 @@ Zeming Lin, Halil Akin, Roshan Rao, Brian Hie, Zhongkai Zhu, Wenting Lu, Nikita
 \newblock Language models of protein sequences at the scale of evolution enable
   accurate structure prediction.
 \newblock {\em bioRxiv}, 2022.
+
+\bibitem{sievers2011fast}
+Fabian Sievers, Andreas Wilm, David Dineen, Toby~J Gibson, Kevin Karplus,
+  Weizhong Li, Rodrigo Lopez, Hamish McWilliam, Michael Remmert, Johannes
+  S{\"o}ding, et~al.
+\newblock Fast, scalable generation of high-quality protein multiple sequence
+  alignments using clustal omega.
+\newblock {\em Molecular systems biology}, 7(1):539, 2011.
 
 \bibitem{yang2018learned}
 Kevin~K Yang, Zachary Wu, Claire~N Bedbrook, and Frances~H Arnold.
