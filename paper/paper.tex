@@ -20,15 +20,55 @@
 
 \section{Methods}
 
-In this section we describe the pipeline used to analyze the embeddings. As shown in Table \ref{table:data}, the input length is different between the models as well as the output produced. We want to address the following problems: 1) compare different methods to join togheter the amminoacid-specific contextual representations in order to have a representation for the whole chunk; 2) compare different methods to join togheter the representations of the chunks in order to have a representation for the whole protein; 3) find out if these representations reflect known properties of the proteins.
+In this section we describe the pipeline used to analyze the embeddings. As shown in Table \ref{tab:embedders}, the input length is different between the models as well as the output produced. We want to address the following problems: 1) compare different methods to join togheter the amminoacid-specific contextual representations in order to have a representation for the whole chunk; 2) compare different methods to join togheter the representations of the chunks in order to have a representation for the whole protein; 3) find out if these representations reflect known properties of the proteins.
 
-\subsection{Single amminoacid contextual representation}
+\subsection{Combining the contextual representations}
+We tried four methods to join togheter the amminoacid embeddings in order to produce a fixed size embedding for the chunk: average, maximum, sum and principal component analysis (PCA). Note that even if these operators are commutative, the overall process do takes into account the order of the amminoacids precisely because the embeddings are contextual.
+
+The same operator used to combine the amminoacid embeddings is also used to combine the embeddings of the chunks of the sequence.
+
+\subsection{Comparison with known informations}
+Given a set of embeddings of sequences we want to analyze their distribution in the embedding space comparing it with both the distance matrix produced during the multiple sequence alignment with Clustal Omega \cite{sievers2011fast} and annotations as Gene Ontology \cite{10.1093/genetics/iyad031, ashburner2000gene}, UniProtKB Keywords and NCBI Taxonimy \cite{uniprot23}.
+
+\subsubsection{Allignment distance \label{sec:allignment}}
+In order to compare the distances between the sequences in the embedding space with the alignment distance we performed an agglomerative clustering on both the matrices, the resulting tree is then cut at each level: flat partitions of all possibles number of clusters are produced. We performed a comparison of the partitions with the same number of clusters using the adjusted rand score \cite{hubert1985comparing}. The mean of these score, starting from two clusters up to $ \#elements - 1 $ clusters is called mean adjusted rand score (MARS). 
+
+\subsubsection{Enrichment analysis}
+We wanted to analyze the properties of the embeddings also at an higher level. The Gene Ontology (GO) describes our knowledge of the sequence with respect to: molecular function, cellular component and biological process; there ara also more specific controlled vocabulary as the UniProt Keywords and hierarchical classifications specific for sequences as the NCBI Taxonomy.
+
+Whatever they are the sets of words to describe the sequences in our datasets, we want to build a distance between sequences among them. Given $A$ and $B$ the sets of annotations of two sequences we computed the distance in two possible ways: $$d1 = \frac{2 * |A \cap B|}{|A| + |B|} $$ $$d2 = \max\{ \frac{|A \cap B|}{|A|}, \frac{|A \cap B|}{|B|} \} $$
+
+Both of them vary between $0$ and $1$, however $d1$ goes to 1 only when the two sets are equals while $d2$ goes to 1 also when one set is a subset of the other. After calculating one of these distance between all possible pair in the dataset we end up with a similarity matrix, that can be easly transformed in a distance matrix that is possible to comprare with the distance matrix derived from the distance between the embeddings using the MARS as described in subsection \ref{sec:allignment}.
+
+\onecolumn
+\begin{table}[ht]
+\centering
+\begin{tabular}{|p{3cm} p{3cm} c c c |} 
+    \hline
+    Name & description & number of sequences & type & avg length   \\ 
+    \hline
+    hemoglobin &  hemoglobin for various organisms & 761 & amminoacid & 142  \\
+    \hline
+    mouse & mouse proteome     & 974 & amminoacid & 516 \\
+    \hline
+    bacterium & bacterium proteome  & 259 &  amminoacid & 427  \\
+    \hline
+    covid19 & covid19 complete genome & 77 & nucleotides & 29831  \\
+    \hline
+    meningitis & meningitis complete genome & 68 & nucleotides & 2240049 \\
+    \hline
+\end{tabular}
+\caption{Datasets used in the experiments.}
+\label{tab:dataset}
+\end{table}
+\twocolumn
+
 
 
 
 
 \onecolumn
-\begin{table}[h]
+\begin{table}[ht]
 \centering
 \begin{tabular}{|l c c|} 
     \hline
@@ -41,10 +81,12 @@ In this section we describe the pipeline used to analyze the embeddings. As show
     evolutionary scale modeling (esm2) \cite{lin2022language}   & 1024    & 1280 per ammino acid \\  
     \hline
 \end{tabular}
-\caption{Embedders used in the experiments.}
-\label{table:data}
+\caption{Embedders used in the experiments, their maximum imput length and the dimension of the embedding produced.}
+\label{tab:embedders}
 \end{table}
 \twocolumn
+
+
 
 \section{Results}
 

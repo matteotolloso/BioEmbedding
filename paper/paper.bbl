@@ -1,9 +1,66 @@
-\begin{thebibliography}{1}
+\begin{thebibliography}{10}
+
+\bibitem{ashburner2000gene}
+Michael Ashburner, Catherine~A Ball, Judith~A Blake, David Botstein, Heather
+  Butler, J~Michael Cherry, Allan~P Davis, Kara Dolinski, Selina~S Dwight,
+  Janan~T Eppig, et~al.
+\newblock Gene ontology: tool for the unification of biology.
+\newblock {\em Nature genetics}, 25(1):25--29, 2000.
 
 \bibitem{bepler2021learning}
 Tristan Bepler and Bonnie Berger.
 \newblock Learning the protein language: Evolution, structure, and function.
 \newblock {\em Cell systems}, 12(6):654--669, 2021.
+
+\bibitem{10.1093/genetics/iyad031}
+The Gene~Ontology Consortium, Suzi~A Aleksander, James Balhoff, Seth Carbon,
+  J~Michael Cherry, Harold~J Drabkin, Dustin Ebert, Marc Feuermann, Pascale
+  Gaudet, Nomi~L Harris, David~P Hill, Raymond Lee, Huaiyu Mi, Sierra Moxon,
+  Christopher~J Mungall, Anushya Muruganugan, Tremayne Mushayahama, Paul~W
+  Sternberg, Paul~D Thomas, Kimberly Van~Auken, Jolene Ramsey, Deborah~A
+  Siegele, Rex~L Chisholm, Petra Fey, Maria~Cristina Aspromonte, Maria~Victoria
+  Nugnes, Federica Quaglia, Silvio Tosatto, Michelle Giglio, Suvarna Nadendla,
+  Giulia Antonazzo, Helen Attrill, Gil dos Santos, Steven Marygold, Victor
+  Strelets, Christopher~J Tabone, Jim Thurmond, Pinglei Zhou, Saadullah~H
+  Ahmed, Praoparn Asanitthong, Diana Luna~Buitrago, Meltem~N Erdol, Matthew~C
+  Gage, Mohamed Ali~Kadhum, Kan Yan~Chloe Li, Miao Long, Aleksandra Michalak,
+  Angeline Pesala, Armalya Pritazahra, Shirin C~C Saverimuttu, Renzhi Su,
+  Kate~E Thurlow, Ruth~C Lovering, Colin Logie, Snezhana Oliferenko, Judith
+  Blake, Karen Christie, Lori Corbani, Mary~E Dolan, Harold~J Drabkin, David~P
+  Hill, Li~Ni, Dmitry Sitnikov, Cynthia Smith, Alayne Cuzick, James Seager,
+  Laurel Cooper, Justin Elser, Pankaj Jaiswal, Parul Gupta, Pankaj Jaiswal,
+  Sushma Naithani, Manuel Lera-Ramirez, Kim Rutherford, Valerie Wood, Jeffrey~L
+  De~Pons, Melinda~R Dwinell, G~Thomas Hayman, Mary~L Kaldunski, Anne~E Kwitek,
+  Stanley J~F Laulederkind, Marek~A Tutaj, Mahima Vedi, Shur-Jen Wang, Peter
+  D’Eustachio, Lucila Aimo, Kristian Axelsen, Alan Bridge, Nevila
+  Hyka-Nouspikel, Anne Morgat, Suzi~A Aleksander, J~Michael Cherry, Stacia~R
+  Engel, Kalpana Karra, Stuart~R Miyasato, Robert~S Nash, Marek~S Skrzypek,
+  Shuai Weng, Edith~D Wong, Erika Bakker, Tanya~Z Berardini, Leonore Reiser,
+  Andrea Auchincloss, Kristian Axelsen, Ghislaine Argoud-Puy, Marie-Claude
+  Blatter, Emmanuel Boutet, Lionel Breuza, Alan Bridge, Cristina Casals-Casas,
+  Elisabeth Coudert, Anne Estreicher, Maria Livia~Famiglietti, Marc Feuermann,
+  Arnaud Gos, Nadine Gruaz-Gumowski, Chantal Hulo, Nevila Hyka-Nouspikel,
+  Florence Jungo, Philippe Le~Mercier, Damien Lieberherr, Patrick Masson, Anne
+  Morgat, Ivo Pedruzzi, Lucille Pourcel, Sylvain Poux, Catherine Rivoire,
+  Shyamala Sundaram, Alex Bateman, Emily Bowler-Barnett, Hema Bye-A-Jee, Paul
+  Denny, Alexandr Ignatchenko, Rizwan Ishtiaq, Antonia Lock, Yvonne Lussi,
+  Michele Magrane, Maria~J Martin, Sandra Orchard, Pedro Raposo, Elena
+  Speretta, Nidhi Tyagi, Kate Warner, Rossana Zaru, Alexander~D Diehl, Raymond
+  Lee, Juancarlos Chan, Stavros Diamantakis, Daniela Raciti, Magdalena
+  Zarowiecki, Malcolm Fisher, Christina James-Zorn, Virgilio Ponferrada, Aaron
+  Zorn, Sridhar Ramachandran, Leyla Ruzicka, and Monte Westerfield.
+\newblock {The Gene Ontology knowledgebase in 2023}.
+\newblock {\em Genetics}, 224(1):iyad031, 03 2023.
+
+\bibitem{uniprot23}
+The~UniProt Consortium.
+\newblock {UniProt: the Universal Protein Knowledgebase in 2023}.
+\newblock {\em Nucleic Acids Research}, 51(D1):D523--D531, 11 2022.
+
+\bibitem{hubert1985comparing}
+Lawrence Hubert and Phipps Arabie.
+\newblock Comparing partitions.
+\newblock {\em Journal of classification}, 2:193--218, 1985.
 
 \bibitem{ji2021dnabert}
 Yanrong Ji, Zhihan Zhou, Han Liu, and Ramana~V Davuluri.
@@ -25,6 +82,14 @@ Zeming Lin, Halil Akin, Roshan Rao, Brian Hie, Zhongkai Zhu, Wenting Lu, Nikita
 \newblock Language models of protein sequences at the scale of evolution enable
   accurate structure prediction.
 \newblock {\em bioRxiv}, 2022.
+
+\bibitem{sievers2011fast}
+Fabian Sievers, Andreas Wilm, David Dineen, Toby~J Gibson, Kevin Karplus,
+  Weizhong Li, Rodrigo Lopez, Hamish McWilliam, Michael Remmert, Johannes
+  S{\"o}ding, et~al.
+\newblock Fast, scalable generation of high-quality protein multiple sequence
+  alignments using clustal omega.
+\newblock {\em Molecular systems biology}, 7(1):539, 2011.
 
 \bibitem{yang2018learned}
 Kevin~K Yang, Zachary Wu, Claire~N Bedbrook, and Frances~H Arnold.
