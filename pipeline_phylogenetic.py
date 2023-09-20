@@ -45,6 +45,11 @@ def main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH):
             # {"embedder" : "rep", "combiner_method" : "average" },
             # {"embedder" : "rep", "combiner_method" : "sum" },
             # {"embedder" : "rep", "combiner_method" : "max" },
+
+            {"embedder" : "seqvec", "combiner_method" : "pca" },
+            {"embedder" : "seqvec", "combiner_method" : "average" },
+            {"embedder" : "seqvec", "combiner_method" : "sum" },
+            {"embedder" : "seqvec", "combiner_method" : "max" },
             
             {"embedder" : "dnabert", "combiner_method" : "pca" },
             {"embedder" : "dnabert", "combiner_method" : "average" },
