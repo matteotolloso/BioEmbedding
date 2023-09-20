@@ -75,6 +75,18 @@ John Jumper, Richard Evans, Alexander Pritzel, Tim Green, Michael Figurnov,
 \newblock Highly accurate protein structure prediction with alphafold.
 \newblock {\em Nature}, 596(7873):583--589, 2021.
 
+\bibitem{khurana2023natural}
+Diksha Khurana, Aditya Koli, Kiran Khatter, and Sukhdev Singh.
+\newblock Natural language processing: State of the art, current trends and
+  challenges.
+\newblock {\em Multimedia tools and applications}, 82(3):3713--3744, 2023.
+
+\bibitem{kosloff2008sequence}
+Mickey Kosloff and Rachel Kolodny.
+\newblock Sequence-similar, structure-dissimilar protein pairs in the pdb.
+\newblock {\em Proteins: Structure, Function, and Bioinformatics},
+  71(2):891--902, 2008.
+
 \bibitem{lin2022language}
 Zeming Lin, Halil Akin, Roshan Rao, Brian Hie, Zhongkai Zhu, Wenting Lu, Nikita
   Smetanin, Allan dos Santos~Costa, Maryam Fazel-Zarandi, Tom Sercu, Sal
@@ -83,6 +95,11 @@ Zeming Lin, Halil Akin, Roshan Rao, Brian Hie, Zhongkai Zhu, Wenting Lu, Nikita
   accurate structure prediction.
 \newblock {\em bioRxiv}, 2022.
 
+\bibitem{mikolov2013efficient}
+Tomas Mikolov, Kai Chen, Greg Corrado, and Jeffrey Dean.
+\newblock Efficient estimation of word representations in vector space.
+\newblock {\em arXiv preprint arXiv:1301.3781}, 2013.
+
 \bibitem{sievers2011fast}
 Fabian Sievers, Andreas Wilm, David Dineen, Toby~J Gibson, Kevin Karplus,
   Weizhong Li, Rodrigo Lopez, Hamish McWilliam, Michael Remmert, Johannes
@@ -90,6 +107,13 @@ Fabian Sievers, Andreas Wilm, David Dineen, Toby~J Gibson, Kevin Karplus,
 \newblock Fast, scalable generation of high-quality protein multiple sequence
   alignments using clustal omega.
 \newblock {\em Molecular systems biology}, 7(1):539, 2011.
+
+\bibitem{SOFI202247}
+Mohammad~Yaseen Sofi, Afshana Shafi, and Khalid~Z. Masoodi.
+\newblock Chapter 6 - multiple sequence alignment.
+\newblock In Mohammad~Yaseen Sofi, Afshana Shafi, and Khalid~Z. Masoodi,
+  editors, {\em Bioinformatics for Everyone}, pages 47--53. Academic Press,
+  2022.
 
 \bibitem{yang2018learned}
 Kevin~K Yang, Zachary Wu, Claire~N Bedbrook, and Frances~H Arnold.

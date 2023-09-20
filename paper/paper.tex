@@ -14,61 +14,42 @@
 \begin{document}
 \maketitle
 
-\section{Introduction}
 
-\section{Related Work}
+\section{Introduction}
+In the latest few years, machine learning and deep learning have revolutionized the natural language processing field (NLP)\cite{khurana2023natural}. At the same time some fundamental ideas developed in NLP have been succesfuly applied to another type of language, the biological one: DNA, RNA and amminoacid sequences bringing to excellent results even in the complex task of protein structure prediction\cite{jumper2021highly, lin2022language}. One of these fundamental ideas is word embedding \cite{mikolov2013efficient} because it transforms words into points in space, therefore easy to process.
+It is well known that sequence similarity do not always correspond to functional similarity \cite{kosloff2008sequence}.
 
 \section{Methods}
 
-In this section we describe the pipeline used to analyze the embeddings. As shown in Table \ref{tab:embedders}, the input length is different between the models as well as the output produced. We want to address the following problems: 1) compare different methods to join togheter the amminoacid-specific contextual representations in order to have a representation for the whole chunk; 2) compare different methods to join togheter the representations of the chunks in order to have a representation for the whole protein; 3) find out if these representations reflect known properties of the proteins.
+In this section we describe the pipeline used to analyze the embeddings. As shown in Table \ref{tab:embedders}, the input length is different between the models as well as the output produced. We want to address the following problems: 1) compare different methods to join togheter the amminoacid-specific contextual representations in order to have a representation for the whole chunk and subsequently join togheter the representations of the chunks in order to have a representation for the whole protein; 2) find out if these representations reflect known properties of the proteins.
 
-\subsection{Combining the contextual representations}
-We tried four methods to join togheter the amminoacid embeddings in order to produce a fixed size embedding for the chunk: average, maximum, sum and principal component analysis (PCA). Note that even if these operators are commutative, the overall process do takes into account the order of the amminoacids precisely because the embeddings are contextual.
+\subsection{Represent protein sequences as continuous vectors}
+short description of the main characteristics of each embedder 
+\subsubsection{SeqVec}
+
+\subsection{Combining the (contextual) representations}
+We tried four methods to join togheter the amminoacid embeddings in order to produce a fixed size embedding for the chunk: average, maximum, sum and principal component analysis (PCA). 
 
 The same operator used to combine the amminoacid embeddings is also used to combine the embeddings of the chunks of the sequence.
 
-\subsection{Comparison with known informations}
-Given a set of embeddings of sequences we want to analyze their distribution in the embedding space comparing it with both the distance matrix produced during the multiple sequence alignment with Clustal Omega \cite{sievers2011fast} and annotations as Gene Ontology \cite{10.1093/genetics/iyad031, ashburner2000gene}, UniProtKB Keywords and NCBI Taxonimy \cite{uniprot23}.
+Note on the contextal embedding: seqvec: contextual
 
-\subsubsection{Allignment distance \label{sec:allignment}}
-In order to compare the distances between the sequences in the embedding space with the alignment distance we performed an agglomerative clustering on both the matrices, the resulting tree is then cut at each level: flat partitions of all possibles number of clusters are produced. We performed a comparison of the partitions with the same number of clusters using the adjusted rand score \cite{hubert1985comparing}. The mean of these score, starting from two clusters up to $ \#elements - 1 $ clusters is called mean adjusted rand score (MARS). 
+\subsection{Comparison with known informations}
+Given a set of embeddings of sequences we want to analyze their distribution in the embedding space comparing it with both the distance matrix produced during the multiple sequence alignment with Clustal Omega \cite{sievers2011fast} and higher level annotations as Gene Ontology \cite{10.1093/genetics/iyad031, ashburner2000gene}, UniProtKB Keywords and NCBI Taxonimy \cite{uniprot23}.
+
+\subsubsection{Similarity between distance matrices \label{sec:similarity}}
+In order to compare two distance matrices we performed an agglomerative clustering on both, the resulting tree is then cut at each level obtaining flat partitions of all possibles number of clusters. We performed a pairwise comparison of the partitions having the same number of clusters using the adjusted rand score \cite{hubert1985comparing}. The mean of these score, starting from two clusters up to $ \#elements - 1 $ clusters is called mean adjusted rand score (MARS). We compared different distance metrics as well as different methods to perform the hierarchical clustering.  
 
 \subsubsection{Enrichment analysis}
-We wanted to analyze the properties of the embeddings also at an higher level. The Gene Ontology (GO) describes our knowledge of the sequence with respect to: molecular function, cellular component and biological process; there ara also more specific controlled vocabulary as the UniProt Keywords and hierarchical classifications specific for sequences as the NCBI Taxonomy.
+The alignment distance matrix provide an evolutionary related distance between sequences \cite{SOFI202247}, we also wanted to analyze the properties of the embeddings at an higher level. The Gene Ontology (GO) describes our knowledge of the sequence with respect to: molecular function, cellular component and biological process; there ara also more specific controlled vocabulary as the UniProt Keywords and hierarchical classifications specific for sequences as the NCBI Taxonomy.
 
 Whatever they are the sets of words to describe the sequences in our datasets, we want to build a distance between sequences among them. Given $A$ and $B$ the sets of annotations of two sequences we computed the distance in two possible ways: $$d1 = \frac{2 * |A \cap B|}{|A| + |B|} $$ $$d2 = \max\{ \frac{|A \cap B|}{|A|}, \frac{|A \cap B|}{|B|} \} $$
 
-Both of them vary between $0$ and $1$, however $d1$ goes to 1 only when the two sets are equals while $d2$ goes to 1 also when one set is a subset of the other. After calculating one of these distance between all possible pair in the dataset we end up with a similarity matrix, that can be easly transformed in a distance matrix that is possible to comprare with the distance matrix derived from the distance between the embeddings using the MARS as described in subsection \ref{sec:allignment}.
-
-\onecolumn
-\begin{table}[ht]
-\centering
-\begin{tabular}{|p{3cm} p{3cm} c c c |} 
-    \hline
-    Name & description & number of sequences & type & avg length   \\ 
-    \hline
-    hemoglobin &  hemoglobin for various organisms & 761 & amminoacid & 142  \\
-    \hline
-    mouse & mouse proteome     & 974 & amminoacid & 516 \\
-    \hline
-    bacterium & bacterium proteome  & 259 &  amminoacid & 427  \\
-    \hline
-    covid19 & covid19 complete genome & 77 & nucleotides & 29831  \\
-    \hline
-    meningitis & meningitis complete genome & 68 & nucleotides & 2240049 \\
-    \hline
-\end{tabular}
-\caption{Datasets used in the experiments.}
-\label{tab:dataset}
-\end{table}
-\twocolumn
-
-
-
+Both of them vary between $0$ and $1$, however $d1$ goes to 1 only when the two sets are equals while $d2$ goes to 1 also when one set is a subset of the other. After calculating one of these distance between all possible pair in the dataset we end up with a similarity matrix, that can be easly transformed in a distance matrix that is possible to comprare with the distance matrix derived from the distance between the embeddings using the MARS as described in subsection \ref{sec:similarity}.
 
 
 \onecolumn
-\begin{table}[ht]
+\begin{table}[htb]
 \centering
 \begin{tabular}{|l c c|} 
     \hline
@@ -87,8 +68,38 @@ Both of them vary between $0$ and $1$, however $d1$ goes to 1 only when the two 
 \twocolumn
 
 
+\onecolumn
+\begin{table}[htb]
+\centering
+\begin{tabular}{|p{3cm} p{3cm} c c c |} 
+    \hline
+    Name & description & number of sequences & type & avg length   \\ 
+    \hline
+    hemoglobin &  hemoglobin for various organisms & 761 & amminoacids & 142  \\
+    \hline
+    mouse & mouse proteome     & 974 & amminoacids & 516 \\
+    \hline
+    bacterium & bacterium proteome  & 259 &  amminoacids & 427  \\
+    \hline
+    covid19 & covid19 complete genome & 77 & nucleotides & 29831  \\
+    \hline
+    meningitis & meningitis complete genome & 68 & nucleotides & 2240049 \\
+    \hline
+\end{tabular}
+\caption{Datasets used in the experiments.}
+\label{tab:dataset}
+\end{table}
+\twocolumn
+
+
+
 
 \section{Results}
+\subsection{Phylogenetic}
+\subsection{Enrichment}
+\subsection{Projections?}
+\subsection{Classification?}
+\subsection{Pointwise representation similarity?}
 
 \onecolumn
 \newpage
