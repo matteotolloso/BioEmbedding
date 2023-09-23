@@ -99,7 +99,7 @@ def main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH):
         return { "embeddings_matrix" : embeddings_matrix, "embeddings_IDs": embeddings_IDs}
 
     et.add_multistage(
-        function=pipeline_pca,
+        function=pipeline_pca, # TODO t-sne
         list_args=[
             {"n_components": "all"},
             {"n_components": "default"},

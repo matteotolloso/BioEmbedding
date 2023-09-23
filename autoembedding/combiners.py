@@ -2,6 +2,8 @@ import numpy as np
 from sklearn.decomposition import PCA
 from sklearn.preprocessing import StandardScaler
 
+# TODO implement t-sne
+
 
 def combiner(raw_embedding : np.array , method: str)-> np.array :
     """

@@ -24,10 +24,26 @@ It is well known that sequence similarity do not always correspond to functional
 In this section we describe the pipeline used to analyze the embeddings. As shown in Table \ref{tab:embedders}, the input length is different between the models as well as the output produced. We want to address the following problems: 1) compare different methods to join togheter the amminoacid-specific contextual representations in order to have a representation for the whole chunk and subsequently join togheter the representations of the chunks in order to have a representation for the whole protein; 2) find out if these representations reflect known properties of the proteins.
 
 \subsection{Represent protein sequences as continuous vectors}
-short description of the main characteristics of each embedder 
-\subsubsection{SeqVec}
+short description of the main characteristics of each embedder
 
-\subsection{Combining the (contextual) representations}
+\subsubsection{prose}
+learning with strictural supervision
+
+\subsubsection{alphafold}
+
+- is a deep learning system not a language model
+
+- predict residue-residue distances from sequence families and fold proteins based on the predicted distance constraints
+
+- rely on large datasets of protein sequences that are similar enough to be aligned with high confidence but contain enough divergence to confidently infer statistical couplings between positions
+
+- unable to learn patterns across large-scale databases of possibly unrelated proteins and have limited ability to draw on the increasing structure and function information available
+
+
+\subsubsection{SeqVec}
+To build their model Heinzinger et al.\cite{heinzinger2019modeling} adapted the standar ELMo configuration \cite{peters-etal-2018-deep} to work with protein sequences modifying the number of tokens and the unroll steps. It is composed by 1 CharCNN and 2 LSTM-Layers. Given a protein sequence of arbitrary length it returns 3072 features for each residue derived by concatenating the outputs of the three layers of ELMo, each describing a token with a vector of length 1024. In order to obtain a smaller representation for each amminoacid i computed the mean of the three layers (as also suggested in the official repository). Given the architecture of the ELMo, these representation are contextual-dependent.
+
+\subsection{Combining the (contextual) representations}derived by concatenating the outputs of the three layers of ELMo, each describing a token with a vector of length 1024
 We tried four methods to join togheter the amminoacid embeddings in order to produce a fixed size embedding for the chunk: average, maximum, sum and principal component analysis (PCA). 
 
 The same operator used to combine the amminoacid embeddings is also used to combine the embeddings of the chunks of the sequence.
@@ -56,6 +72,7 @@ Both of them vary between $0$ and $1$, however $d1$ goes to 1 only when the two 
     Name & input length (chunk) & embedding dimension  \\ 
     \hline
     embedding reproduction (rep)\cite{yang2018learned}       & 64    & 64 per chunk   \\
+    seqvec \cite{heinzinger2019modeling} & 1024 & 1024 per amminoacid \\
     dnabert \cite{ji2021dnabert}                     & 512     & 768 per chunk \\
     prose   \cite{bepler2021learning}                   & 512   & 100 per amino acid   \\
     alphafold  \cite{jumper2021highly}                 & 1024   & 384 per ammino acid\\

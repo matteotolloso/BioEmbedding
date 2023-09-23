@@ -57,6 +57,13 @@ The~UniProt Consortium.
 \newblock {UniProt: the Universal Protein Knowledgebase in 2023}.
 \newblock {\em Nucleic Acids Research}, 51(D1):D523--D531, 11 2022.
 
+\bibitem{heinzinger2019modeling}
+Michael Heinzinger, Ahmed Elnaggar, Yu~Wang, Christian Dallago, Dmitrii
+  Nechaev, Florian Matthes, and Burkhard Rost.
+\newblock Modeling aspects of the language of life through transfer-learning
+  protein sequences.
+\newblock {\em BMC bioinformatics}, 20(1):1--17, 2019.
+
 \bibitem{hubert1985comparing}
 Lawrence Hubert and Phipps Arabie.
 \newblock Comparing partitions.
@@ -99,6 +106,15 @@ Zeming Lin, Halil Akin, Roshan Rao, Brian Hie, Zhongkai Zhu, Wenting Lu, Nikita
 Tomas Mikolov, Kai Chen, Greg Corrado, and Jeffrey Dean.
 \newblock Efficient estimation of word representations in vector space.
 \newblock {\em arXiv preprint arXiv:1301.3781}, 2013.
+
+\bibitem{peters-etal-2018-deep}
+Matthew~E. Peters, Mark Neumann, Mohit Iyyer, Matt Gardner, Christopher Clark,
+  Kenton Lee, and Luke Zettlemoyer.
+\newblock Deep contextualized word representations.
+\newblock In {\em Proceedings of the 2018 Conference of the North {A}merican
+  Chapter of the Association for Computational Linguistics: Human Language
+  Technologies, Volume 1 (Long Papers)}, pages 2227--2237, New Orleans,
+  Louisiana, June 2018. Association for Computational Linguistics.
 
 \bibitem{sievers2011fast}
 Fabian Sievers, Andreas Wilm, David Dineen, Toby~J Gibson, Kevin Karplus,
