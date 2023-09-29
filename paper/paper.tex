@@ -18,6 +18,7 @@
 \section{Introduction}
 In the latest few years, machine learning and deep learning have revolutionized the natural language processing field (NLP)\cite{khurana2023natural}. At the same time some fundamental ideas developed in NLP have been succesfuly applied to another type of language, the biological one: DNA, RNA and amminoacid sequences bringing to excellent results even in the complex task of protein structure prediction\cite{jumper2021highly, lin2022language}. One of these fundamental ideas is word embedding \cite{mikolov2013efficient} because it transforms words into points in space, therefore easy to process.
 It is well known that sequence similarity do not always correspond to functional similarity \cite{kosloff2008sequence}.
+Application of protein language model embeddings to downstream tasks was first demostrated by Bepler and Berger (2019) \cite{bepler2019learning}
 
 \section{Methods}
 
@@ -26,8 +27,10 @@ In this section we describe the pipeline used to analyze the embeddings. As show
 \subsection{Represent protein sequences as continuous vectors}
 short description of the main characteristics of each embedder
 
-\subsubsection{prose}
-learning with strictural supervision
+\subsubsection{prose \cite{bepler2021learning}}
+The model structure is a multi-layer bidirectional Long Short Term Memory (bi-LSTM). Following the intuition that some aspect of proteins structure and semantic can never be discoverable by statistical sequence models alone, they came up with the idea of multi-task learning with strictural supervision. The learning tasks are: 1) classical masked language modeling task, 2) residue-residue contact prediction, 3) structural similarity prediction. This model ouperformed existing approaches in both transmembrane position labeling and phenotypes prediction of sequence variants.
+
+
 
 \subsubsection{alphafold}
 
@@ -41,7 +44,11 @@ learning with strictural supervision
 
 
 \subsubsection{SeqVec}
-To build their model Heinzinger et al.\cite{heinzinger2019modeling} adapted the standar ELMo configuration \cite{peters-etal-2018-deep} to work with protein sequences modifying the number of tokens and the unroll steps. It is composed by 1 CharCNN and 2 LSTM-Layers. Given a protein sequence of arbitrary length it returns 3072 features for each residue derived by concatenating the outputs of the three layers of ELMo, each describing a token with a vector of length 1024. In order to obtain a smaller representation for each amminoacid i computed the mean of the three layers (as also suggested in the official repository). Given the architecture of the ELMo, these representation are contextual-dependent.
+To build their model Heinzinger et al.\cite{heinzinger2019modeling} adapted the standar ELMo configuration \cite{peters-etal-2018-deep} to work with protein sequences modifying the number of tokens and the unroll steps. It is composed by 1 CharCNN and 2 LSTM-Layers. Given a protein sequence of arbitrary length it returns 3072 features for each residue derived by concatenating the outputs of the three layers of ELMo, each describing a token with a vector of length 1024. In order to obtain a smaller representation for each amminoacid we computed the mean of the three layers (as also suggested in the official repository). Given the architecture of the ELMo, these representation are contextual-dependent.
+
+
+\subsubsection{Evolutionary scale modeling}
+
 
 \subsection{Combining the (contextual) representations}derived by concatenating the outputs of the three layers of ELMo, each describing a token with a vector of length 1024
 We tried four methods to join togheter the amminoacid embeddings in order to produce a fixed size embedding for the chunk: average, maximum, sum and principal component analysis (PCA). 

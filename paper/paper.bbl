@@ -7,6 +7,12 @@ Michael Ashburner, Catherine~A Ball, Judith~A Blake, David Botstein, Heather
 \newblock Gene ontology: tool for the unification of biology.
 \newblock {\em Nature genetics}, 25(1):25--29, 2000.
 
+\bibitem{bepler2019learning}
+Tristan Bepler and Bonnie Berger.
+\newblock Learning protein sequence embeddings using information from
+  structure.
+\newblock {\em arXiv preprint arXiv:1902.08661}, 2019.
+
 \bibitem{bepler2021learning}
 Tristan Bepler and Bonnie Berger.
 \newblock Learning the protein language: Evolution, structure, and function.
