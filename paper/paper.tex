@@ -27,12 +27,14 @@ In this section we describe the pipeline used to analyze the embeddings. As show
 \subsection{Represent protein sequences as continuous vectors}
 short description of the main characteristics of each embedder
 
-\subsubsection{prose \cite{bepler2021learning}}
+\subsubsection{Prose \cite{bepler2021learning}}
 The model structure is a multi-layer bidirectional Long Short Term Memory (bi-LSTM). Following the intuition that some aspect of proteins structure and semantic can never be discoverable by statistical sequence models alone, they came up with the idea of multi-task learning with strictural supervision. The learning tasks are: 1) classical masked language modeling task, 2) residue-residue contact prediction, 3) structural similarity prediction. This model ouperformed existing approaches in both transmembrane position labeling and phenotypes prediction of sequence variants.
 
 
 
-\subsubsection{alphafold}
+\subsubsection{Alphafold}
+
+- evoformer module and structure module. The Evoformer, builds separate MSA and residue-pairwise embedding spaces
 
 - is a deep learning system not a language model
 
@@ -42,15 +44,20 @@ The model structure is a multi-layer bidirectional Long Short Term Memory (bi-LS
 
 - unable to learn patterns across large-scale databases of possibly unrelated proteins and have limited ability to draw on the increasing structure and function information available
 
+- used without the MSA and templates
+
 
 \subsubsection{SeqVec}
 To build their model Heinzinger et al.\cite{heinzinger2019modeling} adapted the standar ELMo configuration \cite{peters-etal-2018-deep} to work with protein sequences modifying the number of tokens and the unroll steps. It is composed by 1 CharCNN and 2 LSTM-Layers. Given a protein sequence of arbitrary length it returns 3072 features for each residue derived by concatenating the outputs of the three layers of ELMo, each describing a token with a vector of length 1024. In order to obtain a smaller representation for each amminoacid we computed the mean of the three layers (as also suggested in the official repository). Given the architecture of the ELMo, these representation are contextual-dependent.
 
 
-\subsubsection{Evolutionary scale modeling}
+\subsubsection{Evolutionary scale modeling \cite{lin2023evolutionary}}
+The underlying architecture is a BERT \cite{devlin2018bert} style encoder tarnsformer with modifications in the number of layers, number of attention heads, hidden size and feed forward hidden size. A further improvement is the use of Rotary Position Embedding \cite{su2021roformer} that allows to generalize beyond the context window it is trained on.
+The main advantages compared to AlphaFold are the removal of the the need of multiple sequence alignment and an increasing up to two order of magnitude of  the speed of the prediction pipeline.
+We used the version with 33 layers and 650B parameters (compare with alphafold) 
 
 
-\subsection{Combining the (contextual) representations}derived by concatenating the outputs of the three layers of ELMo, each describing a token with a vector of length 1024
+\subsection{Combining the (contextual) representations}
 We tried four methods to join togheter the amminoacid embeddings in order to produce a fixed size embedding for the chunk: average, maximum, sum and principal component analysis (PCA). 
 
 The same operator used to combine the amminoacid embeddings is also used to combine the embeddings of the chunks of the sequence.
@@ -83,7 +90,7 @@ Both of them vary between $0$ and $1$, however $d1$ goes to 1 only when the two 
     dnabert \cite{ji2021dnabert}                     & 512     & 768 per chunk \\
     prose   \cite{bepler2021learning}                   & 512   & 100 per amino acid   \\
     alphafold  \cite{jumper2021highly}                 & 1024   & 384 per ammino acid\\
-    evolutionary scale modeling (esm2) \cite{lin2022language}   & 1024    & 1280 per ammino acid \\  
+    evolutionary scale modeling (esm2) \cite{lin2023evolutionary}   & 1024    & 1280 per ammino acid \\  
     \hline
 \end{tabular}
 \caption{Embedders used in the experiments, their maximum imput length and the dimension of the embedding produced.}

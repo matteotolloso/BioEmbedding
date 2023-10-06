@@ -63,6 +63,12 @@ The~UniProt Consortium.
 \newblock {UniProt: the Universal Protein Knowledgebase in 2023}.
 \newblock {\em Nucleic Acids Research}, 51(D1):D523--D531, 11 2022.
 
+\bibitem{devlin2018bert}
+Jacob Devlin, Ming-Wei Chang, Kenton Lee, and Kristina Toutanova.
+\newblock Bert: Pre-training of deep bidirectional transformers for language
+  understanding.
+\newblock {\em arXiv preprint arXiv:1810.04805}, 2018.
+
 \bibitem{heinzinger2019modeling}
 Michael Heinzinger, Ahmed Elnaggar, Yu~Wang, Christian Dallago, Dmitrii
   Nechaev, Florian Matthes, and Burkhard Rost.
@@ -108,6 +114,13 @@ Zeming Lin, Halil Akin, Roshan Rao, Brian Hie, Zhongkai Zhu, Wenting Lu, Nikita
   accurate structure prediction.
 \newblock {\em bioRxiv}, 2022.
 
+\bibitem{lin2023evolutionary}
+Zeming Lin, Halil Akin, Roshan Rao, Brian Hie, Zhongkai Zhu, Wenting Lu, Nikita
+  Smetanin, Robert Verkuil, Ori Kabeli, Yaniv Shmueli, et~al.
+\newblock Evolutionary-scale prediction of atomic-level protein structure with
+  a language model.
+\newblock {\em Science}, 379(6637):1123--1130, 2023.
+
 \bibitem{mikolov2013efficient}
 Tomas Mikolov, Kai Chen, Greg Corrado, and Jeffrey Dean.
 \newblock Efficient estimation of word representations in vector space.
@@ -136,6 +149,11 @@ Mohammad~Yaseen Sofi, Afshana Shafi, and Khalid~Z. Masoodi.
 \newblock In Mohammad~Yaseen Sofi, Afshana Shafi, and Khalid~Z. Masoodi,
   editors, {\em Bioinformatics for Everyone}, pages 47--53. Academic Press,
   2022.
+
+\bibitem{su2021roformer}
+Jianlin Su, Yu~Lu, Shengfeng Pan, Ahmed Murtadha, Bo~Wen, and Yunfeng Liu.
+\newblock Roformer: Enhanced transformer with rotary position embedding.
+\newblock {\em arXiv preprint arXiv:2104.09864}, 2021.
 
 \bibitem{yang2018learned}
 Kevin~K Yang, Zachary Wu, Claire~N Bedbrook, and Frances~H Arnold.
