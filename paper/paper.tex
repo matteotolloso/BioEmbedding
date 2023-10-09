@@ -30,24 +30,14 @@ short description of the main characteristics of each embedder
 \subsubsection{Prose \cite{bepler2021learning}}
 The model structure is a multi-layer bidirectional Long Short Term Memory (bi-LSTM). Following the intuition that some aspect of proteins structure and semantic can never be discoverable by statistical sequence models alone, they came up with the idea of multi-task learning with strictural supervision. The learning tasks are: 1) classical masked language modeling task, 2) residue-residue contact prediction, 3) structural similarity prediction. This model ouperformed existing approaches in both transmembrane position labeling and phenotypes prediction of sequence variants.
 
+\subsubsection{Alphafold \cite{jumper2021highly}}
+This is the only approach that do not relay on a language model but is a combination of a bioinformatics and physical approaches.
+It relys on large datasets of protein sequences that are similar enough to be aligned with high confidence but contain enough divergence to confidently infer statistical couplings between positions. It consists in two modules, Evoformer module and structure module. The Evoformer builds separate MSA and residue-pairwise embedding spaces. As it is structured, this system is not able to learn patterns across large-scale databases of possibly unrelated proteins \cite{bepler2021learning}.
+In the experiments we used the ``single'' representation of the sequence, without the MSA and the templates.
 
+Leggi altro paper sul genoma
 
-\subsubsection{Alphafold}
-
-- evoformer module and structure module. The Evoformer, builds separate MSA and residue-pairwise embedding spaces
-
-- is a deep learning system not a language model
-
-- predict residue-residue distances from sequence families and fold proteins based on the predicted distance constraints
-
-- rely on large datasets of protein sequences that are similar enough to be aligned with high confidence but contain enough divergence to confidently infer statistical couplings between positions
-
-- unable to learn patterns across large-scale databases of possibly unrelated proteins and have limited ability to draw on the increasing structure and function information available
-
-- used without the MSA and templates
-
-
-\subsubsection{SeqVec}
+\subsubsection{SeqVec \cite{heinzinger2019modeling} }
 To build their model Heinzinger et al.\cite{heinzinger2019modeling} adapted the standar ELMo configuration \cite{peters-etal-2018-deep} to work with protein sequences modifying the number of tokens and the unroll steps. It is composed by 1 CharCNN and 2 LSTM-Layers. Given a protein sequence of arbitrary length it returns 3072 features for each residue derived by concatenating the outputs of the three layers of ELMo, each describing a token with a vector of length 1024. In order to obtain a smaller representation for each amminoacid we computed the mean of the three layers (as also suggested in the official repository). Given the architecture of the ELMo, these representation are contextual-dependent.
 
 
