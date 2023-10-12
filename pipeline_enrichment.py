@@ -151,7 +151,7 @@ def main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH):
     )
 
     
-    def pipeline_build_gt_linkage_matrix(previous_stage_output : dict, metric, method, edge_weight, ground_true_path)-> dict:
+    def pipeline_build_gt_linkage_matrix(previous_stage_output : dict, metric, method, edge_weight, use_go, use_keywords, use_taxonomy, ground_true_path)-> dict:
 
         embeddings_linkage_matrix = previous_stage_output["embeddings_linkage_matrix"]
         embeddings_IDs = previous_stage_output["embeddings_IDs"]
@@ -184,20 +184,26 @@ def main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH):
                 name_j = name_j[name_j.find("|")+1:]
                 
                 # the amount of common annotations between the two sequences, i.e. A inter B
-                capacity =\
-                    len(set(annotation_dict[name_i]['go']).intersection(set(annotation_dict[name_j]['go']))) +\
-                    len(set(annotation_dict[name_i]['keywords']).intersection(set(annotation_dict[name_j]['keywords'])))+\
-                    len(set(annotation_dict[name_i]['taxonomy']).intersection(set(annotation_dict[name_j]['taxonomy'])))
+                capacity = 0
+
                 # the amount of annotations of the first sequence
-                A =\
-                    len(set(annotation_dict[name_i]['go'])) +\
-                    len(set(annotation_dict[name_i]['keywords'])) +\
-                    len(set(annotation_dict[name_i]['taxonomy']))
+                A = 0
                 # the amount of annotations of the second sequence
-                B =\
-                    len(set(annotation_dict[name_j]['go'])) +\
-                    len(set(annotation_dict[name_j]['keywords'])) +\
-                    len(set(annotation_dict[name_j]['taxonomy']))
+                B = 0
+
+                if use_go:
+                    capacity += len(set(annotation_dict[name_i]['go']).intersection(set(annotation_dict[name_j]['go'])))
+                    A += len(set(annotation_dict[name_i]['go']))
+                    B += len(set(annotation_dict[name_j]['go'])) 
+                if use_keywords:
+                    capacity += len(set(annotation_dict[name_i]['keywords']).intersection(set(annotation_dict[name_j]['keywords'])))
+                    A += len(set(annotation_dict[name_i]['keywords']))
+                    B += len(set(annotation_dict[name_j]['keywords'])) 
+                if use_taxonomy:
+                    capacity += len(set(annotation_dict[name_i]['taxonomy']).intersection(set(annotation_dict[name_j]['taxonomy'])))
+                    A += len(set(annotation_dict[name_i]['taxonomy']))
+                    B += len(set(annotation_dict[name_j]['taxonomy']))
+
                 
                 if edge_weight == 'method_1':
                     # compute the number of common annotations: n = (2*|A inter B|) / (|A| + |B|) 
@@ -236,27 +242,63 @@ def main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH):
         function=pipeline_build_gt_linkage_matrix,
         fixed_args={ "ground_true_path" : GROUND_TRUE_PATH},
         list_args=[
-            { "metric" : "euclidean",   "method" : "ward",        "edge_weight" : "method_1" },
-            { "metric" : "euclidean",   "method" : "average",     "edge_weight" : "method_1" },
-            { "metric" : "euclidean",   "method" : "complete",    "edge_weight" : "method_1" },
-            { "metric" : "euclidean",   "method" : "centroid",    "edge_weight" : "method_1" },
-            { "metric" : "euclidean",   "method" : "single",      "edge_weight" : "method_1" },
-            { "metric" : "euclidean",   "method" : "median",      "edge_weight" : "method_1" },
-            
-            { "metric" : "cosine",      "method" : "average",     "edge_weight" : "method_1" },
-            { "metric" : "cosine",      "method" : "complete",    "edge_weight" : "method_1" },
-            { "metric" : "cosine",      "method" : "single",      "edge_weight" : "method_1" },
-
-            { "metric" : "euclidean",   "method" : "ward",        "edge_weight" : "method_2" },
-            { "metric" : "euclidean",   "method" : "average",     "edge_weight" : "method_2" },
-            { "metric" : "euclidean",   "method" : "complete",    "edge_weight" : "method_2" },
-            { "metric" : "euclidean",   "method" : "centroid",    "edge_weight" : "method_2" },
-            { "metric" : "euclidean",   "method" : "single",      "edge_weight" : "method_2" },
-            { "metric" : "euclidean",   "method" : "median",      "edge_weight" : "method_2" },
-        
-            { "metric" : "cosine",      "method" : "average",     "edge_weight" : "method_2" },
-            { "metric" : "cosine",      "method" : "complete",    "edge_weight" : "method_2" },
-            { "metric" : "cosine",      "method" : "single",      "edge_weight" : "method_2" },
+            # only go
+            { "metric" : "euclidean",   "method" : "ward",        "edge_weight" : "method_1" , "use_go": True, "use_keywords" : False, "use_taxonomy" : False },
+            { "metric" : "euclidean",   "method" : "average",     "edge_weight" : "method_1" , "use_go": True, "use_keywords" : False, "use_taxonomy" : False },
+            { "metric" : "euclidean",   "method" : "complete",    "edge_weight" : "method_1" , "use_go": True, "use_keywords" : False, "use_taxonomy" : False },
+            { "metric" : "euclidean",   "method" : "centroid",    "edge_weight" : "method_1" , "use_go": True, "use_keywords" : False, "use_taxonomy" : False },
+            { "metric" : "euclidean",   "method" : "single",      "edge_weight" : "method_1" , "use_go": True, "use_keywords" : False, "use_taxonomy" : False },
+            { "metric" : "euclidean",   "method" : "median",      "edge_weight" : "method_1" , "use_go": True, "use_keywords" : False, "use_taxonomy" : False },
+            { "metric" : "cosine",      "method" : "average",     "edge_weight" : "method_1" , "use_go": True, "use_keywords" : False, "use_taxonomy" : False },
+            { "metric" : "cosine",      "method" : "complete",    "edge_weight" : "method_1" , "use_go": True, "use_keywords" : False, "use_taxonomy" : False },
+            { "metric" : "cosine",      "method" : "single",      "edge_weight" : "method_1" , "use_go": True, "use_keywords" : False, "use_taxonomy" : False },
+            { "metric" : "euclidean",   "method" : "ward",        "edge_weight" : "method_2" , "use_go": True, "use_keywords" : False, "use_taxonomy" : False },
+            { "metric" : "euclidean",   "method" : "average",     "edge_weight" : "method_2" , "use_go": True, "use_keywords" : False, "use_taxonomy" : False },
+            { "metric" : "euclidean",   "method" : "complete",    "edge_weight" : "method_2" , "use_go": True, "use_keywords" : False, "use_taxonomy" : False },
+            { "metric" : "euclidean",   "method" : "centroid",    "edge_weight" : "method_2" , "use_go": True, "use_keywords" : False, "use_taxonomy" : False },
+            { "metric" : "euclidean",   "method" : "single",      "edge_weight" : "method_2" , "use_go": True, "use_keywords" : False, "use_taxonomy" : False },
+            { "metric" : "euclidean",   "method" : "median",      "edge_weight" : "method_2" , "use_go": True, "use_keywords" : False, "use_taxonomy" : False },
+            { "metric" : "cosine",      "method" : "average",     "edge_weight" : "method_2" , "use_go": True, "use_keywords" : False, "use_taxonomy" : False },
+            { "metric" : "cosine",      "method" : "complete",    "edge_weight" : "method_2" , "use_go": True, "use_keywords" : False, "use_taxonomy" : False },
+            { "metric" : "cosine",      "method" : "single",      "edge_weight" : "method_2" , "use_go": True, "use_keywords" : False, "use_taxonomy" : False },
+            # only keywords
+            { "metric" : "euclidean",   "method" : "ward",        "edge_weight" : "method_1" , "use_go": False, "use_keywords" : True, "use_taxonomy" : False},
+            { "metric" : "euclidean",   "method" : "average",     "edge_weight" : "method_1" , "use_go": False, "use_keywords" : True, "use_taxonomy" : False},
+            { "metric" : "euclidean",   "method" : "complete",    "edge_weight" : "method_1" , "use_go": False, "use_keywords" : True, "use_taxonomy" : False},
+            { "metric" : "euclidean",   "method" : "centroid",    "edge_weight" : "method_1" , "use_go": False, "use_keywords" : True, "use_taxonomy" : False},
+            { "metric" : "euclidean",   "method" : "single",      "edge_weight" : "method_1" , "use_go": False, "use_keywords" : True, "use_taxonomy" : False},
+            { "metric" : "euclidean",   "method" : "median",      "edge_weight" : "method_1" , "use_go": False, "use_keywords" : True, "use_taxonomy" : False},
+            { "metric" : "cosine",      "method" : "average",     "edge_weight" : "method_1" , "use_go": False, "use_keywords" : True, "use_taxonomy" : False},
+            { "metric" : "cosine",      "method" : "complete",    "edge_weight" : "method_1" , "use_go": False, "use_keywords" : True, "use_taxonomy" : False},
+            { "metric" : "cosine",      "method" : "single",      "edge_weight" : "method_1" , "use_go": False, "use_keywords" : True, "use_taxonomy" : False},
+            { "metric" : "euclidean",   "method" : "ward",        "edge_weight" : "method_2" , "use_go": False, "use_keywords" : True, "use_taxonomy" : False},
+            { "metric" : "euclidean",   "method" : "average",     "edge_weight" : "method_2" , "use_go": False, "use_keywords" : True, "use_taxonomy" : False},
+            { "metric" : "euclidean",   "method" : "complete",    "edge_weight" : "method_2" , "use_go": False, "use_keywords" : True, "use_taxonomy" : False},
+            { "metric" : "euclidean",   "method" : "centroid",    "edge_weight" : "method_2" , "use_go": False, "use_keywords" : True, "use_taxonomy" : False},
+            { "metric" : "euclidean",   "method" : "single",      "edge_weight" : "method_2" , "use_go": False, "use_keywords" : True, "use_taxonomy" : False},
+            { "metric" : "euclidean",   "method" : "median",      "edge_weight" : "method_2" , "use_go": False, "use_keywords" : True, "use_taxonomy" : False},
+            { "metric" : "cosine",      "method" : "average",     "edge_weight" : "method_2" , "use_go": False, "use_keywords" : True, "use_taxonomy" : False},
+            { "metric" : "cosine",      "method" : "complete",    "edge_weight" : "method_2" , "use_go": False, "use_keywords" : True, "use_taxonomy" : False},
+            { "metric" : "cosine",      "method" : "single",      "edge_weight" : "method_2" , "use_go": False, "use_keywords" : True, "use_taxonomy" : False},
+            # only taxonomy
+            { "metric" : "euclidean",   "method" : "ward",        "edge_weight" : "method_1" , "use_go": False, "use_keywords" : False, "use_taxonomy" : True},
+            { "metric" : "euclidean",   "method" : "average",     "edge_weight" : "method_1" , "use_go": False, "use_keywords" : False, "use_taxonomy" : True},
+            { "metric" : "euclidean",   "method" : "complete",    "edge_weight" : "method_1" , "use_go": False, "use_keywords" : False, "use_taxonomy" : True},
+            { "metric" : "euclidean",   "method" : "centroid",    "edge_weight" : "method_1" , "use_go": False, "use_keywords" : False, "use_taxonomy" : True},
+            { "metric" : "euclidean",   "method" : "single",      "edge_weight" : "method_1" , "use_go": False, "use_keywords" : False, "use_taxonomy" : True},
+            { "metric" : "euclidean",   "method" : "median",      "edge_weight" : "method_1" , "use_go": False, "use_keywords" : False, "use_taxonomy" : True},
+            { "metric" : "cosine",      "method" : "average",     "edge_weight" : "method_1" , "use_go": False, "use_keywords" : False, "use_taxonomy" : True},
+            { "metric" : "cosine",      "method" : "complete",    "edge_weight" : "method_1" , "use_go": False, "use_keywords" : False, "use_taxonomy" : True},
+            { "metric" : "cosine",      "method" : "single",      "edge_weight" : "method_1" , "use_go": False, "use_keywords" : False, "use_taxonomy" : True},
+            { "metric" : "euclidean",   "method" : "ward",        "edge_weight" : "method_2" , "use_go": False, "use_keywords" : False, "use_taxonomy" : True},
+            { "metric" : "euclidean",   "method" : "average",     "edge_weight" : "method_2" , "use_go": False, "use_keywords" : False, "use_taxonomy" : True},
+            { "metric" : "euclidean",   "method" : "complete",    "edge_weight" : "method_2" , "use_go": False, "use_keywords" : False, "use_taxonomy" : True},
+            { "metric" : "euclidean",   "method" : "centroid",    "edge_weight" : "method_2" , "use_go": False, "use_keywords" : False, "use_taxonomy" : True},
+            { "metric" : "euclidean",   "method" : "single",      "edge_weight" : "method_2" , "use_go": False, "use_keywords" : False, "use_taxonomy" : True},
+            { "metric" : "euclidean",   "method" : "median",      "edge_weight" : "method_2" , "use_go": False, "use_keywords" : False, "use_taxonomy" : True},
+            { "metric" : "cosine",      "method" : "average",     "edge_weight" : "method_2" , "use_go": False, "use_keywords" : False, "use_taxonomy" : True},
+            { "metric" : "cosine",      "method" : "complete",    "edge_weight" : "method_2" , "use_go": False, "use_keywords" : False, "use_taxonomy" : True},
+            { "metric" : "cosine",      "method" : "single",      "edge_weight" : "method_2" , "use_go": False, "use_keywords" : False, "use_taxonomy" : True},
         ]
     )
 
@@ -310,14 +352,14 @@ def main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH):
 if __name__ == "__main__":
     
 
-    EMBEDDINGS_PATH =  "./dataset/batterio/embeddings"
-    GROUND_TRUE_PATH = "./dataset/batterio/batterio.xml"
+    # EMBEDDINGS_PATH =  "./dataset/batterio/embeddings"
+    # GROUND_TRUE_PATH = "./dataset/batterio/batterio.xml"
 
     # EMBEDDINGS_PATH =  "./dataset/emoglobina/embeddings"
     # GROUND_TRUE_PATH = "./dataset/emoglobina/emoglobina.xml"
 
-    # EMBEDDINGS_PATH =  "./dataset/topo/embeddings"
-    # GROUND_TRUE_PATH = "./dataset/topo/topo.xml"
+    EMBEDDINGS_PATH =  "./dataset/topo/embeddings"
+    GROUND_TRUE_PATH = "./dataset/topo/topo.xml"
     
     
     et = main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH)
