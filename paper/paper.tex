@@ -3,6 +3,8 @@
 \usepackage{hyperref}
 \usepackage{graphicx}
 \usepackage{placeins}
+\usepackage{booktabs}
+\usepackage{multirow}
 
 
 \title{Title}
@@ -68,8 +70,8 @@ Whatever they are the sets of words to describe the sequences in our datasets, w
 Both of them vary between $0$ and $1$, however $d1$ goes to 1 only when the two sets are equals while $d2$ goes to 1 also when one set is a subset of the other. After calculating one of these distance between all possible pair in the dataset we end up with a similarity matrix, that can be easly transformed in a distance matrix that is possible to comprare with the distance matrix derived from the distance between the embeddings using the MARS as described in subsection \ref{sec:similarity}.
 
 
-\onecolumn
-\begin{table}[htb]
+
+\begin{table*}[htb]
 \centering
 \begin{tabular}{|l c c|} 
     \hline
@@ -85,12 +87,12 @@ Both of them vary between $0$ and $1$, however $d1$ goes to 1 only when the two 
 \end{tabular}
 \caption{Embedders used in the experiments, their maximum imput length and the dimension of the embedding produced.}
 \label{tab:embedders}
-\end{table}
-\twocolumn
+\end{table*}
 
 
-\onecolumn
-\begin{table}[htb]
+
+
+\begin{table*}[htb]
 \centering
 \begin{tabular}{|p{3cm} p{3cm} c c c |} 
     \hline
@@ -109,14 +111,94 @@ Both of them vary between $0$ and $1$, however $d1$ goes to 1 only when the two 
 \end{tabular}
 \caption{Datasets used in the experiments.}
 \label{tab:dataset}
-\end{table}
-\twocolumn
+\end{table*}
+
 
 
 
 
 \section{Results}
 \subsection{Phylogenetic}
+
+
+
+\begin{table*}[hbt]
+    \begin{tabular}{llrrrrr}
+        \toprule
+         &  & dnabert & seqvec & prose & alphafold & esm \\
+        combiner & dimensional PCA &  &  &  &  &  \\
+        \midrule
+        \multirow[t]{2}{*}{pca} & all & 0.076914 & 0.628944 & 0.438451 & 0.592638 & 0.655989 \\
+         & default & 0.085592 & 0.462319 & 0.378802 & 0.440502 & 0.556404 \\
+        \cline{1-7}
+        \multirow[t]{2}{*}{average} & all & 0.150060 & 0.631618 & 0.436927 & 0.584828 & 0.654195 \\
+         & default & 0.142402 & 0.468093 & 0.373694 & 0.428669 & 0.562981 \\
+        \cline{1-7}
+        \multirow[t]{2}{*}{sum} & all & 0.142098 & 0.632848 & 0.433519 & 0.584272 & 0.651882 \\
+         & default & 0.140880 & 0.445979 & 0.365946 & 0.394104 & 0.530063 \\
+        \cline{1-7}
+        \multirow[t]{2}{*}{max} & all & 0.129600 & 0.648831 & 0.590373 & 0.458190 & 0.754162 \\
+         & default & 0.133080 & 0.491197 & 0.460012 & 0.479472 & 0.628606 \\
+        \cline{1-7}
+        \bottomrule
+        \end{tabular}
+\caption{Emoglobin Phylogenetic results.}
+\label{tab:emoglobin_phylo_results}
+\end{table*}
+
+
+\begin{table*}[hbt]
+\begin{tabular}{llrrrrr}
+    \toprule
+     &  & dnabert & seqvec & prose & alphafold & esm \\
+    combiner & dimensional PCA &  &  &  &  &  \\
+    \midrule
+    \multirow[t]{2}{*}{pca} & all & 0.029854 & 0.293372 & 0.263442 & 0.125250 & 0.278784 \\
+     & default & 0.036239 & 0.291775 & 0.278305 & 0.090662 & 0.379791 \\
+    \cline{1-7}
+    \multirow[t]{2}{*}{average} & all & 0.008628 & 0.326197 & 0.306975 & 0.133504 & 0.272709 \\
+     & default & 0.019080 & 0.325723 & 0.318528 & 0.204344 & 0.423269 \\
+    \cline{1-7}
+    \multirow[t]{2}{*}{sum} & all & 0.037913 & 0.326197 & 0.306975 & 0.133504 & 0.272709 \\
+     & default & 0.051761 & 0.254459 & 0.309792 & 0.059609 & 0.205906 \\
+    \cline{1-7}
+    \multirow[t]{2}{*}{max} & all & 0.039009 & 0.396257 & 0.379740 & 0.053480 & 0.393414 \\
+     & default & 0.020057 & 0.090137 & 0.432732 & 0.139505 & 0.187751 \\
+    \cline{1-7}
+    \bottomrule
+\end{tabular}
+\caption{Mouse Phylogenetic results.}
+\label{tab:mouse_phylo_results}
+\end{table*}
+
+
+\begin{table*}[hbt]
+\begin{tabular}{llrrrrr}
+    \toprule
+     &  & dnabert & seqvec & prose & alphafold & esm \\
+    combiner & dimensional PCA &  &  &  &  &  \\
+    \midrule
+    \multirow[t]{2}{*}{pca} & all & -0.005314 & 0.064490 & 0.066430 & -0.003228 & 0.063098 \\
+     & default & -0.004117 & 0.145555 & 0.075659 & 0.067033 & 0.109153 \\
+    \cline{1-7}
+    \multirow[t]{2}{*}{average} & all & -0.005307 & 0.085411 & 0.070529 & -0.000876 & 0.054788 \\
+     & default & -0.003264 & 0.138811 & 0.092746 & 0.067431 & 0.106074 \\
+    \cline{1-7}
+    \multirow[t]{2}{*}{sum} & all & -0.005312 & 0.085411 & 0.070529 & -0.000876 & 0.054788 \\
+     & default & 0.006822 & 0.075365 & 0.084606 & 0.006121 & 0.034575 \\
+    \cline{1-7}
+    \multirow[t]{2}{*}{max} & all & -0.005648 & 0.078479 & 0.107831 & -0.006607 & 0.080722 \\
+     & default & -0.003445 & 0.009905 & 0.122704 & 0.027285 & 0.031228 \\
+    \cline{1-7}
+    \bottomrule
+    \end{tabular}
+\caption{bacterium Phylogenetic results.}
+\label{tab:bacterium_phylo_results}
+\end{table*}
+    
+
+
+
 \subsection{Enrichment}
 \subsection{Projections?}
 \subsection{Classification?}

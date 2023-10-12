@@ -14,7 +14,7 @@ def results2table(
 
     combiners = ["pca", "average", "sum", "max"]
     pcas = ["all", "default"]
-    embedders = ["rep", "dnabert", "prose", "alphafold", "esm"	]
+    embedders = ["dnabert", "seqvec", "prose", "alphafold", "esm"	]
 
     # generate the empty dict with the argument that are relevant for the table
     for combiner in combiners:
