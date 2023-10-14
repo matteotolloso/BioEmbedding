@@ -135,6 +135,11 @@ Matthew~E. Peters, Mark Neumann, Mohit Iyyer, Matt Gardner, Christopher Clark,
   Technologies, Volume 1 (Long Papers)}, pages 2227--2237, New Orleans,
   Louisiana, June 2018. Association for Computational Linguistics.
 
+\bibitem{salant2017contextualized}
+Shimi Salant and Jonathan Berant.
+\newblock Contextualized word representations for reading comprehension.
+\newblock {\em arXiv preprint arXiv:1712.03609}, 2017.
+
 \bibitem{sievers2011fast}
 Fabian Sievers, Andreas Wilm, David Dineen, Toby~J Gibson, Kevin Karplus,
   Weizhong Li, Rodrigo Lopez, Hamish McWilliam, Michael Remmert, Johannes
