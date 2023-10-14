@@ -13,7 +13,7 @@ def results2table(
     computations_dict = {} # dict[combiner][pca][embedder] = score
 
     combiners = ["pca", "average", "sum", "max"]
-    pcas = ["all", "default"]
+    pcas = [ '10', '20', '30', '40', '50', 'all']
     embedders = ["dnabert", "seqvec", "prose", "alphafold", "esm"	]
 
     # generate the empty dict with the argument that are relevant for the table
@@ -35,7 +35,7 @@ def results2table(
                 embedder = args["embedder"]
                 combiner = args["combiner_method"]
             if stage == "pipeline_pca":
-                pca = args["n_components"]
+                pca = str(args["n_components"])
             if stage == "pipeline_build_embeddings_linkage_matrix":
                 metric_embedding = args["metric"]
                 method_embedding = args["method"]

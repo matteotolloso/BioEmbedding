@@ -245,14 +245,14 @@ def main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH):
 
 if __name__ == "__main__":
     
-    EMBEDDINGS_PATH = "./dataset/emoglobina/embeddings"
-    GROUND_TRUE_PATH = "./dataset/emoglobina/emoglobina.dist"
+    # EMBEDDINGS_PATH = "./dataset/emoglobina/embeddings"
+    # GROUND_TRUE_PATH = "./dataset/emoglobina/emoglobina.dist"
 
     # EMBEDDINGS_PATH =  "./dataset/batterio/embeddings"
     # GROUND_TRUE_PATH = "./dataset/batterio/batterio.dist"
 
-    # EMBEDDINGS_PATH =  "./dataset/topo/embeddings"
-    # GROUND_TRUE_PATH = "./dataset/topo/topo.dist"
+    EMBEDDINGS_PATH =  "./dataset/topo/embeddings"
+    GROUND_TRUE_PATH = "./dataset/topo/topo.dist"
     
     
     et = main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH)
