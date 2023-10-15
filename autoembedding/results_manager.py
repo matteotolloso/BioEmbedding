@@ -11,6 +11,7 @@ def results2table(
     preferred_metric_gt="euclidean",
     preferred_method_gt="ward", 
     preferred_edge_weight="method_1",
+    preferred_annotation = "go"
     ):
     
     computations_dict = {} # dict[combiner][pca][embedder] = score
@@ -28,6 +29,8 @@ def results2table(
         combiner = None
         pca = None
         embedder = None  
+        edge_weight = preferred_edge_weight
+        annotation = preferred_annotation
         for stage, args in pipeline: # for each stage and the arguments that were passed to it
             # keep the arguments that are relevant for the table
             if stage == "pipeline_build_embeddings_matrix":
@@ -45,14 +48,25 @@ def results2table(
                 try:
                     edge_weight = args["edge_weight"]
                 except:
-                    edge_weight = preferred_edge_weight
+                    pass
+
+                try:
+                    if args['use_go']:
+                        annotation = "go"
+                    if args['use_keywords']:
+                        annotation = "keywords"
+                    if args['use_taxonomy']:
+                        annotation = "taxonomy"
+                except:
+                    pass
                     
         
         if  metric_embedding == preferred_metric_embedding and \
             method_embedding == preferred_method_embedding and \
             metric_gt == preferred_metric_gt and \
             method_gt == preferred_method_gt and \
-            edge_weight == preferred_edge_weight:
+            edge_weight == preferred_edge_weight and \
+            annotation == preferred_annotation:
         
             computations_dict[combiner][pca][embedder] = result[metric]
 

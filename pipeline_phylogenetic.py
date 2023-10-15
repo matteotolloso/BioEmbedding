@@ -107,10 +107,10 @@ def main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH):
         function=pipeline_pca, # TODO t-sne
         list_args=[
             {"n_components": 10},
-            {"n_components": 20},
             {"n_components": 30},
-            {"n_components": 40},
             {"n_components": 50},
+            {"n_components": 70},
+            {"n_components": 90},
             {"n_components": "all"},       
         ]
     )
@@ -245,14 +245,14 @@ def main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH):
 
 if __name__ == "__main__":
     
-    # EMBEDDINGS_PATH = "./dataset/emoglobina/embeddings"
-    # GROUND_TRUE_PATH = "./dataset/emoglobina/emoglobina.dist"
+    EMBEDDINGS_PATH = "./dataset/emoglobina/embeddings"
+    GROUND_TRUE_PATH = "./dataset/emoglobina/emoglobina.dist"
 
     # EMBEDDINGS_PATH =  "./dataset/batterio/embeddings"
     # GROUND_TRUE_PATH = "./dataset/batterio/batterio.dist"
 
-    EMBEDDINGS_PATH =  "./dataset/topo/embeddings"
-    GROUND_TRUE_PATH = "./dataset/topo/topo.dist"
+    # EMBEDDINGS_PATH =  "./dataset/topo/embeddings"
+    # GROUND_TRUE_PATH = "./dataset/topo/topo.dist"
     
     
     et = main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH)

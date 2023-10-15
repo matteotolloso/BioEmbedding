@@ -46,6 +46,11 @@ def main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH):
             # {"embedder" : "rep", "combiner_method" : "average" },
             # {"embedder" : "rep", "combiner_method" : "sum" },
             # {"embedder" : "rep", "combiner_method" : "max" },
+
+            {"embedder" : "seqvec", "combiner_method" : "pca" },
+            {"embedder" : "seqvec", "combiner_method" : "average" },
+            {"embedder" : "seqvec", "combiner_method" : "sum" },
+            {"embedder" : "seqvec", "combiner_method" : "max" },
             
             {"embedder" : "dnabert", "combiner_method" : "pca" },
             {"embedder" : "dnabert", "combiner_method" : "average" },
@@ -103,10 +108,10 @@ def main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH):
         function=pipeline_pca,
         list_args=[
             {"n_components": 10},
-            {"n_components": 20},
             {"n_components": 30},
-            {"n_components": 40},
             {"n_components": 50},
+            {"n_components": 70},
+            {"n_components": 90},
             {"n_components": 'all'},
         ]
     )
@@ -352,14 +357,14 @@ def main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH):
 if __name__ == "__main__":
     
 
-    # EMBEDDINGS_PATH =  "./dataset/batterio/embeddings"
-    # GROUND_TRUE_PATH = "./dataset/batterio/batterio.xml"
+    EMBEDDINGS_PATH =  "./dataset/batterio/embeddings"
+    GROUND_TRUE_PATH = "./dataset/batterio/batterio.xml"
 
     # EMBEDDINGS_PATH =  "./dataset/emoglobina/embeddings"
     # GROUND_TRUE_PATH = "./dataset/emoglobina/emoglobina.xml"
 
-    EMBEDDINGS_PATH =  "./dataset/topo/embeddings"
-    GROUND_TRUE_PATH = "./dataset/topo/topo.xml"
+    # EMBEDDINGS_PATH =  "./dataset/topo/embeddings"
+    # GROUND_TRUE_PATH = "./dataset/topo/topo.xml"
     
     
     et = main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH)
@@ -368,7 +373,6 @@ if __name__ == "__main__":
     r = et.get_results()
 
     # get the name of the current file
-
 
     file_name = "./results/"+ "enrichment_"+"results_" + GROUND_TRUE_PATH.split("/")[-1].split(".")[0] 
 
