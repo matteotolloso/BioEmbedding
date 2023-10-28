@@ -2,19 +2,19 @@ import pandas as pd
 
 def results2table(
     r, 
+    embedders = ["dnabert", "seqvec", "prose", "alphafold", "esm"],
+    combiners = ["pca", "average", "sum", "max"],
+    pcas = [ '10', '20', '30', '40', '50', 'all'],
     metric="mean_adjusted_rand_score", 
     preferred_metric_embedding="euclidean",
     preferred_method_embedding="ward",
     preferred_metric_gt="euclidean",
     preferred_method_gt="ward", 
     preferred_edge_weight="method_1",
+    preferred_annotation = "go"
     ):
     
     computations_dict = {} # dict[combiner][pca][embedder] = score
-
-    combiners = ["pca", "average", "sum", "max"]
-    pcas = ["all", "default"]
-    embedders = ["rep", "dnabert", "prose", "alphafold", "esm"	]
 
     # generate the empty dict with the argument that are relevant for the table
     for combiner in combiners:
@@ -25,31 +25,48 @@ def results2table(
                 computations_dict[combiner][pca][embedder] = None
     
     # fill the dict
-    # TODO add the weght of the enrichment method in the preferred method
     for result, pipeline in r:  # for each result and the pipeline that generated it
         combiner = None
         pca = None
         embedder = None  
+        edge_weight = preferred_edge_weight
+        annotation = preferred_annotation
         for stage, args in pipeline: # for each stage and the arguments that were passed to it
             # keep the arguments that are relevant for the table
             if stage == "pipeline_build_embeddings_matrix":
                 embedder = args["embedder"]
                 combiner = args["combiner_method"]
             if stage == "pipeline_pca":
-                pca = args["n_components"]
+                pca = str(args["n_components"])
             if stage == "pipeline_build_embeddings_linkage_matrix":
                 metric_embedding = args["metric"]
                 method_embedding = args["method"]
             if stage == "pipeline_build_gt_linkage_matrix":
                 metric_gt = args["metric"]
                 method_gt = args["method"]
-                edge_weight = args["edge_weight"]
+                # the edge_witght attribute is not present in all the pipelines
+                try:
+                    edge_weight = args["edge_weight"]
+                except:
+                    pass
+
+                try:
+                    if args['use_go']:
+                        annotation = "go"
+                    if args['use_keywords']:
+                        annotation = "keywords"
+                    if args['use_taxonomy']:
+                        annotation = "taxonomy"
+                except:
+                    pass
+                    
         
         if  metric_embedding == preferred_metric_embedding and \
             method_embedding == preferred_method_embedding and \
             metric_gt == preferred_metric_gt and \
             method_gt == preferred_method_gt and \
-            edge_weight == preferred_edge_weight:
+            edge_weight == preferred_edge_weight and \
+            annotation == preferred_annotation:
         
             computations_dict[combiner][pca][embedder] = result[metric]
 
@@ -77,7 +94,6 @@ def results2file(r, filepath):
     
     with open(filepath + ".txt", "w") as f:
         for result, pipeline in r:
-            f.write(f"max_adjusted_rand_score: {result['max_adjusted_rand_score']} \n")
             f.write(f"mean_adjusted_rand_score: {result['mean_adjusted_rand_score']} \n")
             for name, args in pipeline:
                 f.write(f"{name}  {args} \n")

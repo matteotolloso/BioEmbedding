@@ -33,10 +33,12 @@ def build_embeddings_matrix(
         # load the file as a numpy array
         raw_embedding = None
         try:
-            raw_embedding = np.load(folder_path + "/" + id + ".npy") 
+            raw_embedding = np.load(folder_path + "/" + id + ".npy", allow_pickle=True) 
         except:
             print(f"Error while loading the embedding of sequence {id} from embedder {embedder}")
             raise
+
+        assert len(raw_embedding.shape) == 3
 
         final_embedding = combiner(
             raw_embedding = raw_embedding,

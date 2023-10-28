@@ -45,6 +45,11 @@ def main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH):
             # {"embedder" : "rep", "combiner_method" : "average" },
             # {"embedder" : "rep", "combiner_method" : "sum" },
             # {"embedder" : "rep", "combiner_method" : "max" },
+
+            {"embedder" : "seqvec", "combiner_method" : "pca" },
+            {"embedder" : "seqvec", "combiner_method" : "average" },
+            {"embedder" : "seqvec", "combiner_method" : "sum" },
+            {"embedder" : "seqvec", "combiner_method" : "max" },
             
             {"embedder" : "dnabert", "combiner_method" : "pca" },
             {"embedder" : "dnabert", "combiner_method" : "average" },
@@ -65,7 +70,7 @@ def main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH):
             {"embedder" : "esm", "combiner_method" : "average" },
             {"embedder" : "esm", "combiner_method" : "sum" },
             {"embedder" : "esm", "combiner_method" : "max" },
-        
+            
         ]
     )
 
@@ -99,10 +104,14 @@ def main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH):
         return { "embeddings_matrix" : embeddings_matrix, "embeddings_IDs": embeddings_IDs}
 
     et.add_multistage(
-        function=pipeline_pca,
+        function=pipeline_pca, # TODO t-sne
         list_args=[
-            {"n_components": "default"},
-            {"n_components": "all"},
+            {"n_components": 10},
+            {"n_components": 30},
+            {"n_components": 50},
+            {"n_components": 70},
+            {"n_components": 90},
+            {"n_components": "all"},       
         ]
     )
 
@@ -129,15 +138,15 @@ def main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH):
         function=pipeline_build_embeddings_linkage_matrix,
         list_args=[
             {"metric" : "euclidean", "method" : "average"},
-            # {"metric" : "euclidean", "method" : "complete"},
-            # {"metric" : "euclidean", "method" : "ward"},
-            # {"metric" : "euclidean", "method" : "centroid"},
-            # {"metric" : "euclidean", "method" : "single"},
-            # {"metric" : "euclidean", "method" : "median"},
+            {"metric" : "euclidean", "method" : "complete"},
+            {"metric" : "euclidean", "method" : "ward"},
+            {"metric" : "euclidean", "method" : "centroid"},
+            {"metric" : "euclidean", "method" : "single"},
+            {"metric" : "euclidean", "method" : "median"},
             
-            # {"metric" : "cosine", "method" : "average"},
-            # {"metric" : "cosine", "method" : "complete"},
-            # {"metric" : "cosine", "method" : "single"},
+            {"metric" : "cosine", "method" : "average"},
+            {"metric" : "cosine", "method" : "complete"},
+            {"metric" : "cosine", "method" : "single"},
         ]
     )
 
@@ -164,15 +173,15 @@ def main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH):
         fixed_args={"ground_true_path" : GROUND_TRUE_PATH},
         list_args=[
             {"metric" : "euclidean", "method" : "average"},
-            # {"metric" : "euclidean", "method" : "complete"},
-            # {"metric" : "euclidean", "method" : "ward"},
-            # {"metric" : "euclidean", "method" : "centroid"},
-            # {"metric" : "euclidean", "method" : "single"},
-            # {"metric" : "euclidean", "method" : "median"},
+            {"metric" : "euclidean", "method" : "complete"},
+            {"metric" : "euclidean", "method" : "ward"},
+            {"metric" : "euclidean", "method" : "centroid"},
+            {"metric" : "euclidean", "method" : "single"},
+            {"metric" : "euclidean", "method" : "median"},
             
-            # {"metric" : "cosine", "method" : "average"},
-            # {"metric" : "cosine", "method" : "complete"},
-            # {"metric" : "cosine", "method" : "single"},
+            {"metric" : "cosine", "method" : "average"},
+            {"metric" : "cosine", "method" : "complete"},
+            {"metric" : "cosine", "method" : "single"},
         ]
     )
 
@@ -220,7 +229,7 @@ def main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH):
         for i in range(predict_labels_matrix.shape[1]):
             adjusted_rand_scores.append(adjusted_rand_score(predict_labels_matrix[:,i], gtrue_labels_matrix[:,i]))
         
-        return {"mean_adjusted_rand_score" : np.mean(adjusted_rand_scores), "max_adjusted_rand_score" : np.max(adjusted_rand_scores)}
+        return {"mean_adjusted_rand_score" : np.mean(adjusted_rand_scores)}
         
 
 
@@ -236,11 +245,14 @@ def main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH):
 
 if __name__ == "__main__":
     
-    # EMBEDDINGS_PATH = "./dataset/globins/globins.json"
-    # GROUND_TRUE_PATH = "./dataset/globins/globins.dist"
-
-    EMBEDDINGS_PATH =  "./dataset/emoglobina/embeddings"
+    EMBEDDINGS_PATH = "./dataset/emoglobina/embeddings"
     GROUND_TRUE_PATH = "./dataset/emoglobina/emoglobina.dist"
+
+    # EMBEDDINGS_PATH =  "./dataset/batterio/embeddings"
+    # GROUND_TRUE_PATH = "./dataset/batterio/batterio.dist"
+
+    # EMBEDDINGS_PATH =  "./dataset/topo/embeddings"
+    # GROUND_TRUE_PATH = "./dataset/topo/topo.dist"
     
     
     et = main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH)
