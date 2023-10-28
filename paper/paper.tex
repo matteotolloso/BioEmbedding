@@ -24,9 +24,11 @@ Application of protein language model embeddings to downstream tasks was first d
 
 \section{Methods}
 
-In this section we describe the pipeline used to analyze the embeddings, i.e. vectors in a high-dimensional real space that represent a chunk of a genetic sequence (of a hole one if it is short enough). As shown in Table \ref{tab:embedders}, the input length accepted is different between different models as well as the dimensionality of the output produced. The maximum length of the input sequence is usually determined by the length of the examples the model was training with or by limitations due to the structure of the model such as the size of the attention module in the models that use it. These numerical representation of sequences are then used to various downstream applications.
+In this section we describe the pipeline used to analyze the embeddings, i.e. vectors in a high-dimensional real space that represent a chunk of a genetic sequence (of a hole one if it is short enough). As shown in Table \ref{tab:embedders}, the input length accepted is different between different models as well as the dimensionality of the output produced. The maximum length of the input sequence is usually determined by the length of the examples the model was training on or by limitations due to the structure of the model such as the size of the attention module in the models that use it. These numerical representation of sequences are then used to various downstream applications.
 
 Because of their structure, these model output a vector for each single item of the input sequence (amminoacid or nucleotides) so we end up with a matrix representation of a sequence with different number of rows for each different sequence. Futhermore, if the sequence that we want to analyze is longer then the model's limit we have to split it in subsequences and thus the representation became a tensor. 
+
+It is not clear which is the best way to aggregate this tensor in a fixed size representation.
 
 We want to address the following problems: 1) compare different methods to join together the amminoacid-specific contextual representations in order to have a representation for the whole chunk and subsequently join together the representations of the chunks in order to have a representation for the whole protein; 2) find out if these representations reflect known properties of the proteins.
 
@@ -63,15 +65,14 @@ The same operator used to combine the amminoacid embeddings is also used to comb
 \subsection{Comparison with known information}
 Given a set of embeddings of sequences we want to analyze their distribution in the embedding space comparing it with both the distance matrix produced during the multiple sequence alignment with Clustal Omega \cite{sievers2011fast} and higher level annotations as Gene Ontology \cite{10.1093/genetics/iyad031, ashburner2000gene}, UniProtKB Keywords and NCBI Taxonomy \cite{uniprot23}.
 
-\subsubsection{Similarity between distance matrices \label{sec:similarity}}
-In order to compare two distance matrices we performed an agglomerative clustering on both, the resulting tree is then cut at each level obtaining flat partitions of all possibles number of clusters. We performed a pairwise comparison of the partitions having the same number of clusters using the adjusted rand score \cite{hubert1985comparing}. The mean of these score, starting from two clusters up to $ \#elements - 1 $ clusters is called mean adjusted rand index (MARI). We compared different distance metrics as well as different methods to perform the hierarchical clustering.  EXPLAIN BETTER
-
-\subsubsection{Enrichment analysis}
 The alignment distance matrix provide an evolutionary related distance between sequences \cite{SOFI202247}, we also wanted to analyze the properties of the embeddings at an higher level. The Gene Ontology (GO) describes our knowledge of the sequence with respect to: molecular function, cellular component and biological process; there ara also more specific controlled vocabulary as the UniProt Keywords and hierarchical classifications specific for sequences as the NCBI Taxonomy.
 
 Whatever they are the sets of words to describe the sequences in our datasets, we want to build a distance between sequences among them. Given $A$ and $B$ the sets of annotations of two sequences we computed the distance in two possible ways: $$d1 = \frac{2 * |A \cap B|}{|A| + |B|} $$ $$d2 = \max\{ \frac{|A \cap B|}{|A|}, \frac{|A \cap B|}{|B|} \} $$
 
-Both of them vary between $0$ and $1$, however $d1$ goes to 1 only when the two sets are equals while $d2$ goes to 1 also when one set is a subset of the other. After calculating one of these distance between all possible pair in the dataset we end up with a similarity matrix, that can be easily transformed in a distance matrix that is possible to compare with the distance matrix derived from the distance between the embeddings using the MARS as described in subsection \ref{sec:similarity}.
+Both of them vary between $0$ and $1$, however $d1$ goes to 1 only when the two sets are equals while $d2$ goes to 1 also when one set is a subset of the other. After calculating one of these distance between all possible pair in the dataset we end up with a similarity matrix, that can be easily transformed in a distance matrix that is possible to compare with the distance matrix derived from the distance between the embeddings.
+
+\subsubsection{Similarity between distance matrices \label{sec:similarity}}
+In order to compare two distance matrices we performed an agglomerative clustering on both, the resulting tree is then cut at each level obtaining flat partitions of all possibles number of clusters. We performed a pairwise comparison of the partitions having the same number of clusters using the adjusted rand score \cite{hubert1985comparing}. The mean of these scores, starting from two clusters up to $ \#elements - 1 $ clusters is called mean adjusted rand index (MARI). We compared different distance metrics as well as different methods to perform the hierarchical clustering.
 
 
 
