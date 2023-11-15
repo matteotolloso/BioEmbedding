@@ -42,10 +42,6 @@ def main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH):
     et.add_multistage(
         function=pipeline_build_embeddings_matrix,
         list_args=[   
-            # {"embedder" : "rep", "combiner_method" : "pca" },
-            # {"embedder" : "rep", "combiner_method" : "average" },
-            # {"embedder" : "rep", "combiner_method" : "sum" },
-            # {"embedder" : "rep", "combiner_method" : "max" },
 
             {"embedder" : "seqvec", "combiner_method" : "pca" },
             {"embedder" : "seqvec", "combiner_method" : "average" },
@@ -187,39 +183,36 @@ def main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH):
             for j, name_j in enumerate(embeddings_IDs):
 
                 name_j = name_j[name_j.find("|")+1:]
-                
-                # the amount of common annotations between the two sequences, i.e. A inter B
-                capacity = 0
 
-                # the amount of annotations of the first sequence
-                A = 0
-                # the amount of annotations of the second sequence
-                B = 0
+                # annotations of the first sequence
+                A = set()
+                # annotations of the second sequence
+                B = set()
 
                 if use_go:
-                    capacity += len(set(annotation_dict[name_i]['go']).intersection(set(annotation_dict[name_j]['go'])))
-                    A += len(set(annotation_dict[name_i]['go']))
-                    B += len(set(annotation_dict[name_j]['go'])) 
+                    A = A.union(set(annotation_dict[name_i]['go']))
+                    B = B.union(set(annotation_dict[name_j]['go']))
                 if use_keywords:
-                    capacity += len(set(annotation_dict[name_i]['keywords']).intersection(set(annotation_dict[name_j]['keywords'])))
-                    A += len(set(annotation_dict[name_i]['keywords']))
-                    B += len(set(annotation_dict[name_j]['keywords'])) 
+                    A = A.union(set(annotation_dict[name_i]['keywords']))
+                    B = B.union(set(annotation_dict[name_j]['keywords']))
                 if use_taxonomy:
-                    capacity += len(set(annotation_dict[name_i]['taxonomy']).intersection(set(annotation_dict[name_j]['taxonomy'])))
-                    A += len(set(annotation_dict[name_i]['taxonomy']))
-                    B += len(set(annotation_dict[name_j]['taxonomy']))
+                    A = A.union(set(annotation_dict[name_i]['taxonomy']))
+                    B = B.union(set(annotation_dict[name_j]['taxonomy']))
 
-                
-                if edge_weight == 'method_1':
-                    # compute the number of common annotations: n = (2*|A inter B|) / (|A| + |B|) 
-                    gtrue_distance_matrix[i][j] += 2*capacity/(A+B)
-                
-                elif edge_weight == 'method_2':
-                    # compute the weight as max( (A inter B)/A, (A inter B)/B )
-                    gtrue_distance_matrix[i][j] += max(capacity/A, capacity/B)
+                if len(A) == 0 or len(B) == 0:
+                    gtrue_distance_matrix[i][j] = 1/2
+                    continue
 
-        # the ground true distances is not a distance measure but a similarity, we have to make it a distance and also make the diagonal 0 (maybe not necessary)
-        gtrue_distance_matrix = gtrue_distance_matrix.max() - gtrue_distance_matrix
+                if edge_weight == 'jaccard':
+                    gtrue_distance_matrix[i][j] += len(A.intersection(B)) / len(A.union(B))
+                
+                elif edge_weight == 'overlap':
+                    gtrue_distance_matrix[i][j] += len(A.intersection(B)) / min(len(A), len(B))
+
+        assert gtrue_distance_matrix.max() == 1
+
+        # the ground true distances is not a distance measure but a similarity, we have to make it a distance 
+        gtrue_distance_matrix = 1 - gtrue_distance_matrix
         
         # the max should be 1, the min 0 and the diagonal 0
         assert np.allclose(gtrue_distance_matrix.diagonal(), np.zeros(len(embeddings_IDs)), atol=1e-8)
@@ -235,7 +228,7 @@ def main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH):
         # compute the linkage matrices
         gtrue_linkage_matrix = linkage(gtrue_distance_matrix, method=method, metric=metric)
 
-        gtrue_IDs = embeddings_IDs # TODO hopefully this is correct and nothing strange with the order of the IDs has happened
+        gtrue_IDs = embeddings_IDs
 
         return {"gtrue_linkage_matrix" : gtrue_linkage_matrix, 
                 "gtrue_IDs": gtrue_IDs, 
@@ -248,62 +241,62 @@ def main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH):
         fixed_args={ "ground_true_path" : GROUND_TRUE_PATH},
         list_args=[
             # only go
-            { "metric" : "euclidean",   "method" : "ward",        "edge_weight" : "method_1" , "use_go": True, "use_keywords" : False, "use_taxonomy" : False },
-            { "metric" : "euclidean",   "method" : "average",     "edge_weight" : "method_1" , "use_go": True, "use_keywords" : False, "use_taxonomy" : False },
-            { "metric" : "euclidean",   "method" : "complete",    "edge_weight" : "method_1" , "use_go": True, "use_keywords" : False, "use_taxonomy" : False },
-            { "metric" : "euclidean",   "method" : "centroid",    "edge_weight" : "method_1" , "use_go": True, "use_keywords" : False, "use_taxonomy" : False },
-            { "metric" : "euclidean",   "method" : "single",      "edge_weight" : "method_1" , "use_go": True, "use_keywords" : False, "use_taxonomy" : False },
-            { "metric" : "euclidean",   "method" : "median",      "edge_weight" : "method_1" , "use_go": True, "use_keywords" : False, "use_taxonomy" : False },
-            { "metric" : "cosine",      "method" : "average",     "edge_weight" : "method_1" , "use_go": True, "use_keywords" : False, "use_taxonomy" : False },
-            { "metric" : "cosine",      "method" : "complete",    "edge_weight" : "method_1" , "use_go": True, "use_keywords" : False, "use_taxonomy" : False },
-            { "metric" : "cosine",      "method" : "single",      "edge_weight" : "method_1" , "use_go": True, "use_keywords" : False, "use_taxonomy" : False },
-            { "metric" : "euclidean",   "method" : "ward",        "edge_weight" : "method_2" , "use_go": True, "use_keywords" : False, "use_taxonomy" : False },
-            { "metric" : "euclidean",   "method" : "average",     "edge_weight" : "method_2" , "use_go": True, "use_keywords" : False, "use_taxonomy" : False },
-            { "metric" : "euclidean",   "method" : "complete",    "edge_weight" : "method_2" , "use_go": True, "use_keywords" : False, "use_taxonomy" : False },
-            { "metric" : "euclidean",   "method" : "centroid",    "edge_weight" : "method_2" , "use_go": True, "use_keywords" : False, "use_taxonomy" : False },
-            { "metric" : "euclidean",   "method" : "single",      "edge_weight" : "method_2" , "use_go": True, "use_keywords" : False, "use_taxonomy" : False },
-            { "metric" : "euclidean",   "method" : "median",      "edge_weight" : "method_2" , "use_go": True, "use_keywords" : False, "use_taxonomy" : False },
-            { "metric" : "cosine",      "method" : "average",     "edge_weight" : "method_2" , "use_go": True, "use_keywords" : False, "use_taxonomy" : False },
-            { "metric" : "cosine",      "method" : "complete",    "edge_weight" : "method_2" , "use_go": True, "use_keywords" : False, "use_taxonomy" : False },
-            { "metric" : "cosine",      "method" : "single",      "edge_weight" : "method_2" , "use_go": True, "use_keywords" : False, "use_taxonomy" : False },
+            { "metric" : "euclidean",   "method" : "ward",        "edge_weight" : "jaccard" , "use_go": True, "use_keywords" : False, "use_taxonomy" : False },
+            { "metric" : "euclidean",   "method" : "average",     "edge_weight" : "jaccard" , "use_go": True, "use_keywords" : False, "use_taxonomy" : False },
+            { "metric" : "euclidean",   "method" : "complete",    "edge_weight" : "jaccard" , "use_go": True, "use_keywords" : False, "use_taxonomy" : False },
+            { "metric" : "euclidean",   "method" : "centroid",    "edge_weight" : "jaccard" , "use_go": True, "use_keywords" : False, "use_taxonomy" : False },
+            { "metric" : "euclidean",   "method" : "single",      "edge_weight" : "jaccard" , "use_go": True, "use_keywords" : False, "use_taxonomy" : False },
+            { "metric" : "euclidean",   "method" : "median",      "edge_weight" : "jaccard" , "use_go": True, "use_keywords" : False, "use_taxonomy" : False },
+            { "metric" : "cosine",      "method" : "average",     "edge_weight" : "jaccard" , "use_go": True, "use_keywords" : False, "use_taxonomy" : False },
+            { "metric" : "cosine",      "method" : "complete",    "edge_weight" : "jaccard" , "use_go": True, "use_keywords" : False, "use_taxonomy" : False },
+            { "metric" : "cosine",      "method" : "single",      "edge_weight" : "jaccard" , "use_go": True, "use_keywords" : False, "use_taxonomy" : False },
+            { "metric" : "euclidean",   "method" : "ward",        "edge_weight" : "overlap" , "use_go": True, "use_keywords" : False, "use_taxonomy" : False },
+            { "metric" : "euclidean",   "method" : "average",     "edge_weight" : "overlap" , "use_go": True, "use_keywords" : False, "use_taxonomy" : False },
+            { "metric" : "euclidean",   "method" : "complete",    "edge_weight" : "overlap" , "use_go": True, "use_keywords" : False, "use_taxonomy" : False },
+            { "metric" : "euclidean",   "method" : "centroid",    "edge_weight" : "overlap" , "use_go": True, "use_keywords" : False, "use_taxonomy" : False },
+            { "metric" : "euclidean",   "method" : "single",      "edge_weight" : "overlap" , "use_go": True, "use_keywords" : False, "use_taxonomy" : False },
+            { "metric" : "euclidean",   "method" : "median",      "edge_weight" : "overlap" , "use_go": True, "use_keywords" : False, "use_taxonomy" : False },
+            { "metric" : "cosine",      "method" : "average",     "edge_weight" : "overlap" , "use_go": True, "use_keywords" : False, "use_taxonomy" : False },
+            { "metric" : "cosine",      "method" : "complete",    "edge_weight" : "overlap" , "use_go": True, "use_keywords" : False, "use_taxonomy" : False },
+            { "metric" : "cosine",      "method" : "single",      "edge_weight" : "overlap" , "use_go": True, "use_keywords" : False, "use_taxonomy" : False },
             # only keywords
-            { "metric" : "euclidean",   "method" : "ward",        "edge_weight" : "method_1" , "use_go": False, "use_keywords" : True, "use_taxonomy" : False},
-            { "metric" : "euclidean",   "method" : "average",     "edge_weight" : "method_1" , "use_go": False, "use_keywords" : True, "use_taxonomy" : False},
-            { "metric" : "euclidean",   "method" : "complete",    "edge_weight" : "method_1" , "use_go": False, "use_keywords" : True, "use_taxonomy" : False},
-            { "metric" : "euclidean",   "method" : "centroid",    "edge_weight" : "method_1" , "use_go": False, "use_keywords" : True, "use_taxonomy" : False},
-            { "metric" : "euclidean",   "method" : "single",      "edge_weight" : "method_1" , "use_go": False, "use_keywords" : True, "use_taxonomy" : False},
-            { "metric" : "euclidean",   "method" : "median",      "edge_weight" : "method_1" , "use_go": False, "use_keywords" : True, "use_taxonomy" : False},
-            { "metric" : "cosine",      "method" : "average",     "edge_weight" : "method_1" , "use_go": False, "use_keywords" : True, "use_taxonomy" : False},
-            { "metric" : "cosine",      "method" : "complete",    "edge_weight" : "method_1" , "use_go": False, "use_keywords" : True, "use_taxonomy" : False},
-            { "metric" : "cosine",      "method" : "single",      "edge_weight" : "method_1" , "use_go": False, "use_keywords" : True, "use_taxonomy" : False},
-            { "metric" : "euclidean",   "method" : "ward",        "edge_weight" : "method_2" , "use_go": False, "use_keywords" : True, "use_taxonomy" : False},
-            { "metric" : "euclidean",   "method" : "average",     "edge_weight" : "method_2" , "use_go": False, "use_keywords" : True, "use_taxonomy" : False},
-            { "metric" : "euclidean",   "method" : "complete",    "edge_weight" : "method_2" , "use_go": False, "use_keywords" : True, "use_taxonomy" : False},
-            { "metric" : "euclidean",   "method" : "centroid",    "edge_weight" : "method_2" , "use_go": False, "use_keywords" : True, "use_taxonomy" : False},
-            { "metric" : "euclidean",   "method" : "single",      "edge_weight" : "method_2" , "use_go": False, "use_keywords" : True, "use_taxonomy" : False},
-            { "metric" : "euclidean",   "method" : "median",      "edge_weight" : "method_2" , "use_go": False, "use_keywords" : True, "use_taxonomy" : False},
-            { "metric" : "cosine",      "method" : "average",     "edge_weight" : "method_2" , "use_go": False, "use_keywords" : True, "use_taxonomy" : False},
-            { "metric" : "cosine",      "method" : "complete",    "edge_weight" : "method_2" , "use_go": False, "use_keywords" : True, "use_taxonomy" : False},
-            { "metric" : "cosine",      "method" : "single",      "edge_weight" : "method_2" , "use_go": False, "use_keywords" : True, "use_taxonomy" : False},
+            { "metric" : "euclidean",   "method" : "ward",        "edge_weight" : "jaccard" , "use_go": False, "use_keywords" : True, "use_taxonomy" : False},
+            { "metric" : "euclidean",   "method" : "average",     "edge_weight" : "jaccard" , "use_go": False, "use_keywords" : True, "use_taxonomy" : False},
+            { "metric" : "euclidean",   "method" : "complete",    "edge_weight" : "jaccard" , "use_go": False, "use_keywords" : True, "use_taxonomy" : False},
+            { "metric" : "euclidean",   "method" : "centroid",    "edge_weight" : "jaccard" , "use_go": False, "use_keywords" : True, "use_taxonomy" : False},
+            { "metric" : "euclidean",   "method" : "single",      "edge_weight" : "jaccard" , "use_go": False, "use_keywords" : True, "use_taxonomy" : False},
+            { "metric" : "euclidean",   "method" : "median",      "edge_weight" : "jaccard" , "use_go": False, "use_keywords" : True, "use_taxonomy" : False},
+            { "metric" : "cosine",      "method" : "average",     "edge_weight" : "jaccard" , "use_go": False, "use_keywords" : True, "use_taxonomy" : False},
+            { "metric" : "cosine",      "method" : "complete",    "edge_weight" : "jaccard" , "use_go": False, "use_keywords" : True, "use_taxonomy" : False},
+            { "metric" : "cosine",      "method" : "single",      "edge_weight" : "jaccard" , "use_go": False, "use_keywords" : True, "use_taxonomy" : False},
+            { "metric" : "euclidean",   "method" : "ward",        "edge_weight" : "overlap" , "use_go": False, "use_keywords" : True, "use_taxonomy" : False},
+            { "metric" : "euclidean",   "method" : "average",     "edge_weight" : "overlap" , "use_go": False, "use_keywords" : True, "use_taxonomy" : False},
+            { "metric" : "euclidean",   "method" : "complete",    "edge_weight" : "overlap" , "use_go": False, "use_keywords" : True, "use_taxonomy" : False},
+            { "metric" : "euclidean",   "method" : "centroid",    "edge_weight" : "overlap" , "use_go": False, "use_keywords" : True, "use_taxonomy" : False},
+            { "metric" : "euclidean",   "method" : "single",      "edge_weight" : "overlap" , "use_go": False, "use_keywords" : True, "use_taxonomy" : False},
+            { "metric" : "euclidean",   "method" : "median",      "edge_weight" : "overlap" , "use_go": False, "use_keywords" : True, "use_taxonomy" : False},
+            { "metric" : "cosine",      "method" : "average",     "edge_weight" : "overlap" , "use_go": False, "use_keywords" : True, "use_taxonomy" : False},
+            { "metric" : "cosine",      "method" : "complete",    "edge_weight" : "overlap" , "use_go": False, "use_keywords" : True, "use_taxonomy" : False},
+            { "metric" : "cosine",      "method" : "single",      "edge_weight" : "overlap" , "use_go": False, "use_keywords" : True, "use_taxonomy" : False},
             # only taxonomy
-            { "metric" : "euclidean",   "method" : "ward",        "edge_weight" : "method_1" , "use_go": False, "use_keywords" : False, "use_taxonomy" : True},
-            { "metric" : "euclidean",   "method" : "average",     "edge_weight" : "method_1" , "use_go": False, "use_keywords" : False, "use_taxonomy" : True},
-            { "metric" : "euclidean",   "method" : "complete",    "edge_weight" : "method_1" , "use_go": False, "use_keywords" : False, "use_taxonomy" : True},
-            { "metric" : "euclidean",   "method" : "centroid",    "edge_weight" : "method_1" , "use_go": False, "use_keywords" : False, "use_taxonomy" : True},
-            { "metric" : "euclidean",   "method" : "single",      "edge_weight" : "method_1" , "use_go": False, "use_keywords" : False, "use_taxonomy" : True},
-            { "metric" : "euclidean",   "method" : "median",      "edge_weight" : "method_1" , "use_go": False, "use_keywords" : False, "use_taxonomy" : True},
-            { "metric" : "cosine",      "method" : "average",     "edge_weight" : "method_1" , "use_go": False, "use_keywords" : False, "use_taxonomy" : True},
-            { "metric" : "cosine",      "method" : "complete",    "edge_weight" : "method_1" , "use_go": False, "use_keywords" : False, "use_taxonomy" : True},
-            { "metric" : "cosine",      "method" : "single",      "edge_weight" : "method_1" , "use_go": False, "use_keywords" : False, "use_taxonomy" : True},
-            { "metric" : "euclidean",   "method" : "ward",        "edge_weight" : "method_2" , "use_go": False, "use_keywords" : False, "use_taxonomy" : True},
-            { "metric" : "euclidean",   "method" : "average",     "edge_weight" : "method_2" , "use_go": False, "use_keywords" : False, "use_taxonomy" : True},
-            { "metric" : "euclidean",   "method" : "complete",    "edge_weight" : "method_2" , "use_go": False, "use_keywords" : False, "use_taxonomy" : True},
-            { "metric" : "euclidean",   "method" : "centroid",    "edge_weight" : "method_2" , "use_go": False, "use_keywords" : False, "use_taxonomy" : True},
-            { "metric" : "euclidean",   "method" : "single",      "edge_weight" : "method_2" , "use_go": False, "use_keywords" : False, "use_taxonomy" : True},
-            { "metric" : "euclidean",   "method" : "median",      "edge_weight" : "method_2" , "use_go": False, "use_keywords" : False, "use_taxonomy" : True},
-            { "metric" : "cosine",      "method" : "average",     "edge_weight" : "method_2" , "use_go": False, "use_keywords" : False, "use_taxonomy" : True},
-            { "metric" : "cosine",      "method" : "complete",    "edge_weight" : "method_2" , "use_go": False, "use_keywords" : False, "use_taxonomy" : True},
-            { "metric" : "cosine",      "method" : "single",      "edge_weight" : "method_2" , "use_go": False, "use_keywords" : False, "use_taxonomy" : True},
+            { "metric" : "euclidean",   "method" : "ward",        "edge_weight" : "jaccard" , "use_go": False, "use_keywords" : False, "use_taxonomy" : True},
+            { "metric" : "euclidean",   "method" : "average",     "edge_weight" : "jaccard" , "use_go": False, "use_keywords" : False, "use_taxonomy" : True},
+            { "metric" : "euclidean",   "method" : "complete",    "edge_weight" : "jaccard" , "use_go": False, "use_keywords" : False, "use_taxonomy" : True},
+            { "metric" : "euclidean",   "method" : "centroid",    "edge_weight" : "jaccard" , "use_go": False, "use_keywords" : False, "use_taxonomy" : True},
+            { "metric" : "euclidean",   "method" : "single",      "edge_weight" : "jaccard" , "use_go": False, "use_keywords" : False, "use_taxonomy" : True},
+            { "metric" : "euclidean",   "method" : "median",      "edge_weight" : "jaccard" , "use_go": False, "use_keywords" : False, "use_taxonomy" : True},
+            { "metric" : "cosine",      "method" : "average",     "edge_weight" : "jaccard" , "use_go": False, "use_keywords" : False, "use_taxonomy" : True},
+            { "metric" : "cosine",      "method" : "complete",    "edge_weight" : "jaccard" , "use_go": False, "use_keywords" : False, "use_taxonomy" : True},
+            { "metric" : "cosine",      "method" : "single",      "edge_weight" : "jaccard" , "use_go": False, "use_keywords" : False, "use_taxonomy" : True},
+            { "metric" : "euclidean",   "method" : "ward",        "edge_weight" : "overlap" , "use_go": False, "use_keywords" : False, "use_taxonomy" : True},
+            { "metric" : "euclidean",   "method" : "average",     "edge_weight" : "overlap" , "use_go": False, "use_keywords" : False, "use_taxonomy" : True},
+            { "metric" : "euclidean",   "method" : "complete",    "edge_weight" : "overlap" , "use_go": False, "use_keywords" : False, "use_taxonomy" : True},
+            { "metric" : "euclidean",   "method" : "centroid",    "edge_weight" : "overlap" , "use_go": False, "use_keywords" : False, "use_taxonomy" : True},
+            { "metric" : "euclidean",   "method" : "single",      "edge_weight" : "overlap" , "use_go": False, "use_keywords" : False, "use_taxonomy" : True},
+            { "metric" : "euclidean",   "method" : "median",      "edge_weight" : "overlap" , "use_go": False, "use_keywords" : False, "use_taxonomy" : True},
+            { "metric" : "cosine",      "method" : "average",     "edge_weight" : "overlap" , "use_go": False, "use_keywords" : False, "use_taxonomy" : True},
+            { "metric" : "cosine",      "method" : "complete",    "edge_weight" : "overlap" , "use_go": False, "use_keywords" : False, "use_taxonomy" : True},
+            { "metric" : "cosine",      "method" : "single",      "edge_weight" : "overlap" , "use_go": False, "use_keywords" : False, "use_taxonomy" : True},
         ]
     )
 

@@ -1,8 +1,8 @@
 import numpy as np
 from sklearn.decomposition import PCA
 from sklearn.preprocessing import StandardScaler
+from sklearn.manifold import TSNE
 
-# TODO implement t-sne
 
 
 def combiner(raw_embedding : np.array , method: str)-> np.array :
@@ -48,6 +48,18 @@ def combiner(raw_embedding : np.array , method: str)-> np.array :
         combined_embedding = StandardScaler().fit_transform(combined_embedding)
         pca = PCA(n_components=1)
         return pca.fit_transform(combined_embedding).reshape(-1)
+
+    elif method == "tsne":
+        final_chunk_embedding = []
+        for chunk_embedding in raw_embedding:
+            chunk_embedding = np.transpose(chunk_embedding)
+            chunk_embedding = StandardScaler().fit_transform(chunk_embedding)
+            final_chunk_embedding.append(TSNE(n_components=1).fit_transform(chunk_embedding).reshape(-1))
+        
+        combined_embedding = np.transpose(final_chunk_embedding)
+        combined_embedding = StandardScaler().fit_transform(combined_embedding)
+        return TSNE(n_components=1).fit_transform(combined_embedding).reshape(-1)
+            
         
     else:
         raise Exception(f"Unknown combining method: {method} for esm")

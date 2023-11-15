@@ -41,10 +41,6 @@ def main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH):
     et.add_multistage(
         function=pipeline_build_embeddings_matrix,
         list_args=[ 
-            # {"embedder" : "rep", "combiner_method" : "pca" },
-            # {"embedder" : "rep", "combiner_method" : "average" },
-            # {"embedder" : "rep", "combiner_method" : "sum" },
-            # {"embedder" : "rep", "combiner_method" : "max" },
 
             {"embedder" : "seqvec", "combiner_method" : "pca" },
             {"embedder" : "seqvec", "combiner_method" : "average" },
@@ -104,7 +100,7 @@ def main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH):
         return { "embeddings_matrix" : embeddings_matrix, "embeddings_IDs": embeddings_IDs}
 
     et.add_multistage(
-        function=pipeline_pca, # TODO t-sne
+        function=pipeline_pca,
         list_args=[
             {"n_components": 10},
             {"n_components": 30},
