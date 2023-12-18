@@ -74,7 +74,7 @@ def main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH):
 
     # PRINCIPAL COMPONENT ANALYSIS (with scaling)
 
-    def pipeline_pca(previous_stage_output : dict, n_components) -> dict:
+    def pipeline_scaling_and_pca(previous_stage_output : dict, n_components) -> dict:
 
         """
         Performs PCA on the embeddings matrix after scaling it
@@ -90,9 +90,10 @@ def main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH):
         embeddings_matrix = previous_stage_output["embeddings_matrix"]
         embeddings_IDs = previous_stage_output["embeddings_IDs"]
 
+        scaler = StandardScaler()
+        embeddings_matrix = scaler.fit_transform(embeddings_matrix)
+
         if n_components != "all":
-            scaler = StandardScaler()
-            embeddings_matrix = scaler.fit_transform(embeddings_matrix)
             if n_components == "default":
                 n_components = min(embeddings_matrix.shape)
             pca = PCA(n_components=n_components)
@@ -101,13 +102,10 @@ def main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH):
         return { "embeddings_matrix" : embeddings_matrix, "embeddings_IDs": embeddings_IDs}
 
     et.add_multistage(
-        function=pipeline_pca,
+        function=pipeline_scaling_and_pca,
         list_args=[
             {"n_components": 10},
-            {"n_components": 30},
             {"n_components": 50},
-            {"n_components": 70},
-            {"n_components": 90},
             {"n_components": 'all'},
         ]
     )
