@@ -36,7 +36,7 @@ def results2table(
             if stage == "pipeline_build_embeddings_matrix":
                 embedder = args["embedder"]
                 combiner = args["combiner_method"]
-            if stage == "pipeline_pca":
+            if stage == "pipeline_scaling_and_pca":
                 pca = str(args["n_components"])
             if stage == "pipeline_build_embeddings_linkage_matrix":
                 metric_embedding = args["metric"]
@@ -95,6 +95,7 @@ def results2file(r, filepath):
     with open(filepath + ".txt", "w") as f:
         for result, pipeline in r:
             f.write(f"mean_adjusted_rand_score: {result['mean_adjusted_rand_score']} \n")
+            f.write(f"adjusted_rand_scores: {result['adjusted_rand_scores']} \n")
             for name, args in pipeline:
                 f.write(f"{name}  {args} \n")
             f.write(f"\n")

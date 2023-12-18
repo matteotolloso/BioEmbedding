@@ -47,10 +47,10 @@ def main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH):
             {"embedder" : "seqvec", "combiner_method" : "sum" },
             {"embedder" : "seqvec", "combiner_method" : "max" },
             
-            {"embedder" : "dnabert", "combiner_method" : "pca" },
-            {"embedder" : "dnabert", "combiner_method" : "average" },
-            {"embedder" : "dnabert", "combiner_method" : "sum" },
-            {"embedder" : "dnabert", "combiner_method" : "max" },
+            # {"embedder" : "dnabert", "combiner_method" : "pca" },
+            # {"embedder" : "dnabert", "combiner_method" : "average" },
+            # {"embedder" : "dnabert", "combiner_method" : "sum" },
+            # {"embedder" : "dnabert", "combiner_method" : "max" },
             
             {"embedder" : "prose", "combiner_method" : "pca" },
             {"embedder" : "prose", "combiner_method" : "average" },
@@ -223,7 +223,7 @@ def main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH):
         for i in range(predict_labels_matrix.shape[1]):
             adjusted_rand_scores.append(adjusted_rand_score(predict_labels_matrix[:,i], gtrue_labels_matrix[:,i]))
         
-        return {"mean_adjusted_rand_score" : np.mean(adjusted_rand_scores)}
+        return {"mean_adjusted_rand_score" : np.mean(adjusted_rand_scores), "adjusted_rand_scores": adjusted_rand_scores}
         
 
 
