@@ -181,14 +181,14 @@ def main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH):
 
     # COMPARE WITH GROUND TRUE
 
-    def pipeline_mean_adjusted_rand_score(previous_stage_output : dict, cluster_range : tuple ) -> dict:
+    def pipeline_mean_adjusted_rand_score(previous_stage_output : dict, cluster_range ) -> dict:
         """
         Computes the mean adjusted rand score between two hierarchical clustering averaging over all the cut
         in a given range
 
         Args:
             previous_stage_output (dict): The output of the previous stage, a dict containing the linkage matrix and the IDs
-            cluster_range (tuple): The range of clusters to consider (the cut to the hierarchical clustering)
+            cluster_range: The range of clusters to consider (the cut to the hierarchical clustering)
             ground_true_path (str): The path to the ground true newick file
         Returns:
             dict: A dict containing the mean adjusted rand score
@@ -200,19 +200,18 @@ def main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH):
 
         if len(embeddings_IDs) != len(gtrue_IDs):
             raise Exception("The number of IDs in the ground true and the predicted clustering is different")
-        if cluster_range[0] < 2:
-            raise Exception("Cluster range must start at least from 2")
         if not set(embeddings_IDs) == set(gtrue_IDs):
             raise Exception("The IDs in the ground true and the predicted clustering are different")
 
-        start = cluster_range[0]
-        end = cluster_range[1]
-        
-        if end == -1:
-            end = min(len(embeddings_IDs), len(gtrue_IDs))
-        
-        predict_labels_matrix= cut_tree(embeddings_linkage_matrix, n_clusters=range(start, end))
-        gtrue_labels_matrix = cut_tree(gtrue_linkage_matrix, n_clusters=range(start, end))
+        start = 0
+        end = 0
+
+        if cluster_range == "auto":
+            start = 2
+            end = len(embeddings_IDs) - 1
+
+        predict_labels_matrix = cut_tree(embeddings_linkage_matrix, n_clusters=[i for i in range(start, end+1)])
+        gtrue_labels_matrix = cut_tree(gtrue_linkage_matrix, n_clusters=[i for i in range(start, end+1)])
 
         # order the matrix rows based on the IDs
         predict_labels_matrix = predict_labels_matrix[np.argsort(embeddings_IDs)]
@@ -229,7 +228,7 @@ def main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH):
 
     et.add_stage(
         function=pipeline_mean_adjusted_rand_score,
-        args={"cluster_range" : (2, -1)}
+        args={"cluster_range" : "auto"}
     )
 
     # END
