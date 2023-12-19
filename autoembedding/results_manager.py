@@ -15,6 +15,8 @@ def results2table(
     ):
     
     computations_dict = {} # dict[combiner][pca][embedder] = score
+    best_result = -1
+    best_result_list = []
 
     # generate the empty dict with the argument that are relevant for the table
     for combiner in combiners:
@@ -69,6 +71,9 @@ def results2table(
             annotation == preferred_annotation:
         
             computations_dict[combiner][pca][embedder] = result[metric]
+            if result[metric] > best_result:
+                best_result = result[metric]
+                best_result_list = result['adjusted_rand_scores']
 
     
     data_matrix = [] # the matrix that will be converted to a dataframe, the order of the rows and columns must be consistent whith the one created by the MultiIndex and the "columns" parameter of the DataFrame constructor
@@ -86,7 +91,7 @@ def results2table(
     index = pd.MultiIndex.from_product(iterables, names=["combiner", "dimensional PCA"])
     df = pd.DataFrame( data_matrix, index=index, columns=embedders)
 
-    return df
+    return df, best_result_list
 
 def results2file(r, filepath):
     
