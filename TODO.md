@@ -2,10 +2,10 @@
 
 ## Dataset
 
-| dataset           | esmfold       | alphafold         | prose             | dnabert       | seqvec     | rep           |
-|---------          |-----------    |-------            |-------            |-------------- |------------|-------------- |
-| batterio          | complete      | complete          | complete          | complete      | complete   |               |
-| covid19           |               | 1c                |                   |               |            |               |
-| emoglobina        | complete      | complete          | complete          | complete      | complete   |
-| meningite         | 10s           | 1c                |                   |               |            |               |
-| topo              | complete      | complete          | complete          | complete      | complete   |               |
+| dataset           | esmfold       | alphafold         | prose             | dnabert         | seqvec          |
+|---------          |-----------    |-------            |-------            |--------------   |------------     |
+| emoglobina        | complete      | complete          | complete          |                 | complete        |
+| topo              | complete      | complete          | complete          |                 | complete        |
+| batterio          | complete      | complete          | complete          |                 | complete        |
+| covid19           |               |                   |                   | complete        | complete        |
+| meningite         |               |                   |                   | working (anto)  | working (anto)  |
