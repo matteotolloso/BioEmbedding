@@ -11,6 +11,8 @@ def combiner(raw_embedding : np.array , method: str)-> np.array :
     it returns an embedding for the entire protein using some combination methods.
     """
 
+    assert len(raw_embedding.shape) == 3
+
     if method == "average":
 
         final_chunk_embedding = []

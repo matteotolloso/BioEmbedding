@@ -11,9 +11,9 @@ import numpy as np
 from autoembedding.results_manager import results2file
 
 
-def main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH):    
+def main_et(CASE_STUDY):    
     
-    et = ExecutionTree(input = {"embeddings_path" : EMBEDDINGS_PATH} )
+    et = ExecutionTree(input = {"case_study" : CASE_STUDY} )
 
     # BUILD EMBEDDING MATRIX (WITH COMBINER)
     def pipeline_build_embeddings_matrix(previous_stage_output : dict, embedder: str, combiner_method : str) -> dict:
@@ -29,10 +29,10 @@ def main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH):
             dict: A dict containing the IDs and the embeddings matrix where each row is the embedding of the corresponding ID
         """
 
-        embeddings_path = previous_stage_output["embeddings_path"]
+        case_study = previous_stage_output["case_study"]
 
         embeddings_IDs, embeddings_matrix = build_embeddings_matrix(
-            embeddings_path=embeddings_path,
+            case_study=case_study,
             embedder=embedder,
             combiner_method=combiner_method
         )
@@ -47,10 +47,10 @@ def main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH):
             {"embedder" : "seqvec", "combiner_method" : "sum" },
             {"embedder" : "seqvec", "combiner_method" : "max" },
             
-            # {"embedder" : "dnabert", "combiner_method" : "pca" },
-            # {"embedder" : "dnabert", "combiner_method" : "average" },
-            # {"embedder" : "dnabert", "combiner_method" : "sum" },
-            # {"embedder" : "dnabert", "combiner_method" : "max" },
+            {"embedder" : "dnabert", "combiner_method" : "pca" },
+            {"embedder" : "dnabert", "combiner_method" : "average" },
+            {"embedder" : "dnabert", "combiner_method" : "sum" },
+            {"embedder" : "dnabert", "combiner_method" : "max" },
             
             {"embedder" : "prose", "combiner_method" : "pca" },
             {"embedder" : "prose", "combiner_method" : "average" },
@@ -145,7 +145,7 @@ def main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH):
     )
 
     def pipeline_build_gt_linkage_matrix(
-        ground_true_path : str, 
+        case_study : str, 
         previous_stage_output : dict, 
         metric, 
         method)-> dict:
@@ -153,10 +153,11 @@ def main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH):
         embeddings_linkage_matrix = previous_stage_output["embeddings_linkage_matrix"]
         embeddings_IDs = previous_stage_output["embeddings_IDs"]
         
-        
-        gtrue_IDs, gt_distances = utils.read_distance_matrix(ground_true_path)
+        gtrue_IDs, gt_distances = utils.read_distance_matrix(case_study)
         gt_distances = squareform(gt_distances)
         gtrue_linkage_matrix = linkage(gt_distances, method=method, metric=metric)
+
+        assert embeddings_IDs == gtrue_IDs, "The IDs of the embeddings and the ground truth are different"
 
         return { "embeddings_linkage_matrix" : embeddings_linkage_matrix, "embeddings_IDs": embeddings_IDs, 
                 "gtrue_linkage_matrix" : gtrue_linkage_matrix, "gtrue_IDs" : gtrue_IDs}
@@ -164,7 +165,7 @@ def main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH):
 
     et.add_multistage(
         function=pipeline_build_gt_linkage_matrix,
-        fixed_args={"ground_true_path" : GROUND_TRUE_PATH},
+        fixed_args={"case_study" : CASE_STUDY},
         list_args=[
             {"metric" : "euclidean", "method" : "average"},
             {"metric" : "euclidean", "method" : "complete"},
@@ -238,22 +239,14 @@ def main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH):
 
 if __name__ == "__main__":
     
-    EMBEDDINGS_PATH = "./dataset/emoglobina/embeddings"
-    GROUND_TRUE_PATH = "./dataset/emoglobina/emoglobina.dist"
-
-    # EMBEDDINGS_PATH =  "./dataset/batterio/embeddings"
-    # GROUND_TRUE_PATH = "./dataset/batterio/batterio.dist"
-
-    # EMBEDDINGS_PATH =  "./dataset/topo/embeddings"
-    # GROUND_TRUE_PATH = "./dataset/topo/topo.dist"
+    CASE_STUDY = "covid19"
     
-    
-    et = main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH)
+    et = main_et(CASE_STUDY)
     et.compute()
     
     r = et.get_results()
 
-    file_name = "./results/"+ "phylogenetic_" +"results_" + GROUND_TRUE_PATH.split("/")[-1].split(".")[0]
+    file_name = "./results/"+ "phylogenetic_" +"results_" + CASE_STUDY
 
     et.dump_results(r, file_name)
 
