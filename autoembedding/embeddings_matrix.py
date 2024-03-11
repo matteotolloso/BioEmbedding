@@ -1,6 +1,8 @@
 import numpy as np
 from autoembedding.combiners import combiner
+# from combiners import combiner
 from Bio import SeqIO
+import os
 
 
 
@@ -10,14 +12,111 @@ def build_embeddings_matrix(
         combiner_method : str
     ) -> tuple[list[str] , np.array]:
 
+
+    print('build_embeddings_matrix_for_covid19_case_study')
+    print(f"embedder: {embedder}")
+    print(f"combiner_method: {combiner_method}")
+
     if case_study == 'covid19':
         return build_embeddings_matrix_for_covid19_case_study(
             embedder = embedder,
             combiner_method = combiner_method
         )
+
+    if case_study == 'hemoglobin':
+        return build_embeddings_matrix_for_hemoglobin_case_study(
+            embedder = embedder,
+            combiner_method = combiner_method
+        )
     
     raise Exception(f"case study {case_study} not supported")
+
+
+def build_embeddings_matrix_for_hemoglobin_case_study(  
+        embedder : str, 
+        combiner_method : str,
+    ) -> tuple[list[str] , np.array]:
+
+    def get_gene_id(record):
+        for i in record.dbxrefs:
+            if i.startswith("GeneID:"):
+                geneID = i.split(":")[1]
+                return geneID
+        return None
+
+    up_records = list(SeqIO.parse("dataset/hemoglobin/hemoglobin.xml", "uniprot-xml"))
+
+    IDs = []
+    embeddings_matrix = []
+
+    if embedder == 'dnabert':
+
+        for record in up_records:
+            gene_ID = get_gene_id(record)
+            if gene_ID is None: # the protein has not a gene id # TODO why?
+                continue
+
+            if not os.path.exists("dataset/hemoglobin/embeddings/dnabert/" + gene_ID + ".npy"): # not able to find the transpriptome for the geneid? # TODO why
+                continue
+            
+            raw_embedding = None
+            try:
+                raw_embedding = np.load("dataset/hemoglobin/embeddings/dnabert/" + gene_ID + ".npy", allow_pickle=True)
+            except:
+                print(f"Error while loading the embedding of sequence {gene_ID} from embedder {embedder}")
+                raise
+
+            assert len(raw_embedding.shape) == 3
+            # the embedding is of the shape (number_of_chunks, chunks_len, embedding_dimension)
+
+            # combine in a single (embedding_dimension) representation
+            final_embedding = combiner(
+                raw_embedding = raw_embedding,
+                method = combiner_method
+            )
+            
+            embeddings_matrix.append(final_embedding)
+
+            IDs.append(gene_ID)
+        
+        return IDs, np.array(embeddings_matrix)
     
+    else:
+        
+        for record in up_records:
+            
+            gene_ID = get_gene_id(record)
+
+            if gene_ID is None or not os.path.exists("dataset/hemoglobin/embeddings/dnabert/" + gene_ID + ".npy"):
+                # if the protein sequence does not have a gene id or the transriptome does not exist
+                continue
+
+            protein_name = f'sp|{record.id}|{record.name}'.replace('|', '_')
+            
+            raw_embedding = None
+            try:
+                raw_embedding = np.load(f"dataset/hemoglobin/embeddings/{embedder}/" + protein_name + ".npy", allow_pickle=True)
+            except:
+                print(f"Error while loading the embedding of sequence {protein_name} from embedder {embedder}")
+                raise
+
+            assert len(raw_embedding.shape) == 3
+            # the embedding is of the shape (number_of_chunks, chunks_len, embedding_dimension)
+
+            # combine in a single (embedding_dimension) representation
+            final_embedding = combiner(
+                raw_embedding = raw_embedding,
+                method = combiner_method
+            )
+            
+            embeddings_matrix.append(final_embedding)
+
+            IDs.append(gene_ID)
+
+        return IDs, np.array(embeddings_matrix)
+
+
+
 
 
 def build_embeddings_matrix_for_covid19_case_study(
@@ -28,10 +127,6 @@ def build_embeddings_matrix_for_covid19_case_study(
     """
     The data for covid19 are in the covid19.gb file, there are 77 transcripts each one coding 11 proteins
     """
-
-    print('build_embeddings_matrix_for_covid19_case_study')
-    print(f"embedder: {embedder}")
-    print(f"combiner_method: {combiner_method}")
 
     gb_records = list(SeqIO.parse('dataset/covid19/covid19.gb','genbank'))
 
@@ -120,8 +215,9 @@ def build_embeddings_matrix_for_covid19_case_study(
 
 
 if __name__ == '__main__':
-    r = build_embeddings_matrix_for_covid19_case_study(
-        embedder = "esm",
+
+    r = build_embeddings_matrix_for_hemoglobin_case_study(
+        embedder = "alphafold",
         combiner_method = "average"
     )
 

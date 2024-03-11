@@ -72,6 +72,8 @@ def read_distance_matrix(case_study: str) -> tuple:
 
     if case_study == 'covid19':
         path = "dataset/covid19/covid19_tr_distances.txt"
+    if case_study == 'hemoglobin':
+        path = "dataset/hemoglobin/hemoglobin_tr_distances.txt"
     else:
         raise ValueError("Invalid case study")
 

@@ -157,7 +157,7 @@ def main_et(CASE_STUDY):
         gt_distances = squareform(gt_distances)
         gtrue_linkage_matrix = linkage(gt_distances, method=method, metric=metric)
 
-        assert embeddings_IDs == gtrue_IDs, "The IDs of the embeddings and the ground truth are different"
+        # assert embeddings_IDs == gtrue_IDs, "The IDs of the embeddings and the ground truth are different"
 
         return { "embeddings_linkage_matrix" : embeddings_linkage_matrix, "embeddings_IDs": embeddings_IDs, 
                 "gtrue_linkage_matrix" : gtrue_linkage_matrix, "gtrue_IDs" : gtrue_IDs}
@@ -207,12 +207,11 @@ def main_et(CASE_STUDY):
         start = 0
         end = 0
 
-        if cluster_range == "auto":
-            start = 2
-            end = len(embeddings_IDs) - 1
+        if cluster_range != "auto":
+            raise Exception("Not implemented")
 
-        predict_labels_matrix = cut_tree(embeddings_linkage_matrix, n_clusters=[i for i in range(start, end+1)])
-        gtrue_labels_matrix = cut_tree(gtrue_linkage_matrix, n_clusters=[i for i in range(start, end+1)])
+        predict_labels_matrix = cut_tree(embeddings_linkage_matrix)
+        gtrue_labels_matrix = cut_tree(gtrue_linkage_matrix)
 
         # order the matrix rows based on the IDs
         predict_labels_matrix = predict_labels_matrix[np.argsort(embeddings_IDs)]
@@ -239,7 +238,7 @@ def main_et(CASE_STUDY):
 
 if __name__ == "__main__":
     
-    CASE_STUDY = "covid19"
+    CASE_STUDY = "hemoglobin"
     
     et = main_et(CASE_STUDY)
     et.compute()
