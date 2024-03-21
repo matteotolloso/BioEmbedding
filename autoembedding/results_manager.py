@@ -1,4 +1,16 @@
 import pandas as pd
+import numpy as np
+
+
+def calculate_score(result, percentile=90):
+
+    ars = result['adjusted_rand_scores']
+
+    return np.percentile(ars, percentile)
+
+
+
+
 
 def results2table(
     r, 
@@ -14,17 +26,21 @@ def results2table(
     preferred_annotation = "go"
     ):
     
-    computations_dict = {} # dict[combiner][pca][embedder] = score
-    best_result = -1
-    best_result_list = []
+    computations_dict_scores = {} # dict[combiner][pca][embedder] = score
+    computational_dict_ars = {} # dict[combiner][pca][embedder] = ars
+    best_score = -1
+    best_score_list = []
 
     # generate the empty dict with the argument that are relevant for the table
     for combiner in combiners:
-        computations_dict[combiner] = {}
+        computations_dict_scores[combiner] = {}
+        computational_dict_ars[combiner] = {}
         for pca in pcas:
-            computations_dict[combiner][pca] = {}
+            computations_dict_scores[combiner][pca] = {}
+            computational_dict_ars[combiner][pca] = {}
             for embedder in embedders:
-                computations_dict[combiner][pca][embedder] = None
+                computations_dict_scores[combiner][pca][embedder] = None
+                computational_dict_ars[combiner][pca][embedder] = None
     
     # fill the dict
     for result, pipeline in r:  # for each result and the pipeline that generated it
@@ -70,11 +86,14 @@ def results2table(
             edge_weight == preferred_edge_weight and \
             annotation == preferred_annotation:
         
-            computations_dict[combiner][pca][embedder] = result[metric]
-            if result[metric] > best_result:
-                best_result = result[metric]
-                best_result_list = result['adjusted_rand_scores']
-
+            score = calculate_score(result)
+            
+            computations_dict_scores[combiner][pca][embedder] = score
+            computational_dict_ars[combiner][pca][embedder] = result['adjusted_rand_scores']
+            
+            if score > best_score:
+                best_score = score
+                best_score_list = result['adjusted_rand_scores']
     
     data_matrix = [] # the matrix that will be converted to a dataframe, the order of the rows and columns must be consistent whith the one created by the MultiIndex and the "columns" parameter of the DataFrame constructor
 
@@ -84,14 +103,14 @@ def results2table(
         for pca in pcas:
             row = []
             for embedder in embedders:
-                row.append(computations_dict[combiner][pca][embedder])
+                row.append(computations_dict_scores[combiner][pca][embedder])
             data_matrix.append(row)
 
 
     index = pd.MultiIndex.from_product(iterables, names=["combiner", "dimensional PCA"])
     df = pd.DataFrame( data_matrix, index=index, columns=embedders)
 
-    return df, best_result_list
+    return df, best_score_list, computational_dict_ars
 
 def results2file(r, filepath):
     

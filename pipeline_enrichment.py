@@ -12,9 +12,9 @@ from Bio import SeqIO
 from autoembedding.results_manager import results2file
 
 
-def main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH):    
+def main_et(CASE_STUDY):    
     
-    et = ExecutionTree(input = {"embeddings_path" : EMBEDDINGS_PATH} )
+    et = ExecutionTree(input = {"case_study" : CASE_STUDY} )
 
     # BUILD EMBEDDING MATRIX (WITH COMBINER)
     def pipeline_build_embeddings_matrix(previous_stage_output : dict, embedder: str, combiner_method : str) -> dict:
@@ -30,10 +30,10 @@ def main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH):
             dict: A dict containing the IDs and the embeddings matrix where each row is the embedding of the corresponding ID
         """
 
-        embeddings_path = previous_stage_output["embeddings_path"]
+        case_study = previous_stage_output["case_study"]
 
         embeddings_IDs, embeddings_matrix = build_embeddings_matrix(
-            embeddings_path=embeddings_path,
+            case_study=case_study,
             embedder=embedder,
             combiner_method=combiner_method
         )
@@ -48,10 +48,10 @@ def main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH):
             {"embedder" : "seqvec", "combiner_method" : "sum" },
             {"embedder" : "seqvec", "combiner_method" : "max" },
             
-            # {"embedder" : "dnabert", "combiner_method" : "pca" },
-            # {"embedder" : "dnabert", "combiner_method" : "average" },
-            # {"embedder" : "dnabert", "combiner_method" : "sum" },
-            # {"embedder" : "dnabert", "combiner_method" : "max" },
+            {"embedder" : "dnabert", "combiner_method" : "pca" },
+            {"embedder" : "dnabert", "combiner_method" : "average" },
+            {"embedder" : "dnabert", "combiner_method" : "sum" },
+            {"embedder" : "dnabert", "combiner_method" : "max" },
             
             {"embedder" : "prose", "combiner_method" : "pca" },
             {"embedder" : "prose", "combiner_method" : "average" },
@@ -150,37 +150,39 @@ def main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH):
     )
 
     
-    def pipeline_build_gt_linkage_matrix(previous_stage_output : dict, metric, method, edge_weight, use_go, use_keywords, use_taxonomy, ground_true_path)-> dict:
+    def pipeline_build_gt_linkage_matrix(previous_stage_output : dict, metric, method, edge_weight, use_go, use_keywords, use_taxonomy, case_study)-> dict:
 
         embeddings_linkage_matrix = previous_stage_output["embeddings_linkage_matrix"]
         embeddings_IDs = previous_stage_output["embeddings_IDs"]
+
+        if case_study == "mouse":
+            ground_true_path = "dataset/mouse/mouse.xml"
+        else:
+            raise ValueError("The case study must be either 'mouse' or 'bacterium'")
         
         # preparing the matrix distance in the "enrichment space"
         records = list(SeqIO.parse(ground_true_path, "uniprot-xml"))
-
-        assert len(records) == len(embeddings_IDs), "The number of records in the ground true file must be the same as the number of embeddings"
 
         annotation_dict = {}
         
         for record in records:
 
-            name = f'{record.id}|{record.name}'      
+            geneID = utils.get_gene_id(record)
+
+            if geneID not in embeddings_IDs:
+                continue     
             
-            annotation_dict[name] = {}
+            annotation_dict[geneID] = {}
             go_annotations = [i for i in record.dbxrefs if i.startswith('GO')]
-            annotation_dict[name]['go'] = go_annotations
-            annotation_dict[name]['keywords'] = record.annotations['keywords']
-            annotation_dict[name]['taxonomy'] = record.annotations['taxonomy']
+            annotation_dict[geneID]['go'] = go_annotations
+            annotation_dict[geneID]['keywords'] = record.annotations['keywords']
+            annotation_dict[geneID]['taxonomy'] = record.annotations['taxonomy']
 
         gtrue_distance_matrix = np.zeros((len(embeddings_IDs), len(embeddings_IDs)))
 
         for i, name_i in enumerate(embeddings_IDs):
             
-            name_i = name_i[name_i.find("|")+1:]  # remove the first part of the string (until the first '|') this because the annotation dictionary is indexed without them
-            
             for j, name_j in enumerate(embeddings_IDs):
-
-                name_j = name_j[name_j.find("|")+1:]
 
                 # annotations of the first sequence
                 A = set()
@@ -197,8 +199,8 @@ def main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH):
                     A = A.union(set(annotation_dict[name_i]['taxonomy']))
                     B = B.union(set(annotation_dict[name_j]['taxonomy']))
 
-                if len(A) == 0 or len(B) == 0:
-                    gtrue_distance_matrix[i][j] = 1/2
+                if len(A) == 0 and len(B) == 0:
+                    gtrue_distance_matrix[i][j] = 0
                     continue
 
                 if edge_weight == 'jaccard':
@@ -236,7 +238,7 @@ def main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH):
     
     et.add_multistage(
         function=pipeline_build_gt_linkage_matrix,
-        fixed_args={ "ground_true_path" : GROUND_TRUE_PATH},
+        fixed_args={ "case_study" : CASE_STUDY},
         list_args=[
             # only go
             { "metric" : "euclidean",   "method" : "ward",        "edge_weight" : "jaccard" , "use_go": True, "use_keywords" : False, "use_taxonomy" : False },
@@ -324,12 +326,11 @@ def main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH):
         start = 0
         end = 0
 
-        if cluster_range == "auto":
-            start = 2
-            end = len(embeddings_IDs) - 1
+        if cluster_range != "auto":
+            raise Exception("Not implemented")
 
-        predict_labels_matrix = cut_tree(embeddings_linkage_matrix, n_clusters=[i for i in range(start, end+1)])
-        gtrue_labels_matrix = cut_tree(gtrue_linkage_matrix, n_clusters=[i for i in range(start, end+1)])
+        predict_labels_matrix = cut_tree(embeddings_linkage_matrix)
+        gtrue_labels_matrix = cut_tree(gtrue_linkage_matrix)
 
         # order the matrix rows based on the IDs
         predict_labels_matrix = predict_labels_matrix[np.argsort(embeddings_IDs)]
@@ -340,14 +341,12 @@ def main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH):
         for i in range(predict_labels_matrix.shape[1]):
             adjusted_rand_scores.append(adjusted_rand_score(predict_labels_matrix[:,i], gtrue_labels_matrix[:,i]))
         
-        return {"mean_adjusted_rand_score" : np.mean(adjusted_rand_scores), "adjusted_rand_scores": adjusted_rand_scores}
+        return {"mean_adjusted_rand_score" : np.mean(adjusted_rand_scores), "adjusted_rand_scores": adjusted_rand_scores}     
 
 
     et.add_stage(
         function=pipeline_mean_adjusted_rand_score,
-        args={
-            "cluster_range" : "auto"
-        }
+        args={"cluster_range" : "auto"}
     )
 
     # END
@@ -358,24 +357,16 @@ def main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH):
 if __name__ == "__main__":
     
 
-    EMBEDDINGS_PATH =  "./dataset/batterio/embeddings"
-    GROUND_TRUE_PATH = "./dataset/batterio/batterio.xml"
-
-    # EMBEDDINGS_PATH =  "./dataset/emoglobina/embeddings"
-    # GROUND_TRUE_PATH = "./dataset/emoglobina/emoglobina.xml"
-
-    # EMBEDDINGS_PATH =  "./dataset/topo/embeddings"
-    # GROUND_TRUE_PATH = "./dataset/topo/topo.xml"
+    CASE_STUDY = "mouse"
     
-    
-    et = main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH)
+    et = main_et(CASE_STUDY)
     et.compute()
     
     r = et.get_results()
 
     # get the name of the current file
 
-    file_name = "./results/"+ "enrichment_"+"results_" + GROUND_TRUE_PATH.split("/")[-1].split(".")[0] 
+    file_name = "./results/"+ "enrichment_"+"results_" + CASE_STUDY
 
     et.dump_results(r, file_name)
 

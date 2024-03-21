@@ -4,7 +4,7 @@ from sklearn.decomposition import PCA
 from sklearn.preprocessing import StandardScaler
 from autoembedding.embeddings_matrix import build_embeddings_matrix
 from scipy.cluster.hierarchy import linkage
-from scipy.spatial.distance import pdist, squareform
+from scipy.spatial.distance import squareform
 from scipy.cluster.hierarchy import cut_tree
 from sklearn.metrics import adjusted_rand_score
 import numpy as np
@@ -238,7 +238,7 @@ def main_et(CASE_STUDY):
 
 if __name__ == "__main__":
     
-    CASE_STUDY = "hemoglobin"
+    CASE_STUDY = "satb2"
     
     et = main_et(CASE_STUDY)
     et.compute()

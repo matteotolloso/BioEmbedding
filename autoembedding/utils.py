@@ -1,8 +1,5 @@
 from Bio import SeqIO
 import json
-import pandas as pd
-from scipy.spatial.distance import squareform
-from scipy.cluster.hierarchy import linkage
 import numpy as np
 
 
@@ -72,8 +69,14 @@ def read_distance_matrix(case_study: str) -> tuple:
 
     if case_study == 'covid19':
         path = "dataset/covid19/covid19_tr_distances.txt"
-    if case_study == 'hemoglobin':
+    elif case_study == 'hemoglobin':
         path = "dataset/hemoglobin/hemoglobin_tr_distances.txt"
+    elif case_study == 'mouse':
+        path = "dataset/mouse/mouse_tr_distances.txt"
+    elif case_study == 'satb2':
+        path = "dataset/satb2/satb2_tr_distances.txt"
+    elif case_study == 'bacterium':
+        path = "dataset/bacterium/bacterium_tr_distances.txt"
     else:
         raise ValueError("Invalid case study")
 
@@ -101,3 +104,13 @@ def read_distance_matrix(case_study: str) -> tuple:
     assert distances.shape == (size, size), "The size of the matrix is different from the one specified in the first line"
 
     return IDs, distances
+
+
+def get_gene_id(record):
+    """Extract the geneID from an uniprot XML record"""
+
+    for i in record.dbxrefs:
+        if i.startswith("GeneID:"):
+            geneID = i.split(":")[1]
+            return geneID
+    return None

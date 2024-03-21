@@ -1,4 +1,5 @@
 import pickle
+import sys
 
 class Node:
 
@@ -55,7 +56,7 @@ class ExecutionTree:
         
         current_output = node.compute(previous_stage_output=previous_stage_output)
         self.computed_nodes += 1
-        print(f"Computed: {self.computed_nodes}/{self.num_nodes}")
+        print(f"Computed: {self.computed_nodes}/{self.num_nodes}", file=sys.stderr, flush=True)
         for c in node.childs:
             self.recursive_dfs(c, current_output)
 
