@@ -22,7 +22,7 @@ def results2table(
     preferred_method_embedding="ward",
     preferred_metric_gt="euclidean",
     preferred_method_gt="ward", 
-    preferred_edge_weight="method_1",
+    preferred_edge_weight="jaccard",
     preferred_annotation = "go"
     ):
     

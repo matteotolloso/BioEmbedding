@@ -238,7 +238,7 @@ def main_et(CASE_STUDY):
 
 if __name__ == "__main__":
     
-    CASE_STUDY = "satb2"
+    CASE_STUDY = "bacterium"
     
     et = main_et(CASE_STUDY)
     et.compute()
