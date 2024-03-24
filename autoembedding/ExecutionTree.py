@@ -1,4 +1,5 @@
 import pickle
+import sys
 
 class Node:
 
@@ -21,6 +22,8 @@ class ExecutionTree:
         self.input = input
         self.root = Node(lambda previous_stage_output : previous_stage_output, {})
         self.frontier = [self.root]
+        self.num_nodes = 1
+        self.computed_nodes = 0
     
     def add_stage(self, function, args):
         
@@ -30,6 +33,7 @@ class ExecutionTree:
             new_n.parent = n
             n.childs.append(new_n)
             new_frontier.append(new_n)
+            self.num_nodes += 1
         
         self.frontier = new_frontier
 
@@ -43,6 +47,7 @@ class ExecutionTree:
                 new_n.parent = n
                 n.childs.append(new_n)
                 new_frontier.append(new_n)
+                self.num_nodes += 1
         
         self.frontier = new_frontier
     
@@ -50,6 +55,8 @@ class ExecutionTree:
     def recursive_dfs(self, node, previous_stage_output):
         
         current_output = node.compute(previous_stage_output=previous_stage_output)
+        self.computed_nodes += 1
+        print(f"Computed: {self.computed_nodes}/{self.num_nodes}", file=sys.stderr, flush=True)
         for c in node.childs:
             self.recursive_dfs(c, current_output)
 

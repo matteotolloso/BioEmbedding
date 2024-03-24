@@ -4,7 +4,7 @@ from sklearn.decomposition import PCA
 from sklearn.preprocessing import StandardScaler
 from autoembedding.embeddings_matrix import build_embeddings_matrix
 from scipy.cluster.hierarchy import linkage
-from scipy.spatial.distance import pdist, squareform
+from scipy.spatial.distance import squareform
 from scipy.cluster.hierarchy import cut_tree
 from sklearn.metrics import adjusted_rand_score
 import numpy as np
@@ -12,9 +12,9 @@ from Bio import SeqIO
 from autoembedding.results_manager import results2file
 
 
-def main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH):    
+def main_et(CASE_STUDY):    
     
-    et = ExecutionTree(input = {"embeddings_path" : EMBEDDINGS_PATH} )
+    et = ExecutionTree(input = {"case_study" : CASE_STUDY} )
 
     # BUILD EMBEDDING MATRIX (WITH COMBINER)
     def pipeline_build_embeddings_matrix(previous_stage_output : dict, embedder: str, combiner_method : str) -> dict:
@@ -30,10 +30,10 @@ def main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH):
             dict: A dict containing the IDs and the embeddings matrix where each row is the embedding of the corresponding ID
         """
 
-        embeddings_path = previous_stage_output["embeddings_path"]
+        case_study = previous_stage_output["case_study"]
 
         embeddings_IDs, embeddings_matrix = build_embeddings_matrix(
-            embeddings_path=embeddings_path,
+            case_study=case_study,
             embedder=embedder,
             combiner_method=combiner_method
         )
@@ -42,10 +42,6 @@ def main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH):
     et.add_multistage(
         function=pipeline_build_embeddings_matrix,
         list_args=[   
-            # {"embedder" : "rep", "combiner_method" : "pca" },
-            # {"embedder" : "rep", "combiner_method" : "average" },
-            # {"embedder" : "rep", "combiner_method" : "sum" },
-            # {"embedder" : "rep", "combiner_method" : "max" },
 
             {"embedder" : "seqvec", "combiner_method" : "pca" },
             {"embedder" : "seqvec", "combiner_method" : "average" },
@@ -78,7 +74,7 @@ def main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH):
 
     # PRINCIPAL COMPONENT ANALYSIS (with scaling)
 
-    def pipeline_pca(previous_stage_output : dict, n_components) -> dict:
+    def pipeline_scaling_and_pca(previous_stage_output : dict, n_components) -> dict:
 
         """
         Performs PCA on the embeddings matrix after scaling it
@@ -94,9 +90,10 @@ def main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH):
         embeddings_matrix = previous_stage_output["embeddings_matrix"]
         embeddings_IDs = previous_stage_output["embeddings_IDs"]
 
+        scaler = StandardScaler()
+        embeddings_matrix = scaler.fit_transform(embeddings_matrix)
+
         if n_components != "all":
-            scaler = StandardScaler()
-            embeddings_matrix = scaler.fit_transform(embeddings_matrix)
             if n_components == "default":
                 n_components = min(embeddings_matrix.shape)
             pca = PCA(n_components=n_components)
@@ -105,13 +102,10 @@ def main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH):
         return { "embeddings_matrix" : embeddings_matrix, "embeddings_IDs": embeddings_IDs}
 
     et.add_multistage(
-        function=pipeline_pca,
+        function=pipeline_scaling_and_pca,
         list_args=[
             {"n_components": 10},
-            {"n_components": 30},
             {"n_components": 50},
-            {"n_components": 70},
-            {"n_components": 90},
             {"n_components": 'all'},
         ]
     )
@@ -156,70 +150,69 @@ def main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH):
     )
 
     
-    def pipeline_build_gt_linkage_matrix(previous_stage_output : dict, metric, method, edge_weight, use_go, use_keywords, use_taxonomy, ground_true_path)-> dict:
+    def pipeline_build_gt_linkage_matrix(previous_stage_output : dict, metric, method, edge_weight, use_go, use_keywords, use_taxonomy, case_study)-> dict:
 
         embeddings_linkage_matrix = previous_stage_output["embeddings_linkage_matrix"]
         embeddings_IDs = previous_stage_output["embeddings_IDs"]
+
+        if case_study == "mouse":
+            ground_true_path = "dataset/mouse/mouse.xml"
+        else:
+            raise ValueError("The case study must be either 'mouse' or 'bacterium'")
         
         # preparing the matrix distance in the "enrichment space"
         records = list(SeqIO.parse(ground_true_path, "uniprot-xml"))
-
-        assert len(records) == len(embeddings_IDs), "The number of records in the ground true file must be the same as the number of embeddings"
 
         annotation_dict = {}
         
         for record in records:
 
-            name = f'{record.id}|{record.name}'      
+            geneID = utils.get_gene_id(record)
+
+            if geneID not in embeddings_IDs:
+                continue     
             
-            annotation_dict[name] = {}
+            annotation_dict[geneID] = {}
             go_annotations = [i for i in record.dbxrefs if i.startswith('GO')]
-            annotation_dict[name]['go'] = go_annotations
-            annotation_dict[name]['keywords'] = record.annotations['keywords']
-            annotation_dict[name]['taxonomy'] = record.annotations['taxonomy']
+            annotation_dict[geneID]['go'] = go_annotations
+            annotation_dict[geneID]['keywords'] = record.annotations['keywords']
+            annotation_dict[geneID]['taxonomy'] = record.annotations['taxonomy']
 
         gtrue_distance_matrix = np.zeros((len(embeddings_IDs), len(embeddings_IDs)))
 
         for i, name_i in enumerate(embeddings_IDs):
             
-            name_i = name_i[name_i.find("|")+1:]  # remove the first part of the string (until the first '|') this because the annotation dictionary is indexed without them
-            
             for j, name_j in enumerate(embeddings_IDs):
 
-                name_j = name_j[name_j.find("|")+1:]
-                
-                # the amount of common annotations between the two sequences, i.e. A inter B
-                capacity = 0
-
-                # the amount of annotations of the first sequence
-                A = 0
-                # the amount of annotations of the second sequence
-                B = 0
+                # annotations of the first sequence
+                A = set()
+                # annotations of the second sequence
+                B = set()
 
                 if use_go:
-                    capacity += len(set(annotation_dict[name_i]['go']).intersection(set(annotation_dict[name_j]['go'])))
-                    A += len(set(annotation_dict[name_i]['go']))
-                    B += len(set(annotation_dict[name_j]['go'])) 
+                    A = A.union(set(annotation_dict[name_i]['go']))
+                    B = B.union(set(annotation_dict[name_j]['go']))
                 if use_keywords:
-                    capacity += len(set(annotation_dict[name_i]['keywords']).intersection(set(annotation_dict[name_j]['keywords'])))
-                    A += len(set(annotation_dict[name_i]['keywords']))
-                    B += len(set(annotation_dict[name_j]['keywords'])) 
+                    A = A.union(set(annotation_dict[name_i]['keywords']))
+                    B = B.union(set(annotation_dict[name_j]['keywords']))
                 if use_taxonomy:
-                    capacity += len(set(annotation_dict[name_i]['taxonomy']).intersection(set(annotation_dict[name_j]['taxonomy'])))
-                    A += len(set(annotation_dict[name_i]['taxonomy']))
-                    B += len(set(annotation_dict[name_j]['taxonomy']))
+                    A = A.union(set(annotation_dict[name_i]['taxonomy']))
+                    B = B.union(set(annotation_dict[name_j]['taxonomy']))
 
-                
-                if edge_weight == 'method_1':
-                    # compute the number of common annotations: n = (2*|A inter B|) / (|A| + |B|) 
-                    gtrue_distance_matrix[i][j] += 2*capacity/(A+B)
-                
-                elif edge_weight == 'method_2':
-                    # compute the weight as max( (A inter B)/A, (A inter B)/B )
-                    gtrue_distance_matrix[i][j] += max(capacity/A, capacity/B)
+                if len(A) == 0 and len(B) == 0:
+                    gtrue_distance_matrix[i][j] = 0
+                    continue
 
-        # the ground true distances is not a distance measure but a similarity, we have to make it a distance and also make the diagonal 0 (maybe not necessary)
-        gtrue_distance_matrix = gtrue_distance_matrix.max() - gtrue_distance_matrix
+                if edge_weight == 'jaccard':
+                    gtrue_distance_matrix[i][j] += len(A.intersection(B)) / len(A.union(B))
+                
+                elif edge_weight == 'overlap':
+                    gtrue_distance_matrix[i][j] += len(A.intersection(B)) / min(len(A), len(B))
+
+        assert gtrue_distance_matrix.max() == 1
+
+        # the ground true distances is not a distance measure but a similarity, we have to make it a distance 
+        gtrue_distance_matrix = 1 - gtrue_distance_matrix
         
         # the max should be 1, the min 0 and the diagonal 0
         assert np.allclose(gtrue_distance_matrix.diagonal(), np.zeros(len(embeddings_IDs)), atol=1e-8)
@@ -235,7 +228,7 @@ def main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH):
         # compute the linkage matrices
         gtrue_linkage_matrix = linkage(gtrue_distance_matrix, method=method, metric=metric)
 
-        gtrue_IDs = embeddings_IDs # TODO hopefully this is correct and nothing strange with the order of the IDs has happened
+        gtrue_IDs = embeddings_IDs
 
         return {"gtrue_linkage_matrix" : gtrue_linkage_matrix, 
                 "gtrue_IDs": gtrue_IDs, 
@@ -245,108 +238,115 @@ def main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH):
     
     et.add_multistage(
         function=pipeline_build_gt_linkage_matrix,
-        fixed_args={ "ground_true_path" : GROUND_TRUE_PATH},
+        fixed_args={ "case_study" : CASE_STUDY},
         list_args=[
             # only go
-            { "metric" : "euclidean",   "method" : "ward",        "edge_weight" : "method_1" , "use_go": True, "use_keywords" : False, "use_taxonomy" : False },
-            { "metric" : "euclidean",   "method" : "average",     "edge_weight" : "method_1" , "use_go": True, "use_keywords" : False, "use_taxonomy" : False },
-            { "metric" : "euclidean",   "method" : "complete",    "edge_weight" : "method_1" , "use_go": True, "use_keywords" : False, "use_taxonomy" : False },
-            { "metric" : "euclidean",   "method" : "centroid",    "edge_weight" : "method_1" , "use_go": True, "use_keywords" : False, "use_taxonomy" : False },
-            { "metric" : "euclidean",   "method" : "single",      "edge_weight" : "method_1" , "use_go": True, "use_keywords" : False, "use_taxonomy" : False },
-            { "metric" : "euclidean",   "method" : "median",      "edge_weight" : "method_1" , "use_go": True, "use_keywords" : False, "use_taxonomy" : False },
-            { "metric" : "cosine",      "method" : "average",     "edge_weight" : "method_1" , "use_go": True, "use_keywords" : False, "use_taxonomy" : False },
-            { "metric" : "cosine",      "method" : "complete",    "edge_weight" : "method_1" , "use_go": True, "use_keywords" : False, "use_taxonomy" : False },
-            { "metric" : "cosine",      "method" : "single",      "edge_weight" : "method_1" , "use_go": True, "use_keywords" : False, "use_taxonomy" : False },
-            { "metric" : "euclidean",   "method" : "ward",        "edge_weight" : "method_2" , "use_go": True, "use_keywords" : False, "use_taxonomy" : False },
-            { "metric" : "euclidean",   "method" : "average",     "edge_weight" : "method_2" , "use_go": True, "use_keywords" : False, "use_taxonomy" : False },
-            { "metric" : "euclidean",   "method" : "complete",    "edge_weight" : "method_2" , "use_go": True, "use_keywords" : False, "use_taxonomy" : False },
-            { "metric" : "euclidean",   "method" : "centroid",    "edge_weight" : "method_2" , "use_go": True, "use_keywords" : False, "use_taxonomy" : False },
-            { "metric" : "euclidean",   "method" : "single",      "edge_weight" : "method_2" , "use_go": True, "use_keywords" : False, "use_taxonomy" : False },
-            { "metric" : "euclidean",   "method" : "median",      "edge_weight" : "method_2" , "use_go": True, "use_keywords" : False, "use_taxonomy" : False },
-            { "metric" : "cosine",      "method" : "average",     "edge_weight" : "method_2" , "use_go": True, "use_keywords" : False, "use_taxonomy" : False },
-            { "metric" : "cosine",      "method" : "complete",    "edge_weight" : "method_2" , "use_go": True, "use_keywords" : False, "use_taxonomy" : False },
-            { "metric" : "cosine",      "method" : "single",      "edge_weight" : "method_2" , "use_go": True, "use_keywords" : False, "use_taxonomy" : False },
+            { "metric" : "euclidean",   "method" : "ward",        "edge_weight" : "jaccard" , "use_go": True, "use_keywords" : False, "use_taxonomy" : False },
+            { "metric" : "euclidean",   "method" : "average",     "edge_weight" : "jaccard" , "use_go": True, "use_keywords" : False, "use_taxonomy" : False },
+            { "metric" : "euclidean",   "method" : "complete",    "edge_weight" : "jaccard" , "use_go": True, "use_keywords" : False, "use_taxonomy" : False },
+            { "metric" : "euclidean",   "method" : "centroid",    "edge_weight" : "jaccard" , "use_go": True, "use_keywords" : False, "use_taxonomy" : False },
+            { "metric" : "euclidean",   "method" : "single",      "edge_weight" : "jaccard" , "use_go": True, "use_keywords" : False, "use_taxonomy" : False },
+            { "metric" : "euclidean",   "method" : "median",      "edge_weight" : "jaccard" , "use_go": True, "use_keywords" : False, "use_taxonomy" : False },
+            { "metric" : "cosine",      "method" : "average",     "edge_weight" : "jaccard" , "use_go": True, "use_keywords" : False, "use_taxonomy" : False },
+            { "metric" : "cosine",      "method" : "complete",    "edge_weight" : "jaccard" , "use_go": True, "use_keywords" : False, "use_taxonomy" : False },
+            { "metric" : "cosine",      "method" : "single",      "edge_weight" : "jaccard" , "use_go": True, "use_keywords" : False, "use_taxonomy" : False },
+            { "metric" : "euclidean",   "method" : "ward",        "edge_weight" : "overlap" , "use_go": True, "use_keywords" : False, "use_taxonomy" : False },
+            { "metric" : "euclidean",   "method" : "average",     "edge_weight" : "overlap" , "use_go": True, "use_keywords" : False, "use_taxonomy" : False },
+            { "metric" : "euclidean",   "method" : "complete",    "edge_weight" : "overlap" , "use_go": True, "use_keywords" : False, "use_taxonomy" : False },
+            { "metric" : "euclidean",   "method" : "centroid",    "edge_weight" : "overlap" , "use_go": True, "use_keywords" : False, "use_taxonomy" : False },
+            { "metric" : "euclidean",   "method" : "single",      "edge_weight" : "overlap" , "use_go": True, "use_keywords" : False, "use_taxonomy" : False },
+            { "metric" : "euclidean",   "method" : "median",      "edge_weight" : "overlap" , "use_go": True, "use_keywords" : False, "use_taxonomy" : False },
+            { "metric" : "cosine",      "method" : "average",     "edge_weight" : "overlap" , "use_go": True, "use_keywords" : False, "use_taxonomy" : False },
+            { "metric" : "cosine",      "method" : "complete",    "edge_weight" : "overlap" , "use_go": True, "use_keywords" : False, "use_taxonomy" : False },
+            { "metric" : "cosine",      "method" : "single",      "edge_weight" : "overlap" , "use_go": True, "use_keywords" : False, "use_taxonomy" : False },
             # only keywords
-            { "metric" : "euclidean",   "method" : "ward",        "edge_weight" : "method_1" , "use_go": False, "use_keywords" : True, "use_taxonomy" : False},
-            { "metric" : "euclidean",   "method" : "average",     "edge_weight" : "method_1" , "use_go": False, "use_keywords" : True, "use_taxonomy" : False},
-            { "metric" : "euclidean",   "method" : "complete",    "edge_weight" : "method_1" , "use_go": False, "use_keywords" : True, "use_taxonomy" : False},
-            { "metric" : "euclidean",   "method" : "centroid",    "edge_weight" : "method_1" , "use_go": False, "use_keywords" : True, "use_taxonomy" : False},
-            { "metric" : "euclidean",   "method" : "single",      "edge_weight" : "method_1" , "use_go": False, "use_keywords" : True, "use_taxonomy" : False},
-            { "metric" : "euclidean",   "method" : "median",      "edge_weight" : "method_1" , "use_go": False, "use_keywords" : True, "use_taxonomy" : False},
-            { "metric" : "cosine",      "method" : "average",     "edge_weight" : "method_1" , "use_go": False, "use_keywords" : True, "use_taxonomy" : False},
-            { "metric" : "cosine",      "method" : "complete",    "edge_weight" : "method_1" , "use_go": False, "use_keywords" : True, "use_taxonomy" : False},
-            { "metric" : "cosine",      "method" : "single",      "edge_weight" : "method_1" , "use_go": False, "use_keywords" : True, "use_taxonomy" : False},
-            { "metric" : "euclidean",   "method" : "ward",        "edge_weight" : "method_2" , "use_go": False, "use_keywords" : True, "use_taxonomy" : False},
-            { "metric" : "euclidean",   "method" : "average",     "edge_weight" : "method_2" , "use_go": False, "use_keywords" : True, "use_taxonomy" : False},
-            { "metric" : "euclidean",   "method" : "complete",    "edge_weight" : "method_2" , "use_go": False, "use_keywords" : True, "use_taxonomy" : False},
-            { "metric" : "euclidean",   "method" : "centroid",    "edge_weight" : "method_2" , "use_go": False, "use_keywords" : True, "use_taxonomy" : False},
-            { "metric" : "euclidean",   "method" : "single",      "edge_weight" : "method_2" , "use_go": False, "use_keywords" : True, "use_taxonomy" : False},
-            { "metric" : "euclidean",   "method" : "median",      "edge_weight" : "method_2" , "use_go": False, "use_keywords" : True, "use_taxonomy" : False},
-            { "metric" : "cosine",      "method" : "average",     "edge_weight" : "method_2" , "use_go": False, "use_keywords" : True, "use_taxonomy" : False},
-            { "metric" : "cosine",      "method" : "complete",    "edge_weight" : "method_2" , "use_go": False, "use_keywords" : True, "use_taxonomy" : False},
-            { "metric" : "cosine",      "method" : "single",      "edge_weight" : "method_2" , "use_go": False, "use_keywords" : True, "use_taxonomy" : False},
+            { "metric" : "euclidean",   "method" : "ward",        "edge_weight" : "jaccard" , "use_go": False, "use_keywords" : True, "use_taxonomy" : False},
+            { "metric" : "euclidean",   "method" : "average",     "edge_weight" : "jaccard" , "use_go": False, "use_keywords" : True, "use_taxonomy" : False},
+            { "metric" : "euclidean",   "method" : "complete",    "edge_weight" : "jaccard" , "use_go": False, "use_keywords" : True, "use_taxonomy" : False},
+            { "metric" : "euclidean",   "method" : "centroid",    "edge_weight" : "jaccard" , "use_go": False, "use_keywords" : True, "use_taxonomy" : False},
+            { "metric" : "euclidean",   "method" : "single",      "edge_weight" : "jaccard" , "use_go": False, "use_keywords" : True, "use_taxonomy" : False},
+            { "metric" : "euclidean",   "method" : "median",      "edge_weight" : "jaccard" , "use_go": False, "use_keywords" : True, "use_taxonomy" : False},
+            { "metric" : "cosine",      "method" : "average",     "edge_weight" : "jaccard" , "use_go": False, "use_keywords" : True, "use_taxonomy" : False},
+            { "metric" : "cosine",      "method" : "complete",    "edge_weight" : "jaccard" , "use_go": False, "use_keywords" : True, "use_taxonomy" : False},
+            { "metric" : "cosine",      "method" : "single",      "edge_weight" : "jaccard" , "use_go": False, "use_keywords" : True, "use_taxonomy" : False},
+            { "metric" : "euclidean",   "method" : "ward",        "edge_weight" : "overlap" , "use_go": False, "use_keywords" : True, "use_taxonomy" : False},
+            { "metric" : "euclidean",   "method" : "average",     "edge_weight" : "overlap" , "use_go": False, "use_keywords" : True, "use_taxonomy" : False},
+            { "metric" : "euclidean",   "method" : "complete",    "edge_weight" : "overlap" , "use_go": False, "use_keywords" : True, "use_taxonomy" : False},
+            { "metric" : "euclidean",   "method" : "centroid",    "edge_weight" : "overlap" , "use_go": False, "use_keywords" : True, "use_taxonomy" : False},
+            { "metric" : "euclidean",   "method" : "single",      "edge_weight" : "overlap" , "use_go": False, "use_keywords" : True, "use_taxonomy" : False},
+            { "metric" : "euclidean",   "method" : "median",      "edge_weight" : "overlap" , "use_go": False, "use_keywords" : True, "use_taxonomy" : False},
+            { "metric" : "cosine",      "method" : "average",     "edge_weight" : "overlap" , "use_go": False, "use_keywords" : True, "use_taxonomy" : False},
+            { "metric" : "cosine",      "method" : "complete",    "edge_weight" : "overlap" , "use_go": False, "use_keywords" : True, "use_taxonomy" : False},
+            { "metric" : "cosine",      "method" : "single",      "edge_weight" : "overlap" , "use_go": False, "use_keywords" : True, "use_taxonomy" : False},
             # only taxonomy
-            { "metric" : "euclidean",   "method" : "ward",        "edge_weight" : "method_1" , "use_go": False, "use_keywords" : False, "use_taxonomy" : True},
-            { "metric" : "euclidean",   "method" : "average",     "edge_weight" : "method_1" , "use_go": False, "use_keywords" : False, "use_taxonomy" : True},
-            { "metric" : "euclidean",   "method" : "complete",    "edge_weight" : "method_1" , "use_go": False, "use_keywords" : False, "use_taxonomy" : True},
-            { "metric" : "euclidean",   "method" : "centroid",    "edge_weight" : "method_1" , "use_go": False, "use_keywords" : False, "use_taxonomy" : True},
-            { "metric" : "euclidean",   "method" : "single",      "edge_weight" : "method_1" , "use_go": False, "use_keywords" : False, "use_taxonomy" : True},
-            { "metric" : "euclidean",   "method" : "median",      "edge_weight" : "method_1" , "use_go": False, "use_keywords" : False, "use_taxonomy" : True},
-            { "metric" : "cosine",      "method" : "average",     "edge_weight" : "method_1" , "use_go": False, "use_keywords" : False, "use_taxonomy" : True},
-            { "metric" : "cosine",      "method" : "complete",    "edge_weight" : "method_1" , "use_go": False, "use_keywords" : False, "use_taxonomy" : True},
-            { "metric" : "cosine",      "method" : "single",      "edge_weight" : "method_1" , "use_go": False, "use_keywords" : False, "use_taxonomy" : True},
-            { "metric" : "euclidean",   "method" : "ward",        "edge_weight" : "method_2" , "use_go": False, "use_keywords" : False, "use_taxonomy" : True},
-            { "metric" : "euclidean",   "method" : "average",     "edge_weight" : "method_2" , "use_go": False, "use_keywords" : False, "use_taxonomy" : True},
-            { "metric" : "euclidean",   "method" : "complete",    "edge_weight" : "method_2" , "use_go": False, "use_keywords" : False, "use_taxonomy" : True},
-            { "metric" : "euclidean",   "method" : "centroid",    "edge_weight" : "method_2" , "use_go": False, "use_keywords" : False, "use_taxonomy" : True},
-            { "metric" : "euclidean",   "method" : "single",      "edge_weight" : "method_2" , "use_go": False, "use_keywords" : False, "use_taxonomy" : True},
-            { "metric" : "euclidean",   "method" : "median",      "edge_weight" : "method_2" , "use_go": False, "use_keywords" : False, "use_taxonomy" : True},
-            { "metric" : "cosine",      "method" : "average",     "edge_weight" : "method_2" , "use_go": False, "use_keywords" : False, "use_taxonomy" : True},
-            { "metric" : "cosine",      "method" : "complete",    "edge_weight" : "method_2" , "use_go": False, "use_keywords" : False, "use_taxonomy" : True},
-            { "metric" : "cosine",      "method" : "single",      "edge_weight" : "method_2" , "use_go": False, "use_keywords" : False, "use_taxonomy" : True},
+            { "metric" : "euclidean",   "method" : "ward",        "edge_weight" : "jaccard" , "use_go": False, "use_keywords" : False, "use_taxonomy" : True},
+            { "metric" : "euclidean",   "method" : "average",     "edge_weight" : "jaccard" , "use_go": False, "use_keywords" : False, "use_taxonomy" : True},
+            { "metric" : "euclidean",   "method" : "complete",    "edge_weight" : "jaccard" , "use_go": False, "use_keywords" : False, "use_taxonomy" : True},
+            { "metric" : "euclidean",   "method" : "centroid",    "edge_weight" : "jaccard" , "use_go": False, "use_keywords" : False, "use_taxonomy" : True},
+            { "metric" : "euclidean",   "method" : "single",      "edge_weight" : "jaccard" , "use_go": False, "use_keywords" : False, "use_taxonomy" : True},
+            { "metric" : "euclidean",   "method" : "median",      "edge_weight" : "jaccard" , "use_go": False, "use_keywords" : False, "use_taxonomy" : True},
+            { "metric" : "cosine",      "method" : "average",     "edge_weight" : "jaccard" , "use_go": False, "use_keywords" : False, "use_taxonomy" : True},
+            { "metric" : "cosine",      "method" : "complete",    "edge_weight" : "jaccard" , "use_go": False, "use_keywords" : False, "use_taxonomy" : True},
+            { "metric" : "cosine",      "method" : "single",      "edge_weight" : "jaccard" , "use_go": False, "use_keywords" : False, "use_taxonomy" : True},
+            { "metric" : "euclidean",   "method" : "ward",        "edge_weight" : "overlap" , "use_go": False, "use_keywords" : False, "use_taxonomy" : True},
+            { "metric" : "euclidean",   "method" : "average",     "edge_weight" : "overlap" , "use_go": False, "use_keywords" : False, "use_taxonomy" : True},
+            { "metric" : "euclidean",   "method" : "complete",    "edge_weight" : "overlap" , "use_go": False, "use_keywords" : False, "use_taxonomy" : True},
+            { "metric" : "euclidean",   "method" : "centroid",    "edge_weight" : "overlap" , "use_go": False, "use_keywords" : False, "use_taxonomy" : True},
+            { "metric" : "euclidean",   "method" : "single",      "edge_weight" : "overlap" , "use_go": False, "use_keywords" : False, "use_taxonomy" : True},
+            { "metric" : "euclidean",   "method" : "median",      "edge_weight" : "overlap" , "use_go": False, "use_keywords" : False, "use_taxonomy" : True},
+            { "metric" : "cosine",      "method" : "average",     "edge_weight" : "overlap" , "use_go": False, "use_keywords" : False, "use_taxonomy" : True},
+            { "metric" : "cosine",      "method" : "complete",    "edge_weight" : "overlap" , "use_go": False, "use_keywords" : False, "use_taxonomy" : True},
+            { "metric" : "cosine",      "method" : "single",      "edge_weight" : "overlap" , "use_go": False, "use_keywords" : False, "use_taxonomy" : True},
         ]
     )
 
 
-    def pipeline_mean_adjusted_rand_score(previous_stage_output : dict, cluster_range)-> dict:
+    def pipeline_mean_adjusted_rand_score(previous_stage_output : dict, cluster_range ) -> dict:
         """
-        Performs the enrichment analysis comparing the number of common annotations between sequences and the distance in the ebmeddings space
-        
-        Args:
-            previous_stage_output (dict): The output of the previous stage, a dict containing the embeddings matrix and the IDs
-            metric (str): The metric to use (euclidean, cosine, etc.)
-        Returns:
-            dict: A dict containing the linkage matrix and the IDs
-        """
+        Computes the mean adjusted rand score between two hierarchical clustering averaging over all the cut
+        in a given range
 
-        gtrue_linkage_matrix = previous_stage_output["gtrue_linkage_matrix"]
-        gtrue_IDs = previous_stage_output["gtrue_IDs"]
+        Args:
+            previous_stage_output (dict): The output of the previous stage, a dict containing the linkage matrix and the IDs
+            cluster_range: The range of clusters to consider (the cut to the hierarchical clustering)
+            ground_true_path (str): The path to the ground true newick file
+        Returns:
+            dict: A dict containing the mean adjusted rand score
+        """
         embeddings_linkage_matrix = previous_stage_output["embeddings_linkage_matrix"]
         embeddings_IDs = previous_stage_output["embeddings_IDs"]
+        gtrue_linkage_matrix = previous_stage_output["gtrue_linkage_matrix"]
+        gtrue_IDs = previous_stage_output["gtrue_IDs"]
 
-        assert len(gtrue_IDs) == len(embeddings_IDs), "The number of IDs in the ground true file must be the same as the number of embeddings"
+        if len(embeddings_IDs) != len(gtrue_IDs):
+            raise Exception("The number of IDs in the ground true and the predicted clustering is different")
+        if not set(embeddings_IDs) == set(gtrue_IDs):
+            raise Exception("The IDs in the ground true and the predicted clustering are different")
 
-        start = cluster_range[0]
-        end = cluster_range[1]
-        if end == -1:
-            end = len(gtrue_IDs)
+        start = 0
+        end = 0
 
-        # compute the labels matrix: an array of shape (n_samples, n_clusters) where n_clusters is the number of clusters in the range
-        predict_labels_matrix= cut_tree(embeddings_linkage_matrix, n_clusters=range(start, end))
-        gtrue_labels_matrix = cut_tree(gtrue_linkage_matrix, n_clusters=range(start, end))
+        if cluster_range != "auto":
+            raise Exception("Not implemented")
 
+        predict_labels_matrix = cut_tree(embeddings_linkage_matrix)
+        gtrue_labels_matrix = cut_tree(gtrue_linkage_matrix)
+
+        # order the matrix rows based on the IDs
+        predict_labels_matrix = predict_labels_matrix[np.argsort(embeddings_IDs)]
+        gtrue_labels_matrix = gtrue_labels_matrix[np.argsort(gtrue_IDs)]
+
+        # for each iteration, extract the relative column and compute the adjusted rand score
         adjusted_rand_scores = []
         for i in range(predict_labels_matrix.shape[1]):
             adjusted_rand_scores.append(adjusted_rand_score(predict_labels_matrix[:,i], gtrue_labels_matrix[:,i]))
-
-        return {"mean_adjusted_rand_score" : np.mean(adjusted_rand_scores), "max_adjusted_rand_score" : np.max(adjusted_rand_scores)}
+        
+        return {"mean_adjusted_rand_score" : np.mean(adjusted_rand_scores), "adjusted_rand_scores": adjusted_rand_scores}     
 
 
     et.add_stage(
         function=pipeline_mean_adjusted_rand_score,
-        args={
-            "cluster_range" : (2, -1)
-        }
+        args={"cluster_range" : "auto"}
     )
 
     # END
@@ -357,24 +357,16 @@ def main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH):
 if __name__ == "__main__":
     
 
-    EMBEDDINGS_PATH =  "./dataset/batterio/embeddings"
-    GROUND_TRUE_PATH = "./dataset/batterio/batterio.xml"
-
-    # EMBEDDINGS_PATH =  "./dataset/emoglobina/embeddings"
-    # GROUND_TRUE_PATH = "./dataset/emoglobina/emoglobina.xml"
-
-    # EMBEDDINGS_PATH =  "./dataset/topo/embeddings"
-    # GROUND_TRUE_PATH = "./dataset/topo/topo.xml"
+    CASE_STUDY = "mouse"
     
-    
-    et = main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH)
+    et = main_et(CASE_STUDY)
     et.compute()
     
     r = et.get_results()
 
     # get the name of the current file
 
-    file_name = "./results/"+ "enrichment_"+"results_" + GROUND_TRUE_PATH.split("/")[-1].split(".")[0] 
+    file_name = "./results/"+ "enrichment_"+"results_" + CASE_STUDY
 
     et.dump_results(r, file_name)
 

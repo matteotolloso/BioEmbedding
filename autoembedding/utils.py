@@ -1,9 +1,5 @@
 from Bio import SeqIO
 import json
-import pandas as pd
-from ete3 import ClusterTree, ClusterNode
-from scipy.spatial.distance import squareform
-from scipy.cluster.hierarchy import linkage
 import numpy as np
 
 
@@ -43,33 +39,47 @@ def get_embeddings_dict(path : str) -> dict:
     return seq_dict
 
 
-def newick_to_linkage(newick: str):
+# def newick_to_linkage(newick: str):
     
-    """
-    Convert newick tree into scipy linkage matrix
+#     """
+#     Convert newick tree into scipy linkage matrix
 
-    :param newick: newick file path or string
-    :returns: linkage matrix
-    """
+#     :param newick: newick file path or string
+#     :returns: linkage matrix
+#     """
 
-    # newick string -> cophenetic_matrix
-    tree = ClusterNode(newick)
-    cophenetic_matrix, newick_labels = tree.cophenetic_matrix()
-    cophenetic_matrix = pd.DataFrame(cophenetic_matrix, columns=newick_labels, index=newick_labels)
-    # reduce square distance matrix to condensed distance matrices
-    pairwise_distances = squareform(cophenetic_matrix.to_numpy())
-    # return linkage matrix and labels
+#     # newick string -> cophenetic_matrix
+#     tree = ClusterNode(newick)
+#     cophenetic_matrix, newick_labels = tree.cophenetic_matrix()
+#     cophenetic_matrix = pd.DataFrame(cophenetic_matrix, columns=newick_labels, index=newick_labels)
+#     # reduce square distance matrix to condensed distance matrices
+#     pairwise_distances = squareform(cophenetic_matrix.to_numpy())
+#     # return linkage matrix and labels
     
-    return linkage(pairwise_distances), list(cophenetic_matrix.columns)
+#     return linkage(pairwise_distances), list(cophenetic_matrix.columns)
 
 
 
-def read_distance_matrix(path: str) -> tuple:
+def read_distance_matrix(case_study: str) -> tuple:
     """
     Given the path of a distance matrix file, it returns a tuple of two elements:
     - the first element is a list of IDs
     - the second element is a numpy simmetric matrix of pairwise distances
     """
+
+    if case_study == 'covid19':
+        path = "dataset/covid19/covid19_tr_distances.txt"
+    elif case_study == 'hemoglobin':
+        path = "dataset/hemoglobin/hemoglobin_tr_distances.txt"
+    elif case_study == 'mouse':
+        path = "dataset/mouse/mouse_tr_distances.txt"
+    elif case_study == 'satb2':
+        path = "dataset/satb2/satb2_tr_distances.txt"
+    elif case_study == 'bacterium':
+        path = "dataset/bacterium/bacterium_tr_distances.txt"
+    else:
+        raise ValueError("Invalid case study")
+
 
     IDs = []
     distances = []
@@ -94,3 +104,13 @@ def read_distance_matrix(path: str) -> tuple:
     assert distances.shape == (size, size), "The size of the matrix is different from the one specified in the first line"
 
     return IDs, distances
+
+
+def get_gene_id(record):
+    """Extract the geneID from an uniprot XML record"""
+
+    for i in record.dbxrefs:
+        if i.startswith("GeneID:"):
+            geneID = i.split(":")[1]
+            return geneID
+    return None

@@ -4,16 +4,16 @@ from sklearn.decomposition import PCA
 from sklearn.preprocessing import StandardScaler
 from autoembedding.embeddings_matrix import build_embeddings_matrix
 from scipy.cluster.hierarchy import linkage
-from scipy.spatial.distance import pdist, squareform
+from scipy.spatial.distance import squareform
 from scipy.cluster.hierarchy import cut_tree
 from sklearn.metrics import adjusted_rand_score
 import numpy as np
 from autoembedding.results_manager import results2file
 
 
-def main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH):    
+def main_et(CASE_STUDY):    
     
-    et = ExecutionTree(input = {"embeddings_path" : EMBEDDINGS_PATH} )
+    et = ExecutionTree(input = {"case_study" : CASE_STUDY} )
 
     # BUILD EMBEDDING MATRIX (WITH COMBINER)
     def pipeline_build_embeddings_matrix(previous_stage_output : dict, embedder: str, combiner_method : str) -> dict:
@@ -29,10 +29,10 @@ def main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH):
             dict: A dict containing the IDs and the embeddings matrix where each row is the embedding of the corresponding ID
         """
 
-        embeddings_path = previous_stage_output["embeddings_path"]
+        case_study = previous_stage_output["case_study"]
 
         embeddings_IDs, embeddings_matrix = build_embeddings_matrix(
-            embeddings_path=embeddings_path,
+            case_study=case_study,
             embedder=embedder,
             combiner_method=combiner_method
         )
@@ -41,10 +41,6 @@ def main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH):
     et.add_multistage(
         function=pipeline_build_embeddings_matrix,
         list_args=[ 
-            # {"embedder" : "rep", "combiner_method" : "pca" },
-            # {"embedder" : "rep", "combiner_method" : "average" },
-            # {"embedder" : "rep", "combiner_method" : "sum" },
-            # {"embedder" : "rep", "combiner_method" : "max" },
 
             {"embedder" : "seqvec", "combiner_method" : "pca" },
             {"embedder" : "seqvec", "combiner_method" : "average" },
@@ -77,7 +73,7 @@ def main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH):
 
     # PRINCIPAL COMPONENT ANALYSIS (with scaling)
 
-    def pipeline_pca(previous_stage_output : dict, n_components) -> dict:
+    def pipeline_scaling_and_pca(previous_stage_output : dict, n_components) -> dict:
 
         """
         Performs PCA on the embeddings matrix after scaling it
@@ -93,9 +89,10 @@ def main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH):
         embeddings_matrix = previous_stage_output["embeddings_matrix"]
         embeddings_IDs = previous_stage_output["embeddings_IDs"]
 
+        scaler = StandardScaler()
+        embeddings_matrix = scaler.fit_transform(embeddings_matrix)
+
         if n_components != "all":
-            scaler = StandardScaler()
-            embeddings_matrix = scaler.fit_transform(embeddings_matrix)
             if n_components == "default":
                 n_components = min(embeddings_matrix.shape)
             pca = PCA(n_components=n_components)
@@ -104,13 +101,10 @@ def main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH):
         return { "embeddings_matrix" : embeddings_matrix, "embeddings_IDs": embeddings_IDs}
 
     et.add_multistage(
-        function=pipeline_pca, # TODO t-sne
+        function=pipeline_scaling_and_pca,
         list_args=[
             {"n_components": 10},
-            {"n_components": 30},
             {"n_components": 50},
-            {"n_components": 70},
-            {"n_components": 90},
             {"n_components": "all"},       
         ]
     )
@@ -151,7 +145,7 @@ def main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH):
     )
 
     def pipeline_build_gt_linkage_matrix(
-        ground_true_path : str, 
+        case_study : str, 
         previous_stage_output : dict, 
         metric, 
         method)-> dict:
@@ -159,10 +153,11 @@ def main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH):
         embeddings_linkage_matrix = previous_stage_output["embeddings_linkage_matrix"]
         embeddings_IDs = previous_stage_output["embeddings_IDs"]
         
-        
-        gtrue_IDs, gt_distances = utils.read_distance_matrix(ground_true_path)
+        gtrue_IDs, gt_distances = utils.read_distance_matrix(case_study)
         gt_distances = squareform(gt_distances)
         gtrue_linkage_matrix = linkage(gt_distances, method=method, metric=metric)
+
+        # assert embeddings_IDs == gtrue_IDs, "The IDs of the embeddings and the ground truth are different"
 
         return { "embeddings_linkage_matrix" : embeddings_linkage_matrix, "embeddings_IDs": embeddings_IDs, 
                 "gtrue_linkage_matrix" : gtrue_linkage_matrix, "gtrue_IDs" : gtrue_IDs}
@@ -170,7 +165,7 @@ def main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH):
 
     et.add_multistage(
         function=pipeline_build_gt_linkage_matrix,
-        fixed_args={"ground_true_path" : GROUND_TRUE_PATH},
+        fixed_args={"case_study" : CASE_STUDY},
         list_args=[
             {"metric" : "euclidean", "method" : "average"},
             {"metric" : "euclidean", "method" : "complete"},
@@ -187,14 +182,14 @@ def main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH):
 
     # COMPARE WITH GROUND TRUE
 
-    def pipeline_mean_adjusted_rand_score(previous_stage_output : dict, cluster_range : tuple ) -> dict:
+    def pipeline_mean_adjusted_rand_score(previous_stage_output : dict, cluster_range ) -> dict:
         """
         Computes the mean adjusted rand score between two hierarchical clustering averaging over all the cut
         in a given range
 
         Args:
             previous_stage_output (dict): The output of the previous stage, a dict containing the linkage matrix and the IDs
-            cluster_range (tuple): The range of clusters to consider (the cut to the hierarchical clustering)
+            cluster_range: The range of clusters to consider (the cut to the hierarchical clustering)
             ground_true_path (str): The path to the ground true newick file
         Returns:
             dict: A dict containing the mean adjusted rand score
@@ -206,19 +201,17 @@ def main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH):
 
         if len(embeddings_IDs) != len(gtrue_IDs):
             raise Exception("The number of IDs in the ground true and the predicted clustering is different")
-        if cluster_range[0] < 2:
-            raise Exception("Cluster range must start at least from 2")
         if not set(embeddings_IDs) == set(gtrue_IDs):
             raise Exception("The IDs in the ground true and the predicted clustering are different")
 
-        start = cluster_range[0]
-        end = cluster_range[1]
-        
-        if end == -1:
-            end = min(len(embeddings_IDs), len(gtrue_IDs))
-        
-        predict_labels_matrix= cut_tree(embeddings_linkage_matrix, n_clusters=range(start, end))
-        gtrue_labels_matrix = cut_tree(gtrue_linkage_matrix, n_clusters=range(start, end))
+        start = 0
+        end = 0
+
+        if cluster_range != "auto":
+            raise Exception("Not implemented")
+
+        predict_labels_matrix = cut_tree(embeddings_linkage_matrix)
+        gtrue_labels_matrix = cut_tree(gtrue_linkage_matrix)
 
         # order the matrix rows based on the IDs
         predict_labels_matrix = predict_labels_matrix[np.argsort(embeddings_IDs)]
@@ -229,13 +222,13 @@ def main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH):
         for i in range(predict_labels_matrix.shape[1]):
             adjusted_rand_scores.append(adjusted_rand_score(predict_labels_matrix[:,i], gtrue_labels_matrix[:,i]))
         
-        return {"mean_adjusted_rand_score" : np.mean(adjusted_rand_scores)}
+        return {"mean_adjusted_rand_score" : np.mean(adjusted_rand_scores), "adjusted_rand_scores": adjusted_rand_scores}
         
 
 
     et.add_stage(
         function=pipeline_mean_adjusted_rand_score,
-        args={"cluster_range" : (2, -1)}
+        args={"cluster_range" : "auto"}
     )
 
     # END
@@ -245,22 +238,14 @@ def main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH):
 
 if __name__ == "__main__":
     
-    EMBEDDINGS_PATH = "./dataset/emoglobina/embeddings"
-    GROUND_TRUE_PATH = "./dataset/emoglobina/emoglobina.dist"
-
-    # EMBEDDINGS_PATH =  "./dataset/batterio/embeddings"
-    # GROUND_TRUE_PATH = "./dataset/batterio/batterio.dist"
-
-    # EMBEDDINGS_PATH =  "./dataset/topo/embeddings"
-    # GROUND_TRUE_PATH = "./dataset/topo/topo.dist"
+    CASE_STUDY = "bacterium"
     
-    
-    et = main_et(EMBEDDINGS_PATH, GROUND_TRUE_PATH)
+    et = main_et(CASE_STUDY)
     et.compute()
     
     r = et.get_results()
 
-    file_name = "./results/"+ "phylogenetic_" +"results_" + GROUND_TRUE_PATH.split("/")[-1].split(".")[0]
+    file_name = "./results/"+ "phylogenetic_" +"results_" + CASE_STUDY
 
     et.dump_results(r, file_name)
 
