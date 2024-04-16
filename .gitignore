@@ -1,6 +1,8 @@
 dataset.zip
 results/*
 
+*.zip
+
 *.tex
 *.eps
 
@@ -145,6 +147,3 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
-muscle5.1.linux_intel64
-clustalw2
-clustalo-1.2.4-Ubuntu-x86_64
