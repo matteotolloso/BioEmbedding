@@ -17,7 +17,6 @@ def results2table(
     embedders = ["dnabert", "seqvec", "prose", "alphafold", "esm"],
     combiners = ["pca", "average", "sum", "max"],
     pcas = [ '10', '20', '30', '40', '50', 'all'],
-    metric="mean_adjusted_rand_score", 
     preferred_metric_embedding="euclidean",
     preferred_method_embedding="ward",
     preferred_metric_gt="euclidean",

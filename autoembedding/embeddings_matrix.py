@@ -5,7 +5,7 @@ from Bio import SeqIO
 import os
 from autoembedding import utils
 # import utils
-
+import sys
 
 
 def build_embeddings_matrix(
@@ -15,9 +15,9 @@ def build_embeddings_matrix(
     ) -> tuple[list[str] , np.array]:
 
 
-    print('build_embeddings_matrix_for_covid19_case_study')
-    print(f"embedder: {embedder}")
-    print(f"combiner_method: {combiner_method}")
+    print(f'build_embeddings_matrix_for_{case_study}_case_study', file=sys.stderr, flush=True)
+    print(f"embedder: {embedder}", file=sys.stderr, flush=True)
+    print(f"combiner_method: {combiner_method}", file=sys.stderr, flush=True)
 
     if case_study == 'covid19':
         return build_embeddings_matrix_for_covid19_case_study(

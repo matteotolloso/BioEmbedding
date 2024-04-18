@@ -1,8 +1,14 @@
 dataset.zip
 results/*
 
+*.zip
+
 *.tex
 *.eps
+
+tmp
+
+logs
 
 
 .idea

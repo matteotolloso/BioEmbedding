@@ -157,6 +157,8 @@ def main_et(CASE_STUDY):
 
         if case_study == "mouse":
             ground_true_path = "dataset/mouse/mouse.xml"
+        elif case_study == "bacterium":
+            ground_true_path = "dataset/bacterium/bacterium.xml"
         else:
             raise ValueError("The case study must be either 'mouse' or 'bacterium'")
         
@@ -184,6 +186,10 @@ def main_et(CASE_STUDY):
             
             for j, name_j in enumerate(embeddings_IDs):
 
+                if i == j:
+                    gtrue_distance_matrix[i][j] = 1
+                    continue
+
                 # annotations of the first sequence
                 A = set()
                 # annotations of the second sequence
@@ -199,7 +205,7 @@ def main_et(CASE_STUDY):
                     A = A.union(set(annotation_dict[name_i]['taxonomy']))
                     B = B.union(set(annotation_dict[name_j]['taxonomy']))
 
-                if len(A) == 0 and len(B) == 0:
+                if len(A) == 0 or len(B) == 0:
                     gtrue_distance_matrix[i][j] = 0
                     continue
 
@@ -357,7 +363,7 @@ def main_et(CASE_STUDY):
 if __name__ == "__main__":
     
 
-    CASE_STUDY = "mouse"
+    CASE_STUDY = "bacterium"
     
     et = main_et(CASE_STUDY)
     et.compute()
